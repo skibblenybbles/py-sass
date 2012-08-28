@@ -17,7 +17,7 @@ I've added grammar extensions for some of the common IE-specific hacks that comm
 i.e. "`\*display: inline`", "`filter:progid:Something.Awful.From.Microsoft(param = value)`", etc.
 
 My big next steps are:
-* Flesh out grammar extension IE hacks for "`expression\(\)`" property values. This involves implementing a subset of 
+* Flesh out grammar extension IE hacks for "`expression()`" property values. This involves implementing a subset of 
 JavaScript in CSS. Ick.
 * Refactor into decent OO.
 * Extend the grammar with SASS' additions. Yum.
