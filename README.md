@@ -13,7 +13,7 @@ serve as a nice alternative to SASS' Ruby implementation.
 
 I've built a basic CSS3 lexer and parser using
 <a href="https://github.com/dabeaz/ply" target="_blank">David M. Beazley's Python port of Lex and Yacc.</a>
-I've added grammar extensions for some of the common IE-specific hacks that commonly appear in modern CSS,
+I've added grammar extensions to parse some of the IE-specific hacks that commonly appear in modern CSS,
 i.e. `\*display: inline`, `filter:progid:Something.Awful.From.Microsoft(param = value)`, etc.
 
 My big next steps are:
