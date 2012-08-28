@@ -1,7 +1,7 @@
 py-sass
 =======
 
-A pure Python implementation of the SASS language for extending CSS3's capabilities.
+A pure Python implementation of the SASS language for an enhanced CSS3 development experience.
 
 ## Why?
 
