@@ -14,10 +14,10 @@ serve as a nice alternative to SASS' Ruby implementation.
 I've built a basic CSS3 lexer and parser using
 <a href="https://github.com/dabeaz/ply" target="_blank">David M. Beazley's Python port of Lex and Yacc.</a>
 I've added grammar extensions for some of the common IE-specific hacks that commonly appear in modern CSS,
-i.e. "`\*display: inline`", "`filter:progid:Something.Awful.From.Microsoft(param = value)`", etc.
+i.e. `\*display: inline`, `filter:progid:Something.Awful.From.Microsoft(param = value)`, etc.
 
 My big next steps are:
-* Flesh out grammar extension IE hacks for "`expression()`" property values. This involves implementing a subset of 
+* Flesh out grammar extension IE hacks for `expression()` property values. This involves implementing a subset of 
 JavaScript in CSS. Ick.
 * Refactor into decent OO.
 * Extend the grammar with SASS' additions. Yum.
