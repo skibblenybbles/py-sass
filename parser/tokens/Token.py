@@ -12,10 +12,10 @@ class Token(object):
     line = None
     column = None
     
-    def __init__(self, token):
+    def __init__(self, lexer, token):
         self.value = token.value
-        self.line = token.lexer.lineno
-        self.column = token.lexer.column
+        self.line = lexer.line
+        self.column = lexer.column
     
     def escape(self, value):
         return \

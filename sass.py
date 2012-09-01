@@ -12,9 +12,10 @@ def print_usage():
     sys.exit()
 
 def parse(css):
-    from parser import lexer, parser
+    from parser import Lexer, Parser
     
-    print parser.parse(css, lexer = lexer)
+    p = Parser(Lexer())
+    print p.parse(css)
     
     """
     lexer.input(css)
