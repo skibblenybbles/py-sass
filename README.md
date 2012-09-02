@@ -1,7 +1,7 @@
 py-sass
 =======
 
-A pure Python implementation of the SASS language for an enhanced CSS3 development experience.
+A pure Python implementation of SASS for an enhanced CSS3 development experience.
 
 ## Why?
 
@@ -19,7 +19,7 @@ i.e. `*display: inline`, `filter:progid:Something.Awful.From.Microsoft(param = v
 My big next steps are:
 * Flesh out grammar extension IE hacks for `expression()` property values. This involves implementing a subset of 
 JavaScript in CSS. Ick.
-* Refactor into decent OO.
+* <del>Refactor into decent OO.</del>
 * Extend the grammar with SASS' additions. Yum.
 * Build a useful abstract syntax tree from the parsed grammar.
 * Implement all of SASS' awesome CSS-transformation tools.
