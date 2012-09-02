@@ -71,18 +71,17 @@ class Parser(object):
     # empty, whitespace and comment productions
     ###########################################################################
     
-    #######################################
+    
     # empty
     # : <empty>
 
     @PRODUCTION(
-        "empty :"
+        "empty :",
     )
     def p_empty(self, t):
         pass
     
     
-    #######################################
     # space-opt
     # : space
     # | empty
@@ -96,27 +95,25 @@ class Parser(object):
         pass
     
     
-    #######################################
     # space
     # : space-delimiter space
     # | space-delimiter
     
     @PRODUCTION(
-        "space : space-delimiter space"
+        "space : space-delimiter space",
     )
     def p_space_list(self, t):
         # TODO - build AST
         pass
     
     @PRODUCTION(
-        "space : space-delimiter"
+        "space : space-delimiter",
     )
     def p_space_terminal(self, t):
         # TODO - build AST
         pass
     
     
-    #######################################
     # space-delimiter
     # : whitespace
     # | blockcomment
@@ -131,32 +128,29 @@ class Parser(object):
         # TODO - build AST
         pass
 
-
-    #######################################
+    
     # whitespace
     # : SPACE
 
     @PRODUCTION(
-        "whitespace : SPACE"
+        "whitespace : SPACE",
     )
     def p_whitespace(self, t):
         # TODO - build AST
         pass
         
     
-    #######################################
     # blockcomment
     # : BLOCKCOMMENT
 
     @PRODUCTION(
-        "blockcomment : BLOCKCOMMENT"
+        "blockcomment : BLOCKCOMMENT",
     )
     def p_blockcomment(self, t):
         # TODO - build AST
         pass
     
     
-    #######################################
     # htmlcomment
     # : CDO
     # | CDC
@@ -174,11 +168,12 @@ class Parser(object):
     # TODO - organize and describe productions
     ###########################################################################
     
+    
     # stylesheet
     # : charset-opt imports-opt styles-opt
 
     @PRODUCTION(
-        "stylesheet : charset-opt imports-opt styles-opt"
+        "stylesheet : charset-opt imports-opt styles-opt",
     )
     def p_stylesheet(self, t):
         # TODO - build AST
@@ -212,7 +207,7 @@ class Parser(object):
     # imports-opt
     # : imports
     # | empty
-
+    
     @PRODUCTION(
         "imports-opt : imports",
         "            | empty",
@@ -227,28 +222,26 @@ class Parser(object):
     # | import
     
     @PRODUCTION(
-        "imports : import imports"
+        "imports : import imports",
     )
     def p_imports_list(self, t):
         # TODO - build AST
         pass
-
-
+    
+    
     @PRODUCTION(
-        "imports : import"
+        "imports : import",
     )
     def p_imports_terminal(self, t):
         # TODO - build AST
         pass
     
     
-    # TODO: switch lexer into "mediaquery" state at last moment possible...
-    
     # import
     # : SYM_IMPORT space-opt import-src media-queries-opt SEMICOLON space-opt
     
     @PRODUCTION(
-        "import : SYM_IMPORT space-opt import-src media-queries-opt SEMICOLON space-opt"
+        "import : SYM_IMPORT space-opt import-src media-queries-opt SEMICOLON space-opt",
     )
     def p_import(self, t):
         # TODO - build AST
@@ -286,7 +279,7 @@ class Parser(object):
     # | media-query
 
     @PRODUCTION(
-        "media-queries : media-query COMMA space-opt media-queries"
+        "media-queries : media-query COMMA space-opt media-queries",
     )
     def p_media_queries_list(self, t):
         # TODO - build AST
@@ -294,7 +287,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "media-queries : media-query"
+        "media-queries : media-query",
     )
     def p_media_queries_terminal(self, t):
         # TODO - build AST
@@ -302,13 +295,13 @@ class Parser(object):
     
     
     # media-query
-    # : KEY_ONLY space-opt media-query-typed
-    # | KEY_NOT space-opt media-query-typed
+    # : _before-mediaquery KEY_ONLY _after-mediaquery space-opt media-query-typed
+    # | _before-mediaquery KEY_NOT _after-mediaquery space-opt media-query-typed
     # | media-query-typed
     # | media-query-expressions
     
     @PRODUCTION(
-        "media-query : KEY_ONLY space-opt media-query-typed"
+        "media-query : _before-mediaquery KEY_ONLY _after-mediaquery space-opt media-query-typed",
     )
     def p_media_query_only(self, t):
         # TODO - build AST
@@ -316,7 +309,7 @@ class Parser(object):
 
     
     @PRODUCTION(
-        "media-query : KEY_NOT space-opt media-query-typed"
+        "media-query : _before-mediaquery KEY_NOT _after-mediaquery space-opt media-query-typed",
     )
     def p_media_query_not(self, t):
         # TODO - build AST
@@ -324,7 +317,7 @@ class Parser(object):
 
     
     @PRODUCTION(
-        "media-query : media-query-typed"
+        "media-query : media-query-typed",
     )
     def p_media_query_typed(self, t):
         # TODO - build AST
@@ -332,7 +325,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "media-query : media-query-expressions"
+        "media-query : media-query-expressions",
     )
     def p_media_query_expressions(self, t):
         # TODO - build AST
@@ -340,11 +333,11 @@ class Parser(object):
 
 
     # media-query-typed
-    # : media-type KEY_AND space-opt media-query-expressions
+    # : media-type _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions
     # | media-type
     
     @PRODUCTION(
-        "media-query-typed : media-type KEY_AND space-opt media-query-expressions"
+        "media-query-typed : media-type _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions",
     )
     def p_media_query_typed_type_expessions(self, t):
         # TODO - build AST
@@ -352,7 +345,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "media-query-typed : media-type"
+        "media-query-typed : media-type",
     )
     def p_media_query_typed_type(self, t):
         # TODO - build AST
@@ -363,7 +356,7 @@ class Parser(object):
     # : IDENTIFIER space-opt
 
     @PRODUCTION(
-        "media-type : IDENTIFIER space-opt"
+        "media-type : IDENTIFIER space-opt",
     )
     def p_media_type(self, t):
         # TODO - build AST
@@ -371,11 +364,11 @@ class Parser(object):
 
 
     # media-query-expressions
-    # : media-query-expression KEY_AND space-opt media-query-expressions
+    # : media-query-expression _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions
     # | media-query-expression
     
     @PRODUCTION(
-        "media-query-expressions : media-query-expression KEY_AND space-opt media-query-expressions"
+        "media-query-expressions : media-query-expression _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions",
     )
     def p_media_query_expressions_list(self, t):
         # TODO - build AST
@@ -383,7 +376,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "media-query-expressions : media-query-expression"
+        "media-query-expressions : media-query-expression",
     )
     def p_media_query_expressions_terminal(self, t):
         # TODO - build AST
@@ -395,7 +388,7 @@ class Parser(object):
     # : LPAREN space-opt media-feature RPAREN space-opt
     
     @PRODUCTION(
-        "media-query-expression : LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt"
+        "media-query-expression : LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt",
     )
     def p_media_query_expression_feature_value(self, t):
         # TODO - build AST
@@ -403,7 +396,7 @@ class Parser(object):
 
     
     @PRODUCTION(
-        "media-query-expression : LPAREN space-opt media-feature RPAREN space-opt"
+        "media-query-expression : LPAREN space-opt media-feature RPAREN space-opt",
     )
     def p_media_query_expression_feature(self, t):
         # TODO - build AST
@@ -414,7 +407,7 @@ class Parser(object):
     # : IDENTIFIER space-opt
 
     @PRODUCTION(
-        "media-feature : IDENTIFIER space-opt"
+        "media-feature : IDENTIFIER space-opt",
     )
     def p_media_feature(self, t):
         # TODO - build AST
@@ -439,7 +432,7 @@ class Parser(object):
     # : style
 
     @PRODUCTION(
-        "styles : style styles"
+        "styles : style styles",
     )
     def p_styles_list(self, t):
         # TODO - build AST
@@ -447,7 +440,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "styles : style"
+        "styles : style",
     )
     def p_styles_terminal(self, t):
         # TODO - build AST
@@ -473,7 +466,7 @@ class Parser(object):
     # : SYM_PAGE space-opt pseudo-page LBRACE space-opt declarations RBRACE space-opt
 
     @PRODUCTION(
-        "page : SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt"
+        "page : SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt",
     )
     def p_page(self, t):
         # TODO - build AST
@@ -497,7 +490,7 @@ class Parser(object):
     # : COLON IDENTIFIER space-opt
     
     @PRODUCTION(
-        "pseudo-page : COLON IDENTIFIER space-opt"
+        "pseudo-page : COLON IDENTIFIER space-opt",
     )
     def p_pseudo_paget(self, t):
         # TODO - build AST
@@ -505,10 +498,10 @@ class Parser(object):
     
     
     # media
-    # : SYM_MEDIA space-opt _before-media-queries media-queries _after-media-queries LBRACE space-opt styles-opt RBRACE space-opt
+    # : SYM_MEDIA space-opt media-queries LBRACE space-opt styles-opt RBRACE space-opt
 
     @PRODUCTION(
-        "media : SYM_MEDIA space-opt _before-media-queries media-queries _after-media-queries LBRACE space-opt styles-opt RBRACE space-opt"
+        "media : SYM_MEDIA space-opt media-queries LBRACE space-opt styles-opt RBRACE space-opt",
     )
     def p_media(self, t):
         # TODO - build AST
@@ -516,16 +509,16 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "_before-media-queries :"
+        "_before-mediaquery :",
     )
-    def p_before_media_queries(self, t):
+    def p_before_mediaquery(self, t):
         t.lexer.push_state("mediaquery")
 
 
     @PRODUCTION(
-        "_after-media-queries :"
+        "_after-mediaquery :",
     )
-    def p_after_media_queries(self, t):
+    def p_after_mediaquery(self, t):
         t.lexer.pop_state()
 
     
@@ -533,7 +526,7 @@ class Parser(object):
     # : selectors LBRACE space-opt declarations RBRACE space-opt
 
     @PRODUCTION(
-        "ruleset : selectors LBRACE space-opt declarations RBRACE space-opt"
+        "ruleset : selectors LBRACE space-opt declarations RBRACE space-opt",
     )
     def p_ruleset(self, t):
         # TODO - build AST
@@ -545,7 +538,7 @@ class Parser(object):
     # | selector
 
     @PRODUCTION(
-        "selectors : selector COMMA space-opt selectors"
+        "selectors : selector COMMA space-opt selectors",
     )
     def p_selectors_list(self, t):
         # TODO - build AST
@@ -553,7 +546,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "selectors : selector"
+        "selectors : selector",
     )
     def p_selectors_terminal(self, t):
         # TODO - build AST
@@ -565,7 +558,7 @@ class Parser(object):
     # | simple-selector space-opt
     
     @PRODUCTION(
-        "selector : simple-selector combinator selector"
+        "selector : simple-selector combinator selector",
     )
     def p_selector_list(self, t):
         # TODO - build AST
@@ -573,7 +566,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "selector : simple-selector space-opt"
+        "selector : simple-selector space-opt",
     )
     def p_selector_terminal(self, t):
         # TODO - build AST
@@ -585,7 +578,7 @@ class Parser(object):
     # | selector-rules
 
     @PRODUCTION(
-        "simple-selector : type-selector selector-rules-opt"
+        "simple-selector : type-selector selector-rules-opt",
     )
     def p_simple_selector_type(self, t):
         # TODO - build AST
@@ -593,7 +586,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "simple-selector : selector-rules"
+        "simple-selector : selector-rules",
     )
     def p_simple_selector_rules(self, t):
         # TODO - build AST
@@ -617,7 +610,7 @@ class Parser(object):
     # : namespace-prefix-opt element-name
 
     @PRODUCTION(
-        "element-selector : namespace-prefix-opt element-name"
+        "element-selector : namespace-prefix-opt element-name",
     )
     def p_element_selector(self, t):
         # TODO - build AST
@@ -628,7 +621,7 @@ class Parser(object):
     # : namespace-prefix-opt OP_MUL
 
     @PRODUCTION(
-        "all-selector : namespace-prefix-opt OP_MUL"
+        "all-selector : namespace-prefix-opt OP_MUL",
     )
     def p_all_selector(self, t):
         # TODO - build AST
@@ -652,7 +645,7 @@ class Parser(object):
     # : NAMESPACE_PREFIX
     
     @PRODUCTION(
-        "namespace-prefix : NAMESPACE_PREFIX"
+        "namespace-prefix : NAMESPACE_PREFIX",
     )
     def p_namespace_prefix(self, t):
         # TODO - build AST
@@ -663,7 +656,7 @@ class Parser(object):
     # : IDENTIFIER
 
     @PRODUCTION(
-        "element-name : IDENTIFIER"
+        "element-name : IDENTIFIER",
     )
     def p_identifier(self, t):
         # TODO - build AST
@@ -688,7 +681,7 @@ class Parser(object):
     # | selector-rule
     
     @PRODUCTION(
-        "selector-rules : selector-rule selector-rules"
+        "selector-rules : selector-rule selector-rules",
     )
     def p_selector_rules_list(self, t):
         # TODO - build AST
@@ -696,7 +689,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "selector-rules : selector-rule"
+        "selector-rules : selector-rule",
     )
     def p_selector_rules_terminal(self, t):
         # TODO - build AST
@@ -730,7 +723,7 @@ class Parser(object):
     # | space
     
     @PRODUCTION(
-        "combinator : space-opt combinator-op"
+        "combinator : space-opt combinator-op",
     )
     def p_combinator_combinator_op(self, t):
         # TODO - build AST
@@ -738,7 +731,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "combinator : space"
+        "combinator : space",
     )
     def p_combinator_space(self, t):
         # TODO - build AST
@@ -762,7 +755,7 @@ class Parser(object):
     # hash
     # : HASH
     @PRODUCTION(
-        "hash : HASH"
+        "hash : HASH",
     )
     def p_hash(self, t):
         # TODO - build AST
@@ -773,7 +766,7 @@ class Parser(object):
     # : DOT IDENTIFIER
 
     @PRODUCTION(
-        "class : DOT IDENTIFIER"
+        "class : DOT IDENTIFIER",
     )
     def p_class(self, t):
         # TODO - build AST
@@ -784,7 +777,7 @@ class Parser(object):
     # : LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
 
     @PRODUCTION(
-        "attribute : LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET"
+        "attribute : LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET",
     )
     def p_attribute(self, t):
         # TODO - build AST
@@ -808,7 +801,7 @@ class Parser(object):
     # : attribute-op attribute-value
     
     @PRODUCTION(
-        "attribute-match : attribute-op attribute-value"
+        "attribute-match : attribute-op attribute-value",
     )
     def p_attribute_match(self, t):
         # TODO - build AST
@@ -854,7 +847,7 @@ class Parser(object):
     # | COLON COLON pseudo-selector
 
     @PRODUCTION(
-        "pseudo : COLON pseudo-selector"
+        "pseudo : COLON pseudo-selector",
     )
     def p_pseudo_colon(self, t):
         # TODO - build AST
@@ -862,7 +855,7 @@ class Parser(object):
     
 
     @PRODUCTION(
-        "pseudo : COLON COLON pseudo-selector"
+        "pseudo : COLON COLON pseudo-selector",
     )
     def p_pseudo_colon_colon(self, t):
         # TODO - build AST
@@ -874,7 +867,7 @@ class Parser(object):
     # | pseudo-function
 
     @PRODUCTION(
-        "pseudo-selector : IDENTIFIER"
+        "pseudo-selector : IDENTIFIER",
     )
     def p_pseudo_selector_identifier(self, t):
         # TODO - build AST
@@ -882,7 +875,7 @@ class Parser(object):
     
 
     @PRODUCTION(
-        "pseudo-selector : pseudo-function"
+        "pseudo-selector : pseudo-function",
     )
     def p_pseudo_selector_pseudo_function(self, t):
         # TODO - build AST
@@ -893,7 +886,7 @@ class Parser(object):
     # : FUNCTION space-opt pseudo-expression RPAREN
 
     @PRODUCTION(
-        "pseudo-function : FUNCTION space-opt pseudo-expression RPAREN"
+        "pseudo-function : FUNCTION space-opt pseudo-expression RPAREN",
     )
     def p_pseudo_function(self, t):
         # TODO - build AST
@@ -905,7 +898,7 @@ class Parser(object):
     # | pseudo-term
 
     @PRODUCTION(
-        "pseudo-expression : pseudo-term pseudo-expression"
+        "pseudo-expression : pseudo-term pseudo-expression",
     )
     def p_pseudo_expression_list(self, t):
         # TODO - build AST
@@ -913,7 +906,7 @@ class Parser(object):
     
 
     @PRODUCTION(
-        "pseudo-expression : pseudo-term"
+        "pseudo-expression : pseudo-term",
     )
     def p_pseudo_expression_terminal(self, t):
         # TODO - build AST
@@ -945,7 +938,7 @@ class Parser(object):
     # : NOT_SELECTOR space-opt negation-arg RPAREN
 
     @PRODUCTION(
-        "negation : NOT_SELECTOR space-opt negation-argument RPAREN"
+        "negation : NOT_SELECTOR space-opt negation-argument RPAREN",
     )
     def p_negation(self, t):
         # TODO - build AST
@@ -976,7 +969,7 @@ class Parser(object):
     # | declaration-opt
 
     @PRODUCTION(
-        "declarations : declaration-opt SEMICOLON space-opt declarations"
+        "declarations : declaration-opt SEMICOLON space-opt declarations",
     )
     def p_declarations_list(self, t):
         # TODO - build AST
@@ -984,7 +977,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "declarations : declaration-opt"
+        "declarations : declaration-opt",
     )
     def p_declarations_terminal(self, t):
         # TODO - build AST
@@ -1008,7 +1001,7 @@ class Parser(object):
     # : property COLON space-opt value important-opt
     
     @PRODUCTION(
-        "declaration : property COLON space-opt value important-opt"
+        "declaration : property COLON space-opt value important-opt",
     )
     def p_declaration(self, t):
         # TODO - build AST
@@ -1019,7 +1012,7 @@ class Parser(object):
     # : IDENTIFIER space-opt
     
     @PRODUCTION(
-        "property : IDENTIFIER space-opt"
+        "property : IDENTIFIER space-opt",
     )
     def p_property(self, t):
         # TODO - build AST
@@ -1031,7 +1024,7 @@ class Parser(object):
     # | empty
     
     @PRODUCTION(
-        "important-opt : _before-important important _after-important",
+        "important-opt : _before-flag important _after-flag",
     )
     def p_important_opt_important(self, t):
         # TODO - build AST
@@ -1039,7 +1032,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "important-opt : empty"
+        "important-opt : empty",
     )
     def p_important_opt_empty(self, t):
         # TODO - build AST
@@ -1047,16 +1040,16 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "_before-important :"
+        "_before-flag :",
     )
-    def p_before_important(self, t):
+    def p_before_flag(self, t):
         t.lexer.push_state("flag")
 
 
     @PRODUCTION(
-        "_after-important :"
+        "_after-flag :",
     )
-    def p_after_important(self, t):
+    def p_after_flag(self, t):
         t.lexer.pop_state()
 
 
@@ -1064,7 +1057,7 @@ class Parser(object):
     # : BANG space-opt KEY_IMPORTANT space-opt
     
     @PRODUCTION(
-        "important : BANG space-opt KEY_IMPORTANT space-opt"
+        "important : BANG space-opt KEY_IMPORTANT space-opt",
     )
     def p_important(self, t):
         # TODO - build AST
@@ -1076,7 +1069,7 @@ class Parser(object):
     # | value-term
     
     @PRODUCTION(
-        "value : value-term value-op-opt value"
+        "value : value-term value-op-opt value",
     )
     def p_value_list(self, t):
         # TODO - build AST
@@ -1084,7 +1077,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "value : value-term"
+        "value : value-term",
     )
     def p_value_terminal(self, t):
         # TODO - build AST
@@ -1122,7 +1115,7 @@ class Parser(object):
     # | value-nonnumeric
 
     @PRODUCTION(
-        "value-term : value-unary-op-opt value-numeric"
+        "value-term : value-unary-op-opt value-numeric",
     )
     def p_value_term_numeric(self, t):
         # TODO - build AST
@@ -1130,7 +1123,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "value-term : value-nonnumeric"
+        "value-term : value-nonnumeric",
     )
     def p_value_term_nonnumeric(self, t):
         # TODO - build AST
@@ -1201,7 +1194,7 @@ class Parser(object):
     # : NUMBER space-opt
     
     @PRODUCTION(
-        "value-number : NUMBER space-opt"
+        "value-number : NUMBER space-opt",
     )
     def p_value_number(self, t):
         # TODO - build AST
@@ -1212,7 +1205,7 @@ class Parser(object):
     # : PERCENTAGE space-opt
     
     @PRODUCTION(
-        "value-percentage : PERCENTAGE space-opt"
+        "value-percentage : PERCENTAGE space-opt",
     )
     def p_value_percentage(self, t):
         # TODO - build AST
@@ -1223,7 +1216,7 @@ class Parser(object):
     # : DIMENSION space-opt
     
     @PRODUCTION(
-        "value-dimension : DIMENSION space-opt"
+        "value-dimension : DIMENSION space-opt",
     )
     def p_value_dimension(self, t):
         # TODO - build AST
@@ -1234,7 +1227,7 @@ class Parser(object):
     # : STRING space-opt
     
     @PRODUCTION(
-        "value-string : STRING space-opt"
+        "value-string : STRING space-opt",
     )
     def p_value_string(self, t):
         # TODO - build AST
@@ -1245,7 +1238,7 @@ class Parser(object):
     # : URI space-opt
     
     @PRODUCTION(
-        "value-uri : URI space-opt"
+        "value-uri : URI space-opt",
     )
     def p_value_uri(self, t):
         # TODO - build AST
@@ -1256,7 +1249,7 @@ class Parser(object):
     # : IDENTIFIER space-opt
     
     @PRODUCTION(
-        "value-identifier : IDENTIFIER space-opt"
+        "value-identifier : IDENTIFIER space-opt",
     )
     def p_value_identfier(self, t):
         # TODO - build AST
@@ -1267,7 +1260,7 @@ class Parser(object):
     # : HASH space-opt
 
     @PRODUCTION(
-        "value-hexcolor : HASH space-opt"
+        "value-hexcolor : HASH space-opt",
     )
     def p_value_hexcolor(self, t):
         # TODO - build AST
@@ -1278,7 +1271,7 @@ class Parser(object):
     # : FUNCTION space-opt value RPAREN space-opt
 
     @PRODUCTION(
-        "value-function : FUNCTION space-opt value RPAREN space-opt"
+        "value-function : FUNCTION space-opt value RPAREN space-opt",
     )
     def p_value_function(self, t):
         # TODO - build AST
@@ -1296,7 +1289,7 @@ class Parser(object):
     # | ms-property-hack IDENTIFIER space-opt
     
     @PRODUCTION(
-        "property : ms-property-hack IDENTIFIER space-opt"
+        "property : ms-property-hack IDENTIFIER space-opt",
     )
     def p_property_ms(self, t):
         # TODO - build AST
@@ -1320,7 +1313,7 @@ class Parser(object):
     # | ms-value-hack
     
     @PRODUCTION(
-        "value-term : ms-value-hack"
+        "value-term : ms-value-hack",
     )
     def p_value_term_hack(self, t):
         # TODO - build AST
@@ -1331,7 +1324,7 @@ class Parser(object):
     # : ms-scoped-function ms-function-arguments-opt RPAREN space-opt
     
     @PRODUCTION(
-        "ms-value-hack : ms-scoped-function ms-arguments-opt RPAREN space-opt"
+        "ms-value-hack : ms-scoped-function ms-arguments-opt RPAREN space-opt",
     )
     def p_ms_value_hack(self, t):
         # TODO - build AST
@@ -1353,7 +1346,7 @@ class Parser(object):
     
 
     @PRODUCTION(
-        "ms-scoped-function : IDENTIFIER DOT FUNCTION space-opt"
+        "ms-scoped-function : IDENTIFIER DOT FUNCTION space-opt",
     )
     def p_ms_scoped_function_terminal(self, t):
         # TODO - build AST
@@ -1378,7 +1371,7 @@ class Parser(object):
     # | ms-argument
 
     @PRODUCTION(
-        "ms-arguments : ms-argument COMMA space-opt ms-arguments"
+        "ms-arguments : ms-argument COMMA space-opt ms-arguments",
     )
     def p_ms_arguments_list(self, t):
         # TODO - build AST
@@ -1386,7 +1379,7 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "ms-arguments : ms-argument"
+        "ms-arguments : ms-argument",
     )
     def p_ms_arguments_terminal(self, t):
         # TODO - build AST
@@ -1409,7 +1402,7 @@ class Parser(object):
     # | ms-value-nonnumeric
     
     @PRODUCTION(
-        "ms-value-term : value-unary-op-opt ms-value-numeric"
+        "ms-value-term : value-unary-op-opt ms-value-numeric",
     )
     def p_ms_value_term_numeric(self, t):
         # TODO - build AST
@@ -1417,7 +1410,7 @@ class Parser(object):
     
     
     @PRODUCTION(
-        "ms-value-term : ms-value-nonnumeric"
+        "ms-value-term : ms-value-nonnumeric",
     )
     def p_ms_value_term_nonnumeric(self, t):
         # TODO - build AST
@@ -1427,7 +1420,7 @@ class Parser(object):
     # ms-value-numeric
     # : value-number
     @PRODUCTION(
-        "ms-value-numeric : value-number"
+        "ms-value-numeric : value-number",
     )
     def p_ms_value_numeric(self, t):
         # TODO - build AST
@@ -1437,7 +1430,7 @@ class Parser(object):
     # ms-value-nonnumeric
     # : value-string
     @PRODUCTION(
-        "ms-value-nonnumeric : value-string"
+        "ms-value-nonnumeric : value-string",
     )
     def p_ms_value_nonnumeric(self, t):
         # TODO - build AST
@@ -1454,7 +1447,7 @@ class Parser(object):
     # recover from a bad CSS property declaration right before the semicolon
     # or closing inside of a declarations block
     @PRODUCTION(
-        "declarations : declaration-opt error"
+        "declarations : declaration-opt error",
     )
     def p_declarations_error(self, t):
         pass
