@@ -9,11 +9,13 @@
 
 class Token(object):
     value = None
+    type = None
     line = None
     column = None
     
     def __init__(self, lexer, token):
         self.value = token.value
+        self.type = token.type
         self.line = lexer.line
         self.column = lexer.column
     

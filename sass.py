@@ -7,15 +7,18 @@ Usage: sass.py <css file>
 Temporary usage for development. More coming soon!
 """
 
-def print_usage():
+
+def print_usage(exit = True):
     print usage
-    sys.exit()
+    if exit:
+        sys.exit()
+
 
 def parse(css):
     from lexer import Lexer
     from parser import Parser
     
-    print Parser(Lexer()).parse(css)
+    return Parser(Lexer()).parse(css)
     
     """
     lexer.input(css)
@@ -39,5 +42,5 @@ if __name__ == "__main__":
     css = f.read().decode("utf-8")
     f.close()
     
-    parse(css)
+    print parse(css)
 
