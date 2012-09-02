@@ -249,12 +249,12 @@ class Parser(object):
     
     
     # import-src
-    # : STRING space-opt
-    # | URI space-opt
+    # : value-string
+    # | value-uri
     
     @PRODUCTION(
-        "import-src : STRING space-opt",
-        "           | URI space-opt",
+        "import-src : value-string",
+        "           | value-uri",
     )
     def p_import_src(self, t):
         # TODO - build AST
@@ -285,7 +285,7 @@ class Parser(object):
         # TODO - build AST
         pass
 
-
+    
     @PRODUCTION(
         "media-queries : media-query",
     )
@@ -295,13 +295,13 @@ class Parser(object):
     
     
     # media-query
-    # : _before-mediaquery KEY_ONLY _after-mediaquery space-opt media-query-typed
-    # | _before-mediaquery KEY_NOT _after-mediaquery space-opt media-query-typed
+    # : KEY_ONLY space-opt media-query-typed
+    # | KEY_NOT space-opt media-query-typed
     # | media-query-typed
     # | media-query-expressions
     
     @PRODUCTION(
-        "media-query : _before-mediaquery KEY_ONLY _after-mediaquery space-opt media-query-typed",
+        "media-query : KEY_ONLY space-opt media-query-typed",
     )
     def p_media_query_only(self, t):
         # TODO - build AST
@@ -309,7 +309,7 @@ class Parser(object):
 
     
     @PRODUCTION(
-        "media-query : _before-mediaquery KEY_NOT _after-mediaquery space-opt media-query-typed",
+        "media-query : KEY_NOT space-opt media-query-typed",
     )
     def p_media_query_not(self, t):
         # TODO - build AST
@@ -333,11 +333,11 @@ class Parser(object):
 
 
     # media-query-typed
-    # : media-type _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions
+    # : media-type KEY_AND space-opt media-query-expressions
     # | media-type
     
     @PRODUCTION(
-        "media-query-typed : media-type _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions",
+        "media-query-typed : media-type KEY_AND space-opt media-query-expressions",
     )
     def p_media_query_typed_type_expessions(self, t):
         # TODO - build AST
@@ -364,11 +364,11 @@ class Parser(object):
 
 
     # media-query-expressions
-    # : media-query-expression _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions
+    # : media-query-expression KEY_AND space-opt media-query-expressions
     # | media-query-expression
     
     @PRODUCTION(
-        "media-query-expressions : media-query-expression _before-mediaquery KEY_AND _after-mediaquery space-opt media-query-expressions",
+        "media-query-expressions : media-query-expression KEY_AND space-opt media-query-expressions",
     )
     def p_media_query_expressions_list(self, t):
         # TODO - build AST
@@ -702,7 +702,7 @@ class Parser(object):
     # | attribute
     # | pseudo
     # | negation
-
+    
     @PRODUCTION(
         "selector-rule : hash",
         "              | class",
@@ -714,7 +714,7 @@ class Parser(object):
         # TODO - build AST
         pass
     
-
+    
     # combinator
     # : space-opt combinator-op space-opt
     # : space-opt OP_PLUS space-opt
@@ -750,7 +750,7 @@ class Parser(object):
     def p_combinator_op(self, t):
         # TODO - build AST
         pass
-
+    
     
     # hash
     # : HASH
@@ -998,10 +998,10 @@ class Parser(object):
     
     
     # declaration
-    # : property COLON space-opt value important-opt
+    # : property COLON space-opt value flag-opt
     
     @PRODUCTION(
-        "declaration : property COLON space-opt value important-opt",
+        "declaration : property COLON space-opt value flag-opt",
     )
     def p_declaration(self, t):
         # TODO - build AST
@@ -1019,26 +1019,26 @@ class Parser(object):
         pass
     
     
-    # important-opt
-    # : _before-important important _after-important
+    # flag-opt
+    # : _before-flag flag _after-flag
     # | empty
     
     @PRODUCTION(
-        "important-opt : _before-flag important _after-flag",
+        "flag-opt : _before-flag flag _after-flag",
     )
-    def p_important_opt_important(self, t):
+    def p_flag_opt_flag(self, t):
         # TODO - build AST
         pass
 
 
     @PRODUCTION(
-        "important-opt : empty",
+        "flag-opt : empty",
     )
-    def p_important_opt_empty(self, t):
+    def p_flag_opt_empty(self, t):
         # TODO - build AST
         pass
 
-
+    
     @PRODUCTION(
         "_before-flag :",
     )
@@ -1053,13 +1053,23 @@ class Parser(object):
         t.lexer.pop_state()
 
 
-    # important
-    # : BANG space-opt KEY_IMPORTANT space-opt
+    # flag
+    # : BANG space-opt flag-type
     
     @PRODUCTION(
-        "important : BANG space-opt KEY_IMPORTANT space-opt",
+        "flag : BANG space-opt flag-type",
     )
-    def p_important(self, t):
+    def p_flag(self, t):
+        # TODO - build AST
+        pass
+    
+    
+    # flag-type
+    # : KEY_IMPORTANT space-opt
+    @PRODUCTION(
+        "flag-type : KEY_IMPORTANT space-opt",
+    )
+    def p_flag_type(self, t):
         # TODO - build AST
         pass
     
