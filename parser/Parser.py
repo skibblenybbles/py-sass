@@ -295,13 +295,13 @@ class Parser(object):
     
     
     # media-query
-    # : KEY_ONLY space-opt media-query-typed
-    # | KEY_NOT space-opt media-query-typed
-    # | media-query-typed
-    # | media-query-expressions
+    # : KEY_ONLY space-opt media-typed
+    # | KEY_NOT space-opt media-typed
+    # | media-typed
+    # | media-expressions
     
     @PRODUCTION(
-        "media-query : KEY_ONLY space-opt media-query-typed",
+        "media-query : KEY_ONLY space-opt media-typed",
     )
     def p_media_query_only(self, t):
         # TODO - build AST
@@ -309,7 +309,7 @@ class Parser(object):
 
     
     @PRODUCTION(
-        "media-query : KEY_NOT space-opt media-query-typed",
+        "media-query : KEY_NOT space-opt media-typed",
     )
     def p_media_query_not(self, t):
         # TODO - build AST
@@ -317,7 +317,7 @@ class Parser(object):
 
     
     @PRODUCTION(
-        "media-query : media-query-typed",
+        "media-query : media-typed",
     )
     def p_media_query_typed(self, t):
         # TODO - build AST
@@ -325,29 +325,29 @@ class Parser(object):
 
 
     @PRODUCTION(
-        "media-query : media-query-expressions",
+        "media-query : media-expressions",
     )
     def p_media_query_expressions(self, t):
         # TODO - build AST
         pass
 
 
-    # media-query-typed
-    # : media-type KEY_AND space-opt media-query-expressions
+    # media-typed
+    # : media-type KEY_AND space-opt media-expressions
     # | media-type
     
     @PRODUCTION(
-        "media-query-typed : media-type KEY_AND space-opt media-query-expressions",
+        "media-typed : media-type KEY_AND space-opt media-expressions",
     )
-    def p_media_query_typed_type_expessions(self, t):
+    def p_media_typed_type_expessions(self, t):
         # TODO - build AST
         pass
 
 
     @PRODUCTION(
-        "media-query-typed : media-type",
+        "media-typed : media-type",
     )
-    def p_media_query_typed_type(self, t):
+    def p_media_typed_type(self, t):
         # TODO - build AST
         pass
     
@@ -363,42 +363,42 @@ class Parser(object):
         pass
 
 
-    # media-query-expressions
-    # : media-query-expression KEY_AND space-opt media-query-expressions
-    # | media-query-expression
+    # media-expressions
+    # : media-expression KEY_AND space-opt media-expressions
+    # | media-expression
     
     @PRODUCTION(
-        "media-query-expressions : media-query-expression KEY_AND space-opt media-query-expressions",
+        "media-expressions : media-expression KEY_AND space-opt media-expressions",
     )
-    def p_media_query_expressions_list(self, t):
+    def p_media_expressions_list(self, t):
         # TODO - build AST
         pass
 
 
     @PRODUCTION(
-        "media-query-expressions : media-query-expression",
+        "media-expressions : media-expression",
     )
-    def p_media_query_expressions_terminal(self, t):
+    def p_media_expressions_terminal(self, t):
         # TODO - build AST
         pass
         
     
-    # media-query-expression
+    # media-expression
     # | LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
     # : LPAREN space-opt media-feature RPAREN space-opt
     
     @PRODUCTION(
-        "media-query-expression : LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt",
+        "media-expression : LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt",
     )
-    def p_media_query_expression_feature_value(self, t):
+    def p_media_expression_feature_value(self, t):
         # TODO - build AST
         pass
 
     
     @PRODUCTION(
-        "media-query-expression : LPAREN space-opt media-feature RPAREN space-opt",
+        "media-expression : LPAREN space-opt media-feature RPAREN space-opt",
     )
-    def p_media_query_expression_feature(self, t):
+    def p_media_expression_feature(self, t):
         # TODO - build AST
         pass
 

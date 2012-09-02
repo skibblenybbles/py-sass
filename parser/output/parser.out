@@ -36,17 +36,17 @@ Rule 24    media-queries-opt -> media-queries
 Rule 25    media-queries-opt -> empty
 Rule 26    media-queries -> media-query COMMA space-opt media-queries
 Rule 27    media-queries -> media-query
-Rule 28    media-query -> KEY_ONLY space-opt media-query-typed
-Rule 29    media-query -> KEY_NOT space-opt media-query-typed
-Rule 30    media-query -> media-query-typed
-Rule 31    media-query -> media-query-expressions
-Rule 32    media-query-typed -> media-type KEY_AND space-opt media-query-expressions
-Rule 33    media-query-typed -> media-type
+Rule 28    media-query -> KEY_ONLY space-opt media-typed
+Rule 29    media-query -> KEY_NOT space-opt media-typed
+Rule 30    media-query -> media-typed
+Rule 31    media-query -> media-expressions
+Rule 32    media-typed -> media-type KEY_AND space-opt media-expressions
+Rule 33    media-typed -> media-type
 Rule 34    media-type -> IDENTIFIER space-opt
-Rule 35    media-query-expressions -> media-query-expression KEY_AND space-opt media-query-expressions
-Rule 36    media-query-expressions -> media-query-expression
-Rule 37    media-query-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
-Rule 38    media-query-expression -> LPAREN space-opt media-feature RPAREN space-opt
+Rule 35    media-expressions -> media-expression KEY_AND space-opt media-expressions
+Rule 36    media-expressions -> media-expression
+Rule 37    media-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
+Rule 38    media-expression -> LPAREN space-opt media-feature RPAREN space-opt
 Rule 39    media-feature -> IDENTIFIER space-opt
 Rule 40    styles-opt -> styles
 Rule 41    styles-opt -> empty
@@ -268,14 +268,14 @@ import-src           : 21
 imports              : 17 19
 imports-opt          : 13
 media                : 45
+media-expression     : 35 36
+media-expressions    : 31 32 35
 media-feature        : 37 38
 media-queries        : 24 26 51
 media-queries-opt    : 21
 media-query          : 26 27
-media-query-expression : 35 36
-media-query-expressions : 31 32 35
-media-query-typed    : 28 29 30
 media-type           : 32 33
+media-typed          : 28 29 30
 ms-argument          : 165 166
 ms-arguments         : 163 165
 ms-arguments-opt     : 159
@@ -721,13 +721,13 @@ state 13
     SYM_PAGE        reduce using rule 11 (htmlcomment -> CDO .)
     SYM_MEDIA       reduce using rule 11 (htmlcomment -> CDO .)
     $end            reduce using rule 11 (htmlcomment -> CDO .)
+    KEY_AND         reduce using rule 11 (htmlcomment -> CDO .)
+    LBRACE          reduce using rule 11 (htmlcomment -> CDO .)
     KEY_ONLY        reduce using rule 11 (htmlcomment -> CDO .)
     KEY_NOT         reduce using rule 11 (htmlcomment -> CDO .)
     LPAREN          reduce using rule 11 (htmlcomment -> CDO .)
     KEY_IMPORTANT   reduce using rule 11 (htmlcomment -> CDO .)
-    LBRACE          reduce using rule 11 (htmlcomment -> CDO .)
     OP_EQUALS       reduce using rule 11 (htmlcomment -> CDO .)
-    KEY_AND         reduce using rule 11 (htmlcomment -> CDO .)
     OP_GT           reduce using rule 11 (htmlcomment -> CDO .)
     OP_TILDE        reduce using rule 11 (htmlcomment -> CDO .)
     OP_PREFIXMATCH  reduce using rule 11 (htmlcomment -> CDO .)
@@ -743,6 +743,7 @@ state 14
 
     STRING          reduce using rule 2 (space-opt -> space .)
     URI             reduce using rule 2 (space-opt -> space .)
+    LPAREN          reduce using rule 2 (space-opt -> space .)
     HASH            reduce using rule 2 (space-opt -> space .)
     DOT             reduce using rule 2 (space-opt -> space .)
     LBRACKET        reduce using rule 2 (space-opt -> space .)
@@ -767,10 +768,11 @@ state 14
     KEY_IMPORTANT   reduce using rule 2 (space-opt -> space .)
     KEY_ONLY        reduce using rule 2 (space-opt -> space .)
     KEY_NOT         reduce using rule 2 (space-opt -> space .)
-    LPAREN          reduce using rule 2 (space-opt -> space .)
     SYM_PAGE        reduce using rule 2 (space-opt -> space .)
     SYM_MEDIA       reduce using rule 2 (space-opt -> space .)
     $end            reduce using rule 2 (space-opt -> space .)
+    KEY_AND         reduce using rule 2 (space-opt -> space .)
+    LBRACE          reduce using rule 2 (space-opt -> space .)
     RBRACKET        reduce using rule 2 (space-opt -> space .)
     OP_PREFIXMATCH  reduce using rule 2 (space-opt -> space .)
     OP_SUFFIXMATCH  reduce using rule 2 (space-opt -> space .)
@@ -778,8 +780,6 @@ state 14
     OP_INCLUDES     reduce using rule 2 (space-opt -> space .)
     OP_DASHMATCH    reduce using rule 2 (space-opt -> space .)
     OP_EQUALS       reduce using rule 2 (space-opt -> space .)
-    LBRACE          reduce using rule 2 (space-opt -> space .)
-    KEY_AND         reduce using rule 2 (space-opt -> space .)
     SYM_IMPORT      reduce using rule 2 (space-opt -> space .)
 
 
@@ -843,8 +843,6 @@ state 16
     BLOCKCOMMENT    reduce using rule 9 (whitespace -> SPACE .)
     CDO             reduce using rule 9 (whitespace -> SPACE .)
     CDC             reduce using rule 9 (whitespace -> SPACE .)
-    COLON           reduce using rule 9 (whitespace -> SPACE .)
-    RPAREN          reduce using rule 9 (whitespace -> SPACE .)
     OP_DIV          reduce using rule 9 (whitespace -> SPACE .)
     COMMA           reduce using rule 9 (whitespace -> SPACE .)
     OP_MINUS        reduce using rule 9 (whitespace -> SPACE .)
@@ -861,20 +859,22 @@ state 16
     SEMICOLON       reduce using rule 9 (whitespace -> SPACE .)
     error           reduce using rule 9 (whitespace -> SPACE .)
     RBRACE          reduce using rule 9 (whitespace -> SPACE .)
-    SYM_PAGE        reduce using rule 9 (whitespace -> SPACE .)
-    SYM_MEDIA       reduce using rule 9 (whitespace -> SPACE .)
+    RPAREN          reduce using rule 9 (whitespace -> SPACE .)
+    LPAREN          reduce using rule 9 (whitespace -> SPACE .)
+    OP_MUL          reduce using rule 9 (whitespace -> SPACE .)
+    NAMESPACE_PREFIX reduce using rule 9 (whitespace -> SPACE .)
     DOT             reduce using rule 9 (whitespace -> SPACE .)
     LBRACKET        reduce using rule 9 (whitespace -> SPACE .)
-    NOT_SELECTOR    reduce using rule 9 (whitespace -> SPACE .)
-    NAMESPACE_PREFIX reduce using rule 9 (whitespace -> SPACE .)
-    OP_MUL          reduce using rule 9 (whitespace -> SPACE .)
+    COLON           reduce using rule 9 (whitespace -> SPACE .)
     KEY_ONLY        reduce using rule 9 (whitespace -> SPACE .)
     KEY_NOT         reduce using rule 9 (whitespace -> SPACE .)
-    LPAREN          reduce using rule 9 (whitespace -> SPACE .)
+    NOT_SELECTOR    reduce using rule 9 (whitespace -> SPACE .)
     OP_GT           reduce using rule 9 (whitespace -> SPACE .)
     OP_TILDE        reduce using rule 9 (whitespace -> SPACE .)
     LBRACE          reduce using rule 9 (whitespace -> SPACE .)
     SYM_IMPORT      reduce using rule 9 (whitespace -> SPACE .)
+    SYM_PAGE        reduce using rule 9 (whitespace -> SPACE .)
+    SYM_MEDIA       reduce using rule 9 (whitespace -> SPACE .)
     $end            reduce using rule 9 (whitespace -> SPACE .)
     KEY_AND         reduce using rule 9 (whitespace -> SPACE .)
     OP_PREFIXMATCH  reduce using rule 9 (whitespace -> SPACE .)
@@ -947,9 +947,9 @@ state 18
     KEY_NOT         reduce using rule 5 (space -> space-delimiter .)
     LBRACE          reduce using rule 5 (space -> space-delimiter .)
     KEY_AND         reduce using rule 5 (space -> space-delimiter .)
-    KEY_IMPORTANT   reduce using rule 5 (space -> space-delimiter .)
     OP_GT           reduce using rule 5 (space -> space-delimiter .)
     OP_TILDE        reduce using rule 5 (space -> space-delimiter .)
+    KEY_IMPORTANT   reduce using rule 5 (space -> space-delimiter .)
     SPACE           shift and go to state 16
     BLOCKCOMMENT    shift and go to state 20
     CDO             shift and go to state 13
@@ -997,13 +997,13 @@ state 19
     SYM_PAGE        reduce using rule 12 (htmlcomment -> CDC .)
     SYM_MEDIA       reduce using rule 12 (htmlcomment -> CDC .)
     $end            reduce using rule 12 (htmlcomment -> CDC .)
+    KEY_AND         reduce using rule 12 (htmlcomment -> CDC .)
+    LBRACE          reduce using rule 12 (htmlcomment -> CDC .)
     KEY_ONLY        reduce using rule 12 (htmlcomment -> CDC .)
     KEY_NOT         reduce using rule 12 (htmlcomment -> CDC .)
     LPAREN          reduce using rule 12 (htmlcomment -> CDC .)
     KEY_IMPORTANT   reduce using rule 12 (htmlcomment -> CDC .)
-    LBRACE          reduce using rule 12 (htmlcomment -> CDC .)
     OP_EQUALS       reduce using rule 12 (htmlcomment -> CDC .)
-    KEY_AND         reduce using rule 12 (htmlcomment -> CDC .)
     OP_GT           reduce using rule 12 (htmlcomment -> CDC .)
     OP_TILDE        reduce using rule 12 (htmlcomment -> CDC .)
     OP_PREFIXMATCH  reduce using rule 12 (htmlcomment -> CDC .)
@@ -1047,12 +1047,11 @@ state 20
     error           reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     RBRACE          reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     RPAREN          reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
-    LPAREN          reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
-    KEY_AND         reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     SYM_PAGE        reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     SYM_MEDIA       reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     $end            reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     SYM_IMPORT      reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
+    KEY_AND         reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     OP_PREFIXMATCH  reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     OP_SUFFIXMATCH  reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     OP_SUBSTRINGMATCH reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
@@ -1062,6 +1061,7 @@ state 20
     RBRACKET        reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     KEY_ONLY        reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     KEY_NOT         reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
+    LPAREN          reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
     KEY_IMPORTANT   reduce using rule 10 (blockcomment -> BLOCKCOMMENT .)
 
 
@@ -1071,6 +1071,7 @@ state 21
 
     STRING          reduce using rule 3 (space-opt -> empty .)
     URI             reduce using rule 3 (space-opt -> empty .)
+    LPAREN          reduce using rule 3 (space-opt -> empty .)
     HASH            reduce using rule 3 (space-opt -> empty .)
     DOT             reduce using rule 3 (space-opt -> empty .)
     LBRACKET        reduce using rule 3 (space-opt -> empty .)
@@ -1095,21 +1096,20 @@ state 21
     KEY_IMPORTANT   reduce using rule 3 (space-opt -> empty .)
     KEY_ONLY        reduce using rule 3 (space-opt -> empty .)
     KEY_NOT         reduce using rule 3 (space-opt -> empty .)
-    LPAREN          reduce using rule 3 (space-opt -> empty .)
     SYM_PAGE        reduce using rule 3 (space-opt -> empty .)
     SYM_MEDIA       reduce using rule 3 (space-opt -> empty .)
     $end            reduce using rule 3 (space-opt -> empty .)
+    KEY_AND         reduce using rule 3 (space-opt -> empty .)
+    LBRACE          reduce using rule 3 (space-opt -> empty .)
     RBRACKET        reduce using rule 3 (space-opt -> empty .)
     OP_GT           reduce using rule 3 (space-opt -> empty .)
     OP_TILDE        reduce using rule 3 (space-opt -> empty .)
-    LBRACE          reduce using rule 3 (space-opt -> empty .)
     OP_PREFIXMATCH  reduce using rule 3 (space-opt -> empty .)
     OP_SUFFIXMATCH  reduce using rule 3 (space-opt -> empty .)
     OP_SUBSTRINGMATCH reduce using rule 3 (space-opt -> empty .)
     OP_INCLUDES     reduce using rule 3 (space-opt -> empty .)
     OP_DASHMATCH    reduce using rule 3 (space-opt -> empty .)
     OP_EQUALS       reduce using rule 3 (space-opt -> empty .)
-    KEY_AND         reduce using rule 3 (space-opt -> empty .)
     SYM_IMPORT      reduce using rule 3 (space-opt -> empty .)
 
 
@@ -1470,8 +1470,8 @@ state 33
     NAMESPACE_PREFIX reduce using rule 45 (style -> media .)
     OP_MUL          reduce using rule 45 (style -> media .)
     IDENTIFIER      reduce using rule 45 (style -> media .)
-    $end            reduce using rule 45 (style -> media .)
     RBRACE          reduce using rule 45 (style -> media .)
+    $end            reduce using rule 45 (style -> media .)
 
 
 state 34
@@ -1546,8 +1546,8 @@ state 36
     NAMESPACE_PREFIX reduce using rule 46 (style -> ruleset .)
     OP_MUL          reduce using rule 46 (style -> ruleset .)
     IDENTIFIER      reduce using rule 46 (style -> ruleset .)
-    $end            reduce using rule 46 (style -> ruleset .)
     RBRACE          reduce using rule 46 (style -> ruleset .)
+    $end            reduce using rule 46 (style -> ruleset .)
 
 
 state 37
@@ -1570,8 +1570,8 @@ state 38
     (41) styles-opt -> empty .
     (66) namespace-prefix-opt -> empty .
 
-    RBRACE          reduce using rule 41 (styles-opt -> empty .)
     $end            reduce using rule 41 (styles-opt -> empty .)
+    RBRACE          reduce using rule 41 (styles-opt -> empty .)
     OP_MUL          reduce using rule 66 (namespace-prefix-opt -> empty .)
     IDENTIFIER      reduce using rule 66 (namespace-prefix-opt -> empty .)
 
@@ -1621,8 +1621,8 @@ state 40
 
     (40) styles-opt -> styles .
 
-    RBRACE          reduce using rule 40 (styles-opt -> styles .)
     $end            reduce using rule 40 (styles-opt -> styles .)
+    RBRACE          reduce using rule 40 (styles-opt -> styles .)
 
 
 state 41
@@ -1814,8 +1814,8 @@ state 52
     NAMESPACE_PREFIX reduce using rule 44 (style -> page .)
     OP_MUL          reduce using rule 44 (style -> page .)
     IDENTIFIER      reduce using rule 44 (style -> page .)
-    $end            reduce using rule 44 (style -> page .)
     RBRACE          reduce using rule 44 (style -> page .)
+    $end            reduce using rule 44 (style -> page .)
 
 
 state 53
@@ -1934,9 +1934,9 @@ state 56
     KEY_NOT         reduce using rule 4 (space -> space-delimiter space .)
     LBRACE          reduce using rule 4 (space -> space-delimiter space .)
     KEY_AND         reduce using rule 4 (space -> space-delimiter space .)
-    KEY_IMPORTANT   reduce using rule 4 (space -> space-delimiter space .)
     OP_GT           reduce using rule 4 (space -> space-delimiter space .)
     OP_TILDE        reduce using rule 4 (space -> space-delimiter space .)
+    KEY_IMPORTANT   reduce using rule 4 (space -> space-delimiter space .)
 
 
 state 57
@@ -2046,29 +2046,29 @@ state 62
     (51) media -> SYM_MEDIA space-opt . media-queries LBRACE space-opt styles-opt RBRACE space-opt
     (26) media-queries -> . media-query COMMA space-opt media-queries
     (27) media-queries -> . media-query
-    (28) media-query -> . KEY_ONLY space-opt media-query-typed
-    (29) media-query -> . KEY_NOT space-opt media-query-typed
-    (30) media-query -> . media-query-typed
-    (31) media-query -> . media-query-expressions
-    (32) media-query-typed -> . media-type KEY_AND space-opt media-query-expressions
-    (33) media-query-typed -> . media-type
-    (35) media-query-expressions -> . media-query-expression KEY_AND space-opt media-query-expressions
-    (36) media-query-expressions -> . media-query-expression
+    (28) media-query -> . KEY_ONLY space-opt media-typed
+    (29) media-query -> . KEY_NOT space-opt media-typed
+    (30) media-query -> . media-typed
+    (31) media-query -> . media-expressions
+    (32) media-typed -> . media-type KEY_AND space-opt media-expressions
+    (33) media-typed -> . media-type
+    (35) media-expressions -> . media-expression KEY_AND space-opt media-expressions
+    (36) media-expressions -> . media-expression
     (34) media-type -> . IDENTIFIER space-opt
-    (37) media-query-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> . LPAREN space-opt media-feature RPAREN space-opt
+    (37) media-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
+    (38) media-expression -> . LPAREN space-opt media-feature RPAREN space-opt
 
-    KEY_ONLY        shift and go to state 103
-    KEY_NOT         shift and go to state 102
-    IDENTIFIER      shift and go to state 101
+    KEY_ONLY        shift and go to state 102
+    KEY_NOT         shift and go to state 101
+    IDENTIFIER      shift and go to state 100
     LPAREN          shift and go to state 99
 
     media-query                    shift and go to state 94
     media-queries                  shift and go to state 96
     media-type                     shift and go to state 97
-    media-query-typed              shift and go to state 98
-    media-query-expressions        shift and go to state 100
-    media-query-expression         shift and go to state 95
+    media-typed                    shift and go to state 95
+    media-expressions              shift and go to state 98
+    media-expression               shift and go to state 103
 
 state 63
 
@@ -2270,21 +2270,21 @@ state 72
 
     (97) pseudo -> COLON pseudo-selector .
 
-    SPACE           reduce using rule 97 (pseudo -> COLON pseudo-selector .)
-    BLOCKCOMMENT    reduce using rule 97 (pseudo -> COLON pseudo-selector .)
-    CDO             reduce using rule 97 (pseudo -> COLON pseudo-selector .)
-    CDC             reduce using rule 97 (pseudo -> COLON pseudo-selector .)
-    RPAREN          reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     HASH            reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     DOT             reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     LBRACKET        reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     COLON           reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     NOT_SELECTOR    reduce using rule 97 (pseudo -> COLON pseudo-selector .)
+    SPACE           reduce using rule 97 (pseudo -> COLON pseudo-selector .)
+    BLOCKCOMMENT    reduce using rule 97 (pseudo -> COLON pseudo-selector .)
+    CDO             reduce using rule 97 (pseudo -> COLON pseudo-selector .)
+    CDC             reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     OP_PLUS         reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     OP_GT           reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     OP_TILDE        reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     COMMA           reduce using rule 97 (pseudo -> COLON pseudo-selector .)
     LBRACE          reduce using rule 97 (pseudo -> COLON pseudo-selector .)
+    RPAREN          reduce using rule 97 (pseudo -> COLON pseudo-selector .)
 
 
 state 73
@@ -2589,32 +2589,32 @@ state 84
     (26) media-queries -> . media-query COMMA space-opt media-queries
     (27) media-queries -> . media-query
     (1) empty -> .
-    (28) media-query -> . KEY_ONLY space-opt media-query-typed
-    (29) media-query -> . KEY_NOT space-opt media-query-typed
-    (30) media-query -> . media-query-typed
-    (31) media-query -> . media-query-expressions
-    (32) media-query-typed -> . media-type KEY_AND space-opt media-query-expressions
-    (33) media-query-typed -> . media-type
-    (35) media-query-expressions -> . media-query-expression KEY_AND space-opt media-query-expressions
-    (36) media-query-expressions -> . media-query-expression
+    (28) media-query -> . KEY_ONLY space-opt media-typed
+    (29) media-query -> . KEY_NOT space-opt media-typed
+    (30) media-query -> . media-typed
+    (31) media-query -> . media-expressions
+    (32) media-typed -> . media-type KEY_AND space-opt media-expressions
+    (33) media-typed -> . media-type
+    (35) media-expressions -> . media-expression KEY_AND space-opt media-expressions
+    (36) media-expressions -> . media-expression
     (34) media-type -> . IDENTIFIER space-opt
-    (37) media-query-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> . LPAREN space-opt media-feature RPAREN space-opt
+    (37) media-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
+    (38) media-expression -> . LPAREN space-opt media-feature RPAREN space-opt
 
     SEMICOLON       reduce using rule 1 (empty -> .)
-    KEY_ONLY        shift and go to state 103
-    KEY_NOT         shift and go to state 102
-    IDENTIFIER      shift and go to state 101
+    KEY_ONLY        shift and go to state 102
+    KEY_NOT         shift and go to state 101
+    IDENTIFIER      shift and go to state 100
     LPAREN          shift and go to state 99
 
     media-query                    shift and go to state 94
     media-queries-opt              shift and go to state 119
     media-type                     shift and go to state 97
-    media-query-typed              shift and go to state 98
-    media-query-expressions        shift and go to state 100
-    media-query-expression         shift and go to state 95
+    media-typed                    shift and go to state 95
+    media-expressions              shift and go to state 98
     media-queries                  shift and go to state 120
     empty                          shift and go to state 121
+    media-expression               shift and go to state 103
 
 state 85
 
@@ -2821,46 +2821,44 @@ state 94
 
 state 95
 
-    (35) media-query-expressions -> media-query-expression . KEY_AND space-opt media-query-expressions
-    (36) media-query-expressions -> media-query-expression .
+    (30) media-query -> media-typed .
 
-    KEY_AND         shift and go to state 130
-    COMMA           reduce using rule 36 (media-query-expressions -> media-query-expression .)
-    LBRACE          reduce using rule 36 (media-query-expressions -> media-query-expression .)
-    SEMICOLON       reduce using rule 36 (media-query-expressions -> media-query-expression .)
+    COMMA           reduce using rule 30 (media-query -> media-typed .)
+    LBRACE          reduce using rule 30 (media-query -> media-typed .)
+    SEMICOLON       reduce using rule 30 (media-query -> media-typed .)
 
 
 state 96
 
     (51) media -> SYM_MEDIA space-opt media-queries . LBRACE space-opt styles-opt RBRACE space-opt
 
-    LBRACE          shift and go to state 131
+    LBRACE          shift and go to state 130
 
 
 state 97
 
-    (32) media-query-typed -> media-type . KEY_AND space-opt media-query-expressions
-    (33) media-query-typed -> media-type .
+    (32) media-typed -> media-type . KEY_AND space-opt media-expressions
+    (33) media-typed -> media-type .
 
-    KEY_AND         shift and go to state 132
-    COMMA           reduce using rule 33 (media-query-typed -> media-type .)
-    LBRACE          reduce using rule 33 (media-query-typed -> media-type .)
-    SEMICOLON       reduce using rule 33 (media-query-typed -> media-type .)
+    KEY_AND         shift and go to state 131
+    COMMA           reduce using rule 33 (media-typed -> media-type .)
+    SEMICOLON       reduce using rule 33 (media-typed -> media-type .)
+    LBRACE          reduce using rule 33 (media-typed -> media-type .)
 
 
 state 98
 
-    (30) media-query -> media-query-typed .
+    (31) media-query -> media-expressions .
 
-    COMMA           reduce using rule 30 (media-query -> media-query-typed .)
-    LBRACE          reduce using rule 30 (media-query -> media-query-typed .)
-    SEMICOLON       reduce using rule 30 (media-query -> media-query-typed .)
+    COMMA           reduce using rule 31 (media-query -> media-expressions .)
+    LBRACE          reduce using rule 31 (media-query -> media-expressions .)
+    SEMICOLON       reduce using rule 31 (media-query -> media-expressions .)
 
 
 state 99
 
-    (37) media-query-expression -> LPAREN . space-opt media-feature COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> LPAREN . space-opt media-feature RPAREN space-opt
+    (37) media-expression -> LPAREN . space-opt media-feature COLON space-opt value RPAREN space-opt
+    (38) media-expression -> LPAREN . space-opt media-feature RPAREN space-opt
     (2) space-opt -> . space
     (3) space-opt -> . empty
     (4) space -> . space-delimiter space
@@ -2884,20 +2882,11 @@ state 99
     whitespace                     shift and go to state 22
     space                          shift and go to state 14
     blockcomment                   shift and go to state 15
-    space-opt                      shift and go to state 133
+    space-opt                      shift and go to state 132
     space-delimiter                shift and go to state 18
     empty                          shift and go to state 21
 
 state 100
-
-    (31) media-query -> media-query-expressions .
-
-    COMMA           reduce using rule 31 (media-query -> media-query-expressions .)
-    LBRACE          reduce using rule 31 (media-query -> media-query-expressions .)
-    SEMICOLON       reduce using rule 31 (media-query -> media-query-expressions .)
-
-
-state 101
 
     (34) media-type -> IDENTIFIER . space-opt
     (2) space-opt -> . space
@@ -2926,13 +2915,43 @@ state 101
     whitespace                     shift and go to state 22
     space                          shift and go to state 14
     blockcomment                   shift and go to state 15
+    space-opt                      shift and go to state 133
+    space-delimiter                shift and go to state 18
+    empty                          shift and go to state 21
+
+state 101
+
+    (29) media-query -> KEY_NOT . space-opt media-typed
+    (2) space-opt -> . space
+    (3) space-opt -> . empty
+    (4) space -> . space-delimiter space
+    (5) space -> . space-delimiter
+    (1) empty -> .
+    (6) space-delimiter -> . whitespace
+    (7) space-delimiter -> . blockcomment
+    (8) space-delimiter -> . htmlcomment
+    (9) whitespace -> . SPACE
+    (10) blockcomment -> . BLOCKCOMMENT
+    (11) htmlcomment -> . CDO
+    (12) htmlcomment -> . CDC
+
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 16
+    BLOCKCOMMENT    shift and go to state 20
+    CDO             shift and go to state 13
+    CDC             shift and go to state 19
+
+    htmlcomment                    shift and go to state 12
+    whitespace                     shift and go to state 22
+    space                          shift and go to state 14
+    blockcomment                   shift and go to state 15
     space-opt                      shift and go to state 134
     space-delimiter                shift and go to state 18
     empty                          shift and go to state 21
 
 state 102
 
-    (29) media-query -> KEY_NOT . space-opt media-query-typed
+    (28) media-query -> KEY_ONLY . space-opt media-typed
     (2) space-opt -> . space
     (3) space-opt -> . empty
     (4) space -> . space-delimiter space
@@ -2962,33 +2981,14 @@ state 102
 
 state 103
 
-    (28) media-query -> KEY_ONLY . space-opt media-query-typed
-    (2) space-opt -> . space
-    (3) space-opt -> . empty
-    (4) space -> . space-delimiter space
-    (5) space -> . space-delimiter
-    (1) empty -> .
-    (6) space-delimiter -> . whitespace
-    (7) space-delimiter -> . blockcomment
-    (8) space-delimiter -> . htmlcomment
-    (9) whitespace -> . SPACE
-    (10) blockcomment -> . BLOCKCOMMENT
-    (11) htmlcomment -> . CDO
-    (12) htmlcomment -> . CDC
+    (35) media-expressions -> media-expression . KEY_AND space-opt media-expressions
+    (36) media-expressions -> media-expression .
 
-    IDENTIFIER      reduce using rule 1 (empty -> .)
-    SPACE           shift and go to state 16
-    BLOCKCOMMENT    shift and go to state 20
-    CDO             shift and go to state 13
-    CDC             shift and go to state 19
+    KEY_AND         shift and go to state 136
+    COMMA           reduce using rule 36 (media-expressions -> media-expression .)
+    LBRACE          reduce using rule 36 (media-expressions -> media-expression .)
+    SEMICOLON       reduce using rule 36 (media-expressions -> media-expression .)
 
-    htmlcomment                    shift and go to state 12
-    whitespace                     shift and go to state 22
-    space                          shift and go to state 14
-    blockcomment                   shift and go to state 15
-    space-opt                      shift and go to state 136
-    space-delimiter                shift and go to state 18
-    empty                          shift and go to state 21
 
 state 104
 
@@ -3149,21 +3149,21 @@ state 110
 
     (98) pseudo -> COLON COLON pseudo-selector .
 
-    SPACE           reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
-    BLOCKCOMMENT    reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
-    CDO             reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
-    CDC             reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
-    RPAREN          reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     HASH            reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     DOT             reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     LBRACKET        reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     COLON           reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     NOT_SELECTOR    reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
+    SPACE           reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
+    BLOCKCOMMENT    reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
+    CDO             reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
+    CDC             reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     OP_PLUS         reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     OP_GT           reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     OP_TILDE        reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     COMMA           reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
     LBRACE          reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
+    RPAREN          reduce using rule 98 (pseudo -> COLON COLON pseudo-selector .)
 
 
 state 111
@@ -3477,36 +3477,6 @@ state 129
 
 state 130
 
-    (35) media-query-expressions -> media-query-expression KEY_AND . space-opt media-query-expressions
-    (2) space-opt -> . space
-    (3) space-opt -> . empty
-    (4) space -> . space-delimiter space
-    (5) space -> . space-delimiter
-    (1) empty -> .
-    (6) space-delimiter -> . whitespace
-    (7) space-delimiter -> . blockcomment
-    (8) space-delimiter -> . htmlcomment
-    (9) whitespace -> . SPACE
-    (10) blockcomment -> . BLOCKCOMMENT
-    (11) htmlcomment -> . CDO
-    (12) htmlcomment -> . CDC
-
-    LPAREN          reduce using rule 1 (empty -> .)
-    SPACE           shift and go to state 16
-    BLOCKCOMMENT    shift and go to state 20
-    CDO             shift and go to state 13
-    CDC             shift and go to state 19
-
-    htmlcomment                    shift and go to state 12
-    whitespace                     shift and go to state 22
-    space                          shift and go to state 14
-    blockcomment                   shift and go to state 15
-    space-opt                      shift and go to state 162
-    space-delimiter                shift and go to state 18
-    empty                          shift and go to state 21
-
-state 131
-
     (51) media -> SYM_MEDIA space-opt media-queries LBRACE . space-opt styles-opt RBRACE space-opt
     (2) space-opt -> . space
     (3) space-opt -> . empty
@@ -3540,14 +3510,14 @@ state 131
     htmlcomment                    shift and go to state 12
     whitespace                     shift and go to state 22
     space                          shift and go to state 14
-    space-opt                      shift and go to state 163
+    space-opt                      shift and go to state 162
     space-delimiter                shift and go to state 18
     blockcomment                   shift and go to state 15
     empty                          shift and go to state 21
 
-state 132
+state 131
 
-    (32) media-query-typed -> media-type KEY_AND . space-opt media-query-expressions
+    (32) media-typed -> media-type KEY_AND . space-opt media-expressions
     (2) space-opt -> . space
     (3) space-opt -> . empty
     (4) space -> . space-delimiter space
@@ -3571,21 +3541,21 @@ state 132
     whitespace                     shift and go to state 22
     space                          shift and go to state 14
     blockcomment                   shift and go to state 15
-    space-opt                      shift and go to state 164
+    space-opt                      shift and go to state 163
     space-delimiter                shift and go to state 18
     empty                          shift and go to state 21
 
-state 133
+state 132
 
-    (37) media-query-expression -> LPAREN space-opt . media-feature COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> LPAREN space-opt . media-feature RPAREN space-opt
+    (37) media-expression -> LPAREN space-opt . media-feature COLON space-opt value RPAREN space-opt
+    (38) media-expression -> LPAREN space-opt . media-feature RPAREN space-opt
     (39) media-feature -> . IDENTIFIER space-opt
 
-    IDENTIFIER      shift and go to state 166
+    IDENTIFIER      shift and go to state 165
 
-    media-feature                  shift and go to state 165
+    media-feature                  shift and go to state 164
 
-state 134
+state 133
 
     (34) media-type -> IDENTIFIER space-opt .
 
@@ -3595,29 +3565,59 @@ state 134
     SEMICOLON       reduce using rule 34 (media-type -> IDENTIFIER space-opt .)
 
 
-state 135
+state 134
 
-    (29) media-query -> KEY_NOT space-opt . media-query-typed
-    (32) media-query-typed -> . media-type KEY_AND space-opt media-query-expressions
-    (33) media-query-typed -> . media-type
+    (29) media-query -> KEY_NOT space-opt . media-typed
+    (32) media-typed -> . media-type KEY_AND space-opt media-expressions
+    (33) media-typed -> . media-type
     (34) media-type -> . IDENTIFIER space-opt
 
-    IDENTIFIER      shift and go to state 101
+    IDENTIFIER      shift and go to state 100
 
-    media-query-typed              shift and go to state 167
+    media-typed                    shift and go to state 166
+    media-type                     shift and go to state 97
+
+state 135
+
+    (28) media-query -> KEY_ONLY space-opt . media-typed
+    (32) media-typed -> . media-type KEY_AND space-opt media-expressions
+    (33) media-typed -> . media-type
+    (34) media-type -> . IDENTIFIER space-opt
+
+    IDENTIFIER      shift and go to state 100
+
+    media-typed                    shift and go to state 167
     media-type                     shift and go to state 97
 
 state 136
 
-    (28) media-query -> KEY_ONLY space-opt . media-query-typed
-    (32) media-query-typed -> . media-type KEY_AND space-opt media-query-expressions
-    (33) media-query-typed -> . media-type
-    (34) media-type -> . IDENTIFIER space-opt
+    (35) media-expressions -> media-expression KEY_AND . space-opt media-expressions
+    (2) space-opt -> . space
+    (3) space-opt -> . empty
+    (4) space -> . space-delimiter space
+    (5) space -> . space-delimiter
+    (1) empty -> .
+    (6) space-delimiter -> . whitespace
+    (7) space-delimiter -> . blockcomment
+    (8) space-delimiter -> . htmlcomment
+    (9) whitespace -> . SPACE
+    (10) blockcomment -> . BLOCKCOMMENT
+    (11) htmlcomment -> . CDO
+    (12) htmlcomment -> . CDC
 
-    IDENTIFIER      shift and go to state 101
+    LPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 16
+    BLOCKCOMMENT    shift and go to state 20
+    CDO             shift and go to state 13
+    CDC             shift and go to state 19
 
-    media-query-typed              shift and go to state 168
-    media-type                     shift and go to state 97
+    htmlcomment                    shift and go to state 12
+    whitespace                     shift and go to state 22
+    space                          shift and go to state 14
+    blockcomment                   shift and go to state 15
+    space-opt                      shift and go to state 168
+    space-delimiter                shift and go to state 18
+    empty                          shift and go to state 21
 
 state 137
 
@@ -4139,44 +4139,31 @@ state 161
     (26) media-queries -> media-query COMMA space-opt . media-queries
     (26) media-queries -> . media-query COMMA space-opt media-queries
     (27) media-queries -> . media-query
-    (28) media-query -> . KEY_ONLY space-opt media-query-typed
-    (29) media-query -> . KEY_NOT space-opt media-query-typed
-    (30) media-query -> . media-query-typed
-    (31) media-query -> . media-query-expressions
-    (32) media-query-typed -> . media-type KEY_AND space-opt media-query-expressions
-    (33) media-query-typed -> . media-type
-    (35) media-query-expressions -> . media-query-expression KEY_AND space-opt media-query-expressions
-    (36) media-query-expressions -> . media-query-expression
+    (28) media-query -> . KEY_ONLY space-opt media-typed
+    (29) media-query -> . KEY_NOT space-opt media-typed
+    (30) media-query -> . media-typed
+    (31) media-query -> . media-expressions
+    (32) media-typed -> . media-type KEY_AND space-opt media-expressions
+    (33) media-typed -> . media-type
+    (35) media-expressions -> . media-expression KEY_AND space-opt media-expressions
+    (36) media-expressions -> . media-expression
     (34) media-type -> . IDENTIFIER space-opt
-    (37) media-query-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> . LPAREN space-opt media-feature RPAREN space-opt
+    (37) media-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
+    (38) media-expression -> . LPAREN space-opt media-feature RPAREN space-opt
 
-    KEY_ONLY        shift and go to state 103
-    KEY_NOT         shift and go to state 102
-    IDENTIFIER      shift and go to state 101
+    KEY_ONLY        shift and go to state 102
+    KEY_NOT         shift and go to state 101
+    IDENTIFIER      shift and go to state 100
     LPAREN          shift and go to state 99
 
     media-query                    shift and go to state 94
     media-queries                  shift and go to state 196
     media-type                     shift and go to state 97
-    media-query-typed              shift and go to state 98
-    media-query-expressions        shift and go to state 100
-    media-query-expression         shift and go to state 95
+    media-typed                    shift and go to state 95
+    media-expressions              shift and go to state 98
+    media-expression               shift and go to state 103
 
 state 162
-
-    (35) media-query-expressions -> media-query-expression KEY_AND space-opt . media-query-expressions
-    (35) media-query-expressions -> . media-query-expression KEY_AND space-opt media-query-expressions
-    (36) media-query-expressions -> . media-query-expression
-    (37) media-query-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> . LPAREN space-opt media-feature RPAREN space-opt
-
-    LPAREN          shift and go to state 99
-
-    media-query-expressions        shift and go to state 197
-    media-query-expression         shift and go to state 95
-
-state 163
 
     (51) media -> SYM_MEDIA space-opt media-queries LBRACE space-opt . styles-opt RBRACE space-opt
     (40) styles-opt -> . styles
@@ -4246,35 +4233,35 @@ state 163
     class                          shift and go to state 45
     namespace-prefix-opt           shift and go to state 46
     selector-rules                 shift and go to state 23
-    styles-opt                     shift and go to state 198
+    styles-opt                     shift and go to state 197
     pseudo                         shift and go to state 48
     selectors                      shift and go to state 49
     all-selector                   shift and go to state 50
     page                           shift and go to state 52
 
-state 164
+state 163
 
-    (32) media-query-typed -> media-type KEY_AND space-opt . media-query-expressions
-    (35) media-query-expressions -> . media-query-expression KEY_AND space-opt media-query-expressions
-    (36) media-query-expressions -> . media-query-expression
-    (37) media-query-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> . LPAREN space-opt media-feature RPAREN space-opt
+    (32) media-typed -> media-type KEY_AND space-opt . media-expressions
+    (35) media-expressions -> . media-expression KEY_AND space-opt media-expressions
+    (36) media-expressions -> . media-expression
+    (37) media-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
+    (38) media-expression -> . LPAREN space-opt media-feature RPAREN space-opt
 
     LPAREN          shift and go to state 99
 
-    media-query-expressions        shift and go to state 199
-    media-query-expression         shift and go to state 95
+    media-expressions              shift and go to state 198
+    media-expression               shift and go to state 103
+
+state 164
+
+    (37) media-expression -> LPAREN space-opt media-feature . COLON space-opt value RPAREN space-opt
+    (38) media-expression -> LPAREN space-opt media-feature . RPAREN space-opt
+
+    COLON           shift and go to state 200
+    RPAREN          shift and go to state 199
+
 
 state 165
-
-    (37) media-query-expression -> LPAREN space-opt media-feature . COLON space-opt value RPAREN space-opt
-    (38) media-query-expression -> LPAREN space-opt media-feature . RPAREN space-opt
-
-    COLON           shift and go to state 201
-    RPAREN          shift and go to state 200
-
-
-state 166
 
     (39) media-feature -> IDENTIFIER . space-opt
     (2) space-opt -> . space
@@ -4301,27 +4288,40 @@ state 166
     whitespace                     shift and go to state 22
     space                          shift and go to state 14
     blockcomment                   shift and go to state 15
-    space-opt                      shift and go to state 202
+    space-opt                      shift and go to state 201
     space-delimiter                shift and go to state 18
     empty                          shift and go to state 21
 
+state 166
+
+    (29) media-query -> KEY_NOT space-opt media-typed .
+
+    COMMA           reduce using rule 29 (media-query -> KEY_NOT space-opt media-typed .)
+    LBRACE          reduce using rule 29 (media-query -> KEY_NOT space-opt media-typed .)
+    SEMICOLON       reduce using rule 29 (media-query -> KEY_NOT space-opt media-typed .)
+
+
 state 167
 
-    (29) media-query -> KEY_NOT space-opt media-query-typed .
+    (28) media-query -> KEY_ONLY space-opt media-typed .
 
-    COMMA           reduce using rule 29 (media-query -> KEY_NOT space-opt media-query-typed .)
-    LBRACE          reduce using rule 29 (media-query -> KEY_NOT space-opt media-query-typed .)
-    SEMICOLON       reduce using rule 29 (media-query -> KEY_NOT space-opt media-query-typed .)
+    COMMA           reduce using rule 28 (media-query -> KEY_ONLY space-opt media-typed .)
+    LBRACE          reduce using rule 28 (media-query -> KEY_ONLY space-opt media-typed .)
+    SEMICOLON       reduce using rule 28 (media-query -> KEY_ONLY space-opt media-typed .)
 
 
 state 168
 
-    (28) media-query -> KEY_ONLY space-opt media-query-typed .
+    (35) media-expressions -> media-expression KEY_AND space-opt . media-expressions
+    (35) media-expressions -> . media-expression KEY_AND space-opt media-expressions
+    (36) media-expressions -> . media-expression
+    (37) media-expression -> . LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt
+    (38) media-expression -> . LPAREN space-opt media-feature RPAREN space-opt
 
-    COMMA           reduce using rule 28 (media-query -> KEY_ONLY space-opt media-query-typed .)
-    LBRACE          reduce using rule 28 (media-query -> KEY_ONLY space-opt media-query-typed .)
-    SEMICOLON       reduce using rule 28 (media-query -> KEY_ONLY space-opt media-query-typed .)
+    LPAREN          shift and go to state 99
 
+    media-expressions              shift and go to state 202
+    media-expression               shift and go to state 103
 
 state 169
 
@@ -4867,32 +4867,23 @@ state 196
 
 state 197
 
-    (35) media-query-expressions -> media-query-expression KEY_AND space-opt media-query-expressions .
-
-    COMMA           reduce using rule 35 (media-query-expressions -> media-query-expression KEY_AND space-opt media-query-expressions .)
-    LBRACE          reduce using rule 35 (media-query-expressions -> media-query-expression KEY_AND space-opt media-query-expressions .)
-    SEMICOLON       reduce using rule 35 (media-query-expressions -> media-query-expression KEY_AND space-opt media-query-expressions .)
-
-
-state 198
-
     (51) media -> SYM_MEDIA space-opt media-queries LBRACE space-opt styles-opt . RBRACE space-opt
 
     RBRACE          shift and go to state 218
 
 
+state 198
+
+    (32) media-typed -> media-type KEY_AND space-opt media-expressions .
+
+    COMMA           reduce using rule 32 (media-typed -> media-type KEY_AND space-opt media-expressions .)
+    SEMICOLON       reduce using rule 32 (media-typed -> media-type KEY_AND space-opt media-expressions .)
+    LBRACE          reduce using rule 32 (media-typed -> media-type KEY_AND space-opt media-expressions .)
+
+
 state 199
 
-    (32) media-query-typed -> media-type KEY_AND space-opt media-query-expressions .
-
-    COMMA           reduce using rule 32 (media-query-typed -> media-type KEY_AND space-opt media-query-expressions .)
-    LBRACE          reduce using rule 32 (media-query-typed -> media-type KEY_AND space-opt media-query-expressions .)
-    SEMICOLON       reduce using rule 32 (media-query-typed -> media-type KEY_AND space-opt media-query-expressions .)
-
-
-state 200
-
-    (38) media-query-expression -> LPAREN space-opt media-feature RPAREN . space-opt
+    (38) media-expression -> LPAREN space-opt media-feature RPAREN . space-opt
     (2) space-opt -> . space
     (3) space-opt -> . empty
     (4) space -> . space-delimiter space
@@ -4923,9 +4914,9 @@ state 200
     space-delimiter                shift and go to state 18
     empty                          shift and go to state 21
 
-state 201
+state 200
 
-    (37) media-query-expression -> LPAREN space-opt media-feature COLON . space-opt value RPAREN space-opt
+    (37) media-expression -> LPAREN space-opt media-feature COLON . space-opt value RPAREN space-opt
     (2) space-opt -> . space
     (3) space-opt -> . empty
     (4) space -> . space-delimiter space
@@ -4962,12 +4953,21 @@ state 201
     space-delimiter                shift and go to state 18
     empty                          shift and go to state 21
 
-state 202
+state 201
 
     (39) media-feature -> IDENTIFIER space-opt .
 
     COLON           reduce using rule 39 (media-feature -> IDENTIFIER space-opt .)
     RPAREN          reduce using rule 39 (media-feature -> IDENTIFIER space-opt .)
+
+
+state 202
+
+    (35) media-expressions -> media-expression KEY_AND space-opt media-expressions .
+
+    COMMA           reduce using rule 35 (media-expressions -> media-expression KEY_AND space-opt media-expressions .)
+    LBRACE          reduce using rule 35 (media-expressions -> media-expression KEY_AND space-opt media-expressions .)
+    SEMICOLON       reduce using rule 35 (media-expressions -> media-expression KEY_AND space-opt media-expressions .)
 
 
 state 203
@@ -5261,17 +5261,17 @@ state 218
 
 state 219
 
-    (38) media-query-expression -> LPAREN space-opt media-feature RPAREN space-opt .
+    (38) media-expression -> LPAREN space-opt media-feature RPAREN space-opt .
 
-    KEY_AND         reduce using rule 38 (media-query-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
-    COMMA           reduce using rule 38 (media-query-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
-    LBRACE          reduce using rule 38 (media-query-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
-    SEMICOLON       reduce using rule 38 (media-query-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
+    KEY_AND         reduce using rule 38 (media-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
+    COMMA           reduce using rule 38 (media-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
+    LBRACE          reduce using rule 38 (media-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
+    SEMICOLON       reduce using rule 38 (media-expression -> LPAREN space-opt media-feature RPAREN space-opt .)
 
 
 state 220
 
-    (37) media-query-expression -> LPAREN space-opt media-feature COLON space-opt . value RPAREN space-opt
+    (37) media-expression -> LPAREN space-opt media-feature COLON space-opt . value RPAREN space-opt
     (128) value -> . value-term value-op-opt value
     (129) value -> . value-term
     (134) value-term -> . value-unary-op-opt value-numeric
@@ -5869,7 +5869,7 @@ state 243
 
 state 244
 
-    (37) media-query-expression -> LPAREN space-opt media-feature COLON space-opt value . RPAREN space-opt
+    (37) media-expression -> LPAREN space-opt media-feature COLON space-opt value . RPAREN space-opt
 
     RPAREN          shift and go to state 273
 
@@ -5888,8 +5888,8 @@ state 245
     NAMESPACE_PREFIX reduce using rule 47 (page -> SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt .)
     OP_MUL          reduce using rule 47 (page -> SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt .)
     IDENTIFIER      reduce using rule 47 (page -> SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt .)
-    RBRACE          reduce using rule 47 (page -> SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt .)
     $end            reduce using rule 47 (page -> SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt .)
+    RBRACE          reduce using rule 47 (page -> SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt .)
 
 
 state 246
@@ -6515,7 +6515,7 @@ state 272
 
 state 273
 
-    (37) media-query-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN . space-opt
+    (37) media-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN . space-opt
     (2) space-opt -> . space
     (3) space-opt -> . empty
     (4) space -> . space-delimiter space
@@ -6848,12 +6848,12 @@ state 289
 
 state 290
 
-    (37) media-query-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .
+    (37) media-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .
 
-    KEY_AND         reduce using rule 37 (media-query-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
-    COMMA           reduce using rule 37 (media-query-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
-    LBRACE          reduce using rule 37 (media-query-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
-    SEMICOLON       reduce using rule 37 (media-query-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
+    KEY_AND         reduce using rule 37 (media-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
+    COMMA           reduce using rule 37 (media-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
+    LBRACE          reduce using rule 37 (media-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
+    SEMICOLON       reduce using rule 37 (media-expression -> LPAREN space-opt media-feature COLON space-opt value RPAREN space-opt .)
 
 
 state 291
