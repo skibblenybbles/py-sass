@@ -71,7 +71,6 @@ class Parser(object):
     # empty, whitespace and comment productions
     ###########################################################################
     
-    
     # empty
     # : <empty>
     @PRODUCTION(
@@ -158,9 +157,8 @@ class Parser(object):
 
     
     ###########################################################################
-    # TODO - organize and describe productions
+    # sylesheet structure
     ###########################################################################
-    
     
     # stylesheet
     # : charset-opt imports-opt styles-opt
@@ -184,16 +182,6 @@ class Parser(object):
         pass
     
     
-    # charset:
-    # : SYM_CHARSET STRING space-opt SEMICOLON space-opt
-    @PRODUCTION(
-        "charset : SYM_CHARSET STRING space-opt SEMICOLON space-opt",
-    )
-    def p_charset(self, t):
-        # TODO - build AST
-        pass
-
-    
     # imports-opt
     # : imports
     # | empty
@@ -204,6 +192,37 @@ class Parser(object):
     def p_imports_opt(self, t):
         # TODO - build AST
         pass
+        
+    
+    # styles-opt
+    # : styles
+    # | empty
+    @PRODUCTION(
+        "styles-opt : styles",
+        "           | empty",
+    )
+    def p_styles_opt_styles(self, t):
+        # TODO - build AST
+        pass
+    
+    
+    ###########################################################################
+    # charset
+    ###########################################################################
+    
+    # charset:
+    # : SYM_CHARSET STRING space-opt SEMICOLON space-opt
+    @PRODUCTION(
+        "charset : SYM_CHARSET STRING space-opt SEMICOLON space-opt",
+    )
+    def p_charset(self, t):
+        # TODO - build AST
+        pass
+
+    
+    ###########################################################################
+    # imports
+    ###########################################################################
     
     
     # imports
@@ -242,6 +261,92 @@ class Parser(object):
         "           | value-uri",
     )
     def p_import_src(self, t):
+        # TODO - build AST
+        pass
+    
+    
+    ###########################################################################
+    # styles
+    ###########################################################################
+    
+    # styles
+    # : style styles
+    # : style
+    @PRODUCTION(
+        "styles : style styles",
+    )
+    def p_styles_list(self, t):
+        # TODO - build AST
+        pass
+
+    @PRODUCTION(
+        "styles : style",
+    )
+    def p_styles_terminal(self, t):
+        # TODO - build AST
+        pass
+
+
+    # style
+    # : page
+    # | media
+    # | ruleset
+    @PRODUCTION(
+        "style : page",
+        "      | media",
+        "      | ruleset",
+    )
+    def p_style_page(self, t):
+        # TODO - build AST
+        pass
+    
+    
+    ###########################################################################
+    # page
+    ###########################################################################
+    
+    # page
+    # : SYM_PAGE space-opt pseudo-page LBRACE space-opt declarations RBRACE space-opt
+    @PRODUCTION(
+        "page : SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt",
+    )
+    def p_page(self, t):
+        # TODO - build AST
+        pass
+
+
+    # psuedo-page-opt
+    # : pseudo-page
+    # | empty
+    @PRODUCTION(
+        "pseudo-page-opt : pseudo-page",
+        "                | empty",
+    )
+    def p_pseudo_page_opt(self, t):
+        # TODO - build AST
+        pass
+    
+
+    # pseudo-page
+    # : COLON IDENTIFIER space-opt
+    @PRODUCTION(
+        "pseudo-page : COLON IDENTIFIER space-opt",
+    )
+    def p_pseudo_paget(self, t):
+        # TODO - build AST
+        pass
+    
+    
+    ###########################################################################
+    # media and media queries
+    ###########################################################################
+    
+    # media
+    # : _before-mediaquery SYM_MEDIA space-opt media-queries _after-mediaquery LBRACE space-opt styles-opt RBRACE space-opt
+    @PRODUCTION(
+        "media : _before-mediaquery SYM_MEDIA space-opt media-queries _after-mediaquery LBRACE space-opt styles-opt RBRACE space-opt",
+    )
+    def p_media(self, t):
         # TODO - build AST
         pass
     
@@ -406,105 +511,9 @@ class Parser(object):
         pass
     
     
-    # styles-opt
-    # : styles
-    # | empty
-    @PRODUCTION(
-        "styles-opt : styles",
-        "           | empty",
-    )
-    def p_styles_opt_styles(self, t):
-        # TODO - build AST
-        pass
-    
-
-    # styles
-    # : style styles
-    # : style
-    @PRODUCTION(
-        "styles : style styles",
-    )
-    def p_styles_list(self, t):
-        # TODO - build AST
-        pass
-
-    @PRODUCTION(
-        "styles : style",
-    )
-    def p_styles_terminal(self, t):
-        # TODO - build AST
-        pass
-
-
-    # style
-    # : page
-    # | media
-    # | ruleset
-    @PRODUCTION(
-        "style : page",
-        "      | media",
-        "      | ruleset",
-    )
-    def p_style_page(self, t):
-        # TODO - build AST
-        pass
-    
-    
-    # page
-    # : SYM_PAGE space-opt pseudo-page LBRACE space-opt declarations RBRACE space-opt
-    @PRODUCTION(
-        "page : SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt",
-    )
-    def p_page(self, t):
-        # TODO - build AST
-        pass
-
-
-    # psuedo-page-opt
-    # : pseudo-page
-    # | empty
-    @PRODUCTION(
-        "pseudo-page-opt : pseudo-page",
-        "                | empty",
-    )
-    def p_pseudo_page_opt(self, t):
-        # TODO - build AST
-        pass
-    
-
-    # pseudo-page
-    # : COLON IDENTIFIER space-opt
-    @PRODUCTION(
-        "pseudo-page : COLON IDENTIFIER space-opt",
-    )
-    def p_pseudo_paget(self, t):
-        # TODO - build AST
-        pass
-    
-    
-    # media
-    # : _before-mediaquery SYM_MEDIA space-opt media-queries _after-mediaquery LBRACE space-opt styles-opt RBRACE space-opt
-    @PRODUCTION(
-        "media : _before-mediaquery SYM_MEDIA space-opt media-queries _after-mediaquery LBRACE space-opt styles-opt RBRACE space-opt",
-    )
-    def p_media(self, t):
-        # TODO - build AST
-        pass
-
-
-    @PRODUCTION(
-        "_before-mediaquery :",
-    )
-    def p_before_mediaquery(self, t):
-        t.lexer.push_state("mediaquery")
-
-
-    @PRODUCTION(
-        "_after-mediaquery :",
-    )
-    def p_after_mediaquery(self, t):
-        t.lexer.pop_state()
-
+    ###########################################################################
+    # rulesets and selectors
+    ###########################################################################
     
     # ruleset
     # : selectors LBRACE space-opt declarations RBRACE space-opt
@@ -514,8 +523,8 @@ class Parser(object):
     def p_ruleset(self, t):
         # TODO - build AST
         pass
-
-
+    
+    
     # selectors
     # : selector COMMA space-opt selectors
     # | selector
@@ -913,6 +922,10 @@ class Parser(object):
         pass
     
     
+    ###########################################################################
+    # declarations
+    ###########################################################################
+    
     # declarations
     # : declaration-opt SEMICOLON space-opt declarations
     # | declaration-opt
@@ -973,20 +986,6 @@ class Parser(object):
     def p_flag_opt(self, t):
         # TODO - build AST
         pass
-    
-    
-    @PRODUCTION(
-        "_before-flag :",
-    )
-    def p_before_flag(self, t):
-        t.lexer.push_state("flag")
-
-
-    @PRODUCTION(
-        "_after-flag :",
-    )
-    def p_after_flag(self, t):
-        t.lexer.pop_state()
 
 
     # flag
@@ -1353,6 +1352,35 @@ class Parser(object):
     def p_ms_value_nonnumeric(self, t):
         # TODO - build AST
         pass
+    
+    
+    ###########################################################################
+    # actions
+    ###########################################################################
+    
+    @PRODUCTION(
+        "_before-flag :",
+    )
+    def p_before_flag(self, t):
+        t.lexer.push_state("flag")
+
+    @PRODUCTION(
+        "_after-flag :",
+    )
+    def p_after_flag(self, t):
+        t.lexer.pop_state()
+    
+    @PRODUCTION(
+        "_before-mediaquery :",
+    )
+    def p_before_mediaquery(self, t):
+        t.lexer.push_state("mediaquery")
+    
+    @PRODUCTION(
+        "_after-mediaquery :",
+    )
+    def p_after_mediaquery(self, t):
+        t.lexer.pop_state()
     
     
     ###########################################################################
