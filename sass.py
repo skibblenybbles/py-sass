@@ -17,16 +17,8 @@ def print_usage(exit = True):
 def parse(css):
     from lexer import Lexer
     from parser import SCSSParser
-    
     return SCSSParser(Lexer).parse(css)
     
-    """
-    lexer.input(css)
-    token = lexer.token()
-    while token is not None:
-        print token
-        token = lexer.token()
-    """
 
 if __name__ == "__main__":
     import os, sys

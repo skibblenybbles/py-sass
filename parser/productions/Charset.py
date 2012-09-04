@@ -12,8 +12,8 @@ class Charset(WhitespaceComment):
     # : charset
     # | empty
     @PRODUCTION(
-        "charset-opt : charset",
-        "            | empty",
+        "charset-opt : space-opt charset",
+        "            | space-opt",
     )
     def p_charset_opt(self, t):
         # TODO - build AST

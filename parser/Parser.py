@@ -16,26 +16,28 @@ class Parser(object):
     # the Lexer instance
     lexer = None
     
+    # are we debugging?
+    debug = False
+    
     # the tokens from the Lexer
     tokens = None
     
-    # the PLY yacc instance
-    parser = None
-    
     # the starting symbol
     start = None
+    
+    # the PLY yacc instance
+    parser = None
     
     
     ###########################################################################
     # constructor and overrideable methods
     ###########################################################################
     
-    def __init__(self, Lexer, line = 1, column = 1, debug = True, *args, **kwargs):
-        super(Parser, self).__init__(*args, **kwargs)
+    def __init__(self, Lexer, debug = True, *args, **kwargs):
         
         # instantiate the Lexer
         self.Lexer = Lexer
-        self.lexer = self.Lexer(line = line, column = column)
+        self.lexer = self.Lexer()
         
         # debugging?
         self.debug = debug
@@ -63,6 +65,10 @@ class Parser(object):
             debuglog = logging.getLogger() if debug else None,
             debug = debug,
         )
+        
+        # call the bases
+        super(Parser, self).__init__(*args, **kwargs)
+        
     
     def get_tokens(self):
         return NotImplementedError
@@ -75,7 +81,8 @@ class Parser(object):
     # public api
     ###########################################################################
     
-    def parse(self, input):
+    def parse(self, input, line = None, column = None):
+        self.lexer.set_position(line = line, column = column)
         return self.parser.parse(input, lexer = self.lexer.lexer)
 
     

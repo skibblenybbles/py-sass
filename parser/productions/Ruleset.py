@@ -7,7 +7,7 @@ from ActionSelectors import ActionSelectors
 class Ruleset(Selectors, Declarations, ActionSelectors):
     
     # ruleset
-    # : selectors LBRACE space-opt declarations RBRACE space-opt
+    # : selectors _before-selectors LBRACE space-opt declarations _after-selectors RBRACE space-opt
     @PRODUCTION(
         "ruleset : selectors _before-selectors LBRACE space-opt declarations _after-selectors RBRACE space-opt",
     )

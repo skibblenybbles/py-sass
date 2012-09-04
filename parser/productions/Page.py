@@ -10,7 +10,7 @@ class Page(Declarations, ActionSelectors):
     ###########################################################################
     
     # page
-    # : SYM_PAGE space-opt pseudo-page LBRACE space-opt declarations RBRACE space-opt
+    # : SYM_PAGE space-opt pseudo-page-opt _before-selectors LBRACE space-opt declarations _after-selectors RBRACE space-opt
     @PRODUCTION(
         "page : SYM_PAGE space-opt pseudo-page-opt _before-selectors LBRACE space-opt declarations _after-selectors RBRACE space-opt",
     )

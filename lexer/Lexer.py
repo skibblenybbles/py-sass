@@ -23,15 +23,22 @@ class Lexer(object):
     # constructor
     ###########################################################################
     
-    def __init__(self, line = 1, column = 1, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(Lexer, self).__init__(*args, **kwargs)
-        
-        # store the passed-in line and column
-        self.line = line
-        self.column = column
         
         # create the lexer instance
         self.lexer = lex.lex(module = self, reflags = re.IGNORECASE)
+    
+    
+    ###########################################################################
+    # public api
+    ###########################################################################
+    
+    def set_position(self, line = None, column = None):
+        if line is not None:
+            self.line = line
+        if column is not None:
+            self.column = column
     
     
     ###########################################################################
@@ -83,7 +90,7 @@ class Lexer(object):
 
     # selectors
     partials['selectorchar']        = r'([^{};])'
-    partials['selector']            = r'((' + partials['selectorchar'] + r'|' + partials['inlinecomment'] + r'|' +  partials['blockcomment'] + ')+{)'
+    partials['selectors']           = r'((' + partials['selectorchar'] + r'|' + partials['inlinecomment'] + r'|' +  partials['blockcomment'] + ')+{)'
     
     # number
     partials['number']              = r'([0-9]+|[0-9]*\.[0-9]+)'
@@ -574,7 +581,7 @@ class Lexer(object):
     ###########################################################################
     
     # make sure that whitespace and comments are matched in the
-    # selectors state before the SELECTOR token
+    # selectors state before the SELECTORS token
     t_selectors_ignore_INLINECOMMENT = t_ignore_INLINECOMMENT
     t_selectors_SPACE = t_SPACE
     t_selectors_CDO = t_CDO
@@ -583,12 +590,12 @@ class Lexer(object):
 
     # SELECTOR - matches the start of a nested selector
     # only available in "selector" state
-    tokens += ("SELECTOR",)
+    tokens += ("SELECTORS",)
     
     @lex.TOKEN(
-        partials['selector'],
+        partials['selectors'],
     )
-    def t_selectors_SELECTOR(self, t):
+    def t_selectors_SELECTORS(self, t):
         token = self.create_token(t, True)
         return t
     
