@@ -1,8 +1,8 @@
 from ..utils import PRODUCTION
-from Value import Value
+from WhitespaceComment import WhitespaceComment
 
 
-class Selectors(Value):
+class Selectors(WhitespaceComment):
     
     ###########################################################################
     # selectors
@@ -282,11 +282,11 @@ class Selectors(Value):
     
     
     # attribute-value
-    # : value-identifier
-    # | value-string
+    # : IDENTIFIER space-opt
+    # | STRING space-opt
     @PRODUCTION(
-        "attribute-value : value-identifier",
-        "                | value-string",
+        "attribute-value : IDENTIFIER space-opt",
+        "                | STRING space-opt",
     )
     def p_attribute_value(self, t):
         # TODO - build AST
@@ -360,17 +360,17 @@ class Selectors(Value):
     # pseudo-term
     # : OP_PLUS space-opt
     # | OP_MINUS space-opt
-    # | value-dimension
-    # | value-number
-    # | value-string
-    # | value-identifier
+    # | DIMENSION space-opt
+    # | NUMBER space-opt
+    # | STRING space-opt
+    # | IDENTIFIER space-opt
     @PRODUCTION(
         "pseudo-term : OP_PLUS space-opt",
         "            | OP_MINUS space-opt",
-        "            | value-dimension",
-        "            | value-number",
-        "            | value-string",
-        "            | value-identifier",
+        "            | DIMENSION space-opt",
+        "            | NUMBER space-opt",
+        "            | STRING space-opt",
+        "            | IDENTIFIER space-opt",
     )
     def p_pseudo_term(self, t):
         # TODO - build AST

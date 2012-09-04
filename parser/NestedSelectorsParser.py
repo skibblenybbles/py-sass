@@ -1,8 +1,8 @@
 from Parser import Parser
-from productions import Selectors
+from productions import NestedSelectors
 
 
-class SelectorsParser(Parser, Selectors):
+class NestedSelectorsParser(Parser, NestedSelectors):
     
     ###########################################################################
     # overrideable methods
@@ -12,5 +12,5 @@ class SelectorsParser(Parser, Selectors):
         return self.lexer.selector_tokens
     
     def get_start(self):
-        return "selectors"
+        return "nested-selectors"
     

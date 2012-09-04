@@ -1,3 +1,3 @@
 from Stylesheet import Stylesheet
-from Selectors import Selectors
+from NestedSelectors import NestedSelectors
 from MSHacks import MSHacks
