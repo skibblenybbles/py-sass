@@ -23,8 +23,12 @@ class Lexer(object):
     # constructor
     ###########################################################################
     
-    def __init__(self, *args, **kwargs):
+    def __init__(self, line = 1, column = 1, *args, **kwargs):
         super(Lexer, self).__init__(*args, **kwargs)
+        
+        # store the passed-in line and column
+        self.line = line
+        self.column = column
         
         # create the lexer instance
         self.lexer = lex.lex(module = self, reflags = re.IGNORECASE)

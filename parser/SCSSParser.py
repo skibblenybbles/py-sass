@@ -1,59 +1,25 @@
 import os, logging
 from ply import yacc
+from Parser import Parser
 from utils import PRODUCTION
+
 
 # TODO
 # add support for awful MS expression() function for attributes
 
 
-class SCSSParser(object):
-    
-    ###########################################################################
-    # internal state
-    ###########################################################################
-    
-    # the lexer class to use for tokenizing the input
-    Lexer = None
-    
-    # the Lexer instance
-    lexer = None
-    
-    # the tokens from the Lexer
-    tokens = None
-    
-    # the PLY yacc instance
-    parser = None
+class SCSSParser(Parser):
     
     
     ###########################################################################
-    # constructor
+    # overrideable methods
     ###########################################################################
     
-    def __init__(self, Lexer, *args, **kwargs):
-        super(SCSSParser, self).__init__(*args, **kwargs)
-        
-        # instantiate the Lexer and store its tokens
-        self.Lexer = Lexer
-        self.lexer = self.Lexer()
-        self.tokens = self.lexer.tokens
-        
-        
-        # set up a logging object
-        output_dir = os.path.join(os.path.dirname(__file__), "output/%s" % self.__class__.__name__)
-        logging.basicConfig(
-            level = logging.DEBUG,
-            filename = os.path.join(output_dir, "parser.out"),
-            filemode = "w",
-            format = u"%(message)s",
-        )
-        
-        # create the yacc instance
-        self.parser = yacc.yacc(
-            module = self,
-            outputdir = output_dir,
-            debuglog = logging.getLogger(),
-            debug = True,
-        )
+    def get_tokens(self):
+        return self.lexer.tokens
+    
+    def get_start(self):
+        return "stylesheet"
     
     
     ###########################################################################
@@ -62,13 +28,6 @@ class SCSSParser(object):
     
     def parse(self, input):
         return self.parser.parse(input, lexer = self.lexer.lexer)
-
-    
-    ###########################################################################
-    # starting symbol
-    ###########################################################################
-
-    start = "stylesheet"
     
     
     ###########################################################################
@@ -1430,16 +1389,3 @@ class SCSSParser(object):
         pass
     
     
-    ###########################################################################
-    # unexpected token syntax errors
-    ###########################################################################
-
-    def p_error(self, t):
-        print(u"Syntax error: unexpected token '%s' at Line %d, Column %d" % (
-            t.value.value,
-            t.value.line,
-            t.value.column,
-        ))
-    
-
-
