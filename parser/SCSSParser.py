@@ -6,13 +6,16 @@ from utils import PRODUCTION
 # add support for awful MS expression() function for attributes
 
 
-class Parser(object):
+class SCSSParser(object):
     
     ###########################################################################
     # internal state
     ###########################################################################
     
-    # the Lexer to use for tokenizing the input
+    # the lexer class to use for tokenizing the input
+    Lexer = None
+    
+    # the Lexer instance
     lexer = None
     
     # the tokens from the Lexer
@@ -26,16 +29,17 @@ class Parser(object):
     # constructor
     ###########################################################################
     
-    def __init__(self, lexer, *args, **kwargs):
-        super(Parser, self).__init__(*args, **kwargs)
+    def __init__(self, Lexer, *args, **kwargs):
+        super(SCSSParser, self).__init__(*args, **kwargs)
         
-        # store the lexer and its tokens
-        self.lexer = lexer
-        self.tokens = lexer.tokens
+        # instantiate the Lexer and store its tokens
+        self.Lexer = Lexer
+        self.lexer = self.Lexer()
+        self.tokens = self.lexer.tokens
         
         
         # set up a logging object
-        output_dir = os.path.join(os.path.dirname(__file__), "output")
+        output_dir = os.path.join(os.path.dirname(__file__), "output/%s" % self.__class__.__name__)
         logging.basicConfig(
             level = logging.DEBUG,
             filename = os.path.join(output_dir, "parser.out"),
@@ -308,7 +312,7 @@ class Parser(object):
     # page
     # : SYM_PAGE space-opt pseudo-page LBRACE space-opt declarations RBRACE space-opt
     @PRODUCTION(
-        "page : SYM_PAGE space-opt pseudo-page-opt LBRACE space-opt declarations RBRACE space-opt",
+        "page : SYM_PAGE space-opt pseudo-page-opt _before-declarations LBRACE space-opt declarations _after-declarations RBRACE space-opt",
     )
     def p_page(self, t):
         # TODO - build AST
@@ -518,7 +522,7 @@ class Parser(object):
     # ruleset
     # : selectors LBRACE space-opt declarations RBRACE space-opt
     @PRODUCTION(
-        "ruleset : selectors LBRACE space-opt declarations RBRACE space-opt",
+        "ruleset : selectors _before-declarations LBRACE space-opt declarations _after-declarations RBRACE space-opt",
     )
     def p_ruleset(self, t):
         # TODO - build AST
@@ -609,7 +613,7 @@ class Parser(object):
     def p_all_selector(self, t):
         # TODO - build AST
         pass
-
+    
     
     # namespace-prefix-opt 
     # : namespace-prefix
@@ -631,7 +635,7 @@ class Parser(object):
     def p_namespace_prefix(self, t):
         # TODO - build AST
         pass
-
+    
 
     # element-name
     # : IDENTIFIER
@@ -935,15 +939,43 @@ class Parser(object):
     def p_declarations_list(self, t):
         # TODO - build AST
         pass
-
+        print "declarations_list"
+    
+    
+    @PRODUCTION(
+        "declarations : SELECTOR space-opt declarations RBRACE space-opt declarations",
+    )
+    def p_declarations_ruleset(self, t):
+        # TODO - build AST
+        pass
+        print "declarations_ruleset"
+        print t[1]
+        print '-' * 75
+    
+    
+    @PRODUCTION(
+        "_before-declarations :",
+    )
+    def p_before_declarations(self, t):
+        t.lexer.push_state("selector")
+    
+    
+    @PRODUCTION(
+        "_after-declarations :",
+    )
+    def p_after_declarations(self, t):
+        t.lexer.pop_state()
+     
+    
     @PRODUCTION(
         "declarations : declaration-opt",
     )
     def p_declarations_terminal(self, t):
         # TODO - build AST
         pass
-
-
+        print "declarations_terminal"
+    
+    
     # declaration-opt
     # : declaration
     # | empty
@@ -1212,7 +1244,7 @@ class Parser(object):
     #
     # boo - these are here for compatibility with the SASS parser
     ###########################################################################
-
+    
     # property
     # : IDENTIFIER space-opt (already defined)
     # | ms-property-hack IDENTIFIER space-opt
@@ -1232,7 +1264,6 @@ class Parser(object):
     def p_ms_property_hack(self, t):
         # TODO - build AST
         pass
-
     
     # value-term
     # : value-unary-op-opt value-numeric (already defined)

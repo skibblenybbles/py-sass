@@ -62,6 +62,7 @@ class Lexer(object):
     partials['badstring']           = r'(' + partials['badstringdouble'] + r'|' + partials['badstringsingle'] + r')'
 
     # comments
+    partials['inlinecomment']       = r'((\/\/[^\n\r\f]*)' + partials['newline'] + r')'
     partials['blockcomment']        = r'(\/\*[^*]*\*+([^/*][^*]*\*+)*\/)'
     partials['badcommentstarless']  = r'(\/\*[^*]*\*+([^/*][^*]*\*+)*)'
     partials['badcommentslashless'] = r'(\/\*[^*]*(\*+[^/*][^*]*)*)'
@@ -76,9 +77,13 @@ class Lexer(object):
     # url
     partials['url']                 = r'(([!#$%&*-~]|' + partials['nonascii'] + r'|' + partials['escape'] + r')*)'
 
+    # selectors
+    partials['selectorchar']        = r'([^{};])'
+    partials['selector']            = r'((' + partials['selectorchar'] + r'|' + partials['inlinecomment'] + r'|' +  partials['blockcomment'] + ')+{)'
+    
     # number
     partials['number']              = r'([0-9]+|[0-9]*\.[0-9]+)'
-
+    
     # optional unicode-escaped characters used in keywords
     partials['A']                   = r'(a|\\0{0,4}(41|61)(\r\n|[ \t\r\n\f])?)'
     partials['B']                   = r'(b|\\0{0,4}(42|62)(\r\n|[ \t\r\n\f])?)'
@@ -144,7 +149,7 @@ class Lexer(object):
             # simply update the column counter
             self.column += len(value)
         
-        # return the created token (in t.value)    
+        # return the created token (in t.value)
         return t.value
 
 
@@ -161,6 +166,10 @@ class Lexer(object):
         # flag:
         # adds keyword "important"
         ("flag", "inclusive"),
+        
+        # selector:
+        # adds token for matching a nested selector
+        ("selector", "inclusive"),
     )
     
 
@@ -172,6 +181,18 @@ class Lexer(object):
 
 
     ###########################################################################
+    # ignored tokens
+    ###########################################################################
+    
+    @lex.TOKEN(
+        partials['inlinecomment']
+    )
+    def t_ignore_INLINECOMMENT(self, t):
+        self.create_token(t, True)
+        return None
+
+    
+    ###########################################################################
     # whitespace and comment tokens
     ###########################################################################
 
@@ -179,7 +200,7 @@ class Lexer(object):
     tokens += ("SPACE",)
 
     @lex.TOKEN(
-        partials['space']
+        partials['space'],
     )
     def t_SPACE(self, t):
         self.create_token(t, True)
@@ -190,7 +211,7 @@ class Lexer(object):
     tokens += ("CDO",)
 
     @lex.TOKEN(
-        r'<!--'
+        r'<!--',
     )
     def t_CDO(self, t):
         self.create_token(t, False)
@@ -201,7 +222,7 @@ class Lexer(object):
     tokens += ("CDC",)
 
     @lex.TOKEN(
-        r'-->'
+        r'-->',
     )
     def t_CDC(self, t):
         self.create_token(t, False)
@@ -212,7 +233,7 @@ class Lexer(object):
     tokens += ("BLOCKCOMMENT",)
 
     @lex.TOKEN(
-        partials['blockcomment']
+        partials['blockcomment'],
     )
     def t_BLOCKCOMMENT(self, t):
         self.create_token(t, True)
@@ -223,7 +244,7 @@ class Lexer(object):
     tokens += ("BADCOMMENT",)
 
     @lex.TOKEN(
-        partials['badcomment']
+        partials['badcomment'],
     )
     def t_BADCOMMENT(self, t):
         self.create_token(t, True)
@@ -238,7 +259,7 @@ class Lexer(object):
     tokens += ("NOT_SELECTOR",)
 
     @lex.TOKEN(
-        ':' + ''.join([partials[e] for e in "NOT"]) + r'\('
+        ':' + ''.join([partials[e] for e in "NOT"]) + r'\(',
     )
     def t_NOT_SELECTOR(self, t):
         self.create_token(t, True)
@@ -253,7 +274,7 @@ class Lexer(object):
     tokens += ("SYM_IMPORT",)
 
     @lex.TOKEN(
-        r'@' + ''.join([partials[e] for e in "IMPORT"])
+        r'@' + ''.join([partials[e] for e in "IMPORT"]),
     )
     def t_SYM_IMPORT(self, t):
         token = self.create_token(t, True)
@@ -265,7 +286,7 @@ class Lexer(object):
     tokens += ("SYM_PAGE",)
 
     @lex.TOKEN(
-        r'@' + ''.join([partials[e] for e in "PAGE"])
+        r'@' + ''.join([partials[e] for e in "PAGE"]),
     )
     def t_SYM_PAGE(self, t):
         token = self.create_token(t, True)
@@ -277,7 +298,7 @@ class Lexer(object):
     tokens += ("SYM_MEDIA",)
 
     @lex.TOKEN(
-        r'@' + ''.join([partials[e] for e in "MEDIA"])
+        r'@' + ''.join([partials[e] for e in "MEDIA"]),
     )
     def t_SYM_MEDIA(self, t):
         token = self.create_token(t, True)
@@ -289,7 +310,7 @@ class Lexer(object):
     tokens += ("SYM_CHARSET",)
 
     @lex.TOKEN(
-        r"@charset[ ]"
+        r"@charset[ ]",
     )
     def t_SYM_CHARSET(self, t):
         token = self.create_token(t, False)
@@ -305,7 +326,7 @@ class Lexer(object):
     tokens += ("STRING",)
 
     @lex.TOKEN(
-        partials['string']
+        partials['string'],
     )
     def t_STRING(self, t):
         self.create_token(t, True)
@@ -316,7 +337,7 @@ class Lexer(object):
     tokens += ("BAD_STRING",)
 
     @lex.TOKEN(
-        partials['badstring']
+        partials['badstring'],
     )
     def t_BAD_STRING(self, t):
         self.create_token(t, True)
@@ -327,7 +348,7 @@ class Lexer(object):
     tokens += ("HASH",)
 
     @lex.TOKEN(
-        r'\#(?P<name>' + partials['name'] + ')'
+        r'\#(?P<name>' + partials['name'] + ')',
     )
     def t_HASH(self, t):
         m = self.lexer.lexmatch
@@ -341,7 +362,7 @@ class Lexer(object):
     tokens += ("DIMENSION",)
  
     @lex.TOKEN(
-        r'(?P<number>' + partials['number'] + r')(?P<units>' + partials['identifier'] + r')'
+        r'(?P<number>' + partials['number'] + r')(?P<units>' + partials['identifier'] + r')',
     )
     def t_DIMENSION(self, t):
         m = self.lexer.lexmatch
@@ -363,7 +384,7 @@ class Lexer(object):
     tokens += ("PERCENTAGE",)
 
     @lex.TOKEN(
-        r'(?P<number>' + partials['number'] + r')%'
+        r'(?P<number>' + partials['number'] + r')%',
     )
     def t_PERCENTAGE(self, t):
         m = self.lexer.lexmatch
@@ -384,7 +405,7 @@ class Lexer(object):
     tokens += ("NUMBER",)
 
     @lex.TOKEN(
-        partials['number']
+        partials['number'],
     )
     def t_NUMBER(self, t):
         m = self.lexer.lexmatch
@@ -405,7 +426,7 @@ class Lexer(object):
     tokens += ("URI",)
 
     @lex.TOKEN(
-        r'url\((?P<url>' + partials['string'] + r'|' + partials['url'] + r')\)'
+        r'url\((?P<url>' + partials['string'] + r'|' + partials['url'] + r')\)',
     )
     def t_URI(self, t):
         m = self.lexer.lexmatch
@@ -418,7 +439,7 @@ class Lexer(object):
     tokens += ("BAD_URI",)
 
     @lex.TOKEN(
-        partials['baduri']
+        partials['baduri'],
     )
     def t_BAD_URI(self, t):
         self.create_token(t, False)
@@ -426,14 +447,14 @@ class Lexer(object):
 
 
     ###########################################################################
-    # function, namespace prefix, state-specific keywords and identifier tokens
+    # function, namespace prefix and identifier tokens
     ###########################################################################
 
     # FUNCTION - identifier with following "("
     tokens += ("FUNCTION",)
 
     @lex.TOKEN(
-        r'(?P<identifier>' + partials['identifier'] + ')\('
+        r'(?P<identifier>' + partials['identifier'] + ')\(',
     )
     def t_FUNCTION(self, t):
         m = self.lexer.lexmatch
@@ -444,9 +465,9 @@ class Lexer(object):
 
     # NAMESPACE_PREFIX - optional identifier or "*" with following "|"
     tokens += ("NAMESPACE_PREFIX",)
-
+    
     @lex.TOKEN(
-        r'((?P<identifier>)|(?P<all>\*))?\|'
+        r'((?P<identifier>' + partials['identifier'] + r')|(?P<all>\*))?\|',
     )
     def t_NAMESPACE_PREFIX(self, t):
         m = self.lexer.lexmatch
@@ -454,14 +475,30 @@ class Lexer(object):
         t.identifier = m.group('identifier')
         t.all = m.group('all')
         return t
+    
 
+    # IDENTIFIER - identifier
+    tokens += ("IDENTIFIER",)
 
+    @lex.TOKEN(
+        partials['identifier'],
+    )
+    def t_IDENTIFIER(self, t):
+        self.create_token(t, False)
+        return t
+
+    
+    
+    ###########################################################################
+    # mediaquery state tokens
+    ###########################################################################
+    
     # KEY_ONLY - "only" keyword
     # only available in "mediaquery" state
     tokens += ("KEY_ONLY",)
 
     @lex.TOKEN(
-        r''.join([partials[e] for e in "ONLY"])
+        r''.join([partials[e] for e in "ONLY"]),
     )
     def t_mediaquery_KEY_ONLY(self, t):
         token = self.create_token(t, True)
@@ -474,7 +511,7 @@ class Lexer(object):
     tokens += ("KEY_AND",)
 
     @lex.TOKEN(
-        r''.join([partials[e] for e in "AND"])
+        r''.join([partials[e] for e in "AND"]),
     )
     def t_mediaquery_KEY_AND(self, t):
         token = self.create_token(t, True)
@@ -487,37 +524,54 @@ class Lexer(object):
     tokens += ("KEY_NOT",)
 
     @lex.TOKEN(
-        r''.join([partials[e] for e in "NOT"])
+        r''.join([partials[e] for e in "NOT"]),
     )
     def t_mediaquery_KEY_NOT(self, t):
         token = self.create_token(t, True)
         token.parsed = "not"
         return t
-
-
+    
+    
+    ###########################################################################
+    # flag state tokens
+    ###########################################################################
+    
     # KEY_IMPORTANT - "important" keyword
     # only available in "flag" state
     tokens += ("KEY_IMPORTANT",)
 
     @lex.TOKEN(
-        r''.join([partials[e] for e in "IMPORTANT"])
+        r''.join([partials[e] for e in "IMPORTANT"]),
     )
     def t_flag_KEY_IMPORTANT(self, t):
         token = self.create_token(t, True)
         token.parsed = "important"
         return t
+    
+    
+    ###########################################################################
+    # selector state tokens
+    ###########################################################################
+    
+    # make sure that whitespace and comments are matched in the
+    # selector state before the SELECTOR token
+    t_selector_ignore_INLINECOMMENT = t_ignore_INLINECOMMENT
+    t_selector_SPACE = t_SPACE
+    t_selector_CDO = t_CDO
+    t_selector_CDC = t_CDC
+    t_selector_BLOCKCOMMENT = t_BLOCKCOMMENT
 
-
-    # IDENTIFIER - identifier
-    tokens += ("IDENTIFIER",)
-
+    # SELECTOR - matches the start of a nested selector
+    # only available in "selector" state
+    tokens += ("SELECTOR",)
+    
     @lex.TOKEN(
-        partials['identifier']
+        partials['selector'],
     )
-    def t_IDENTIFIER(self, t):
-        self.create_token(t, False)
+    def t_selector_SELECTOR(self, t):
+        token = self.create_token(t, True)
         return t
-
+    
 
     ###########################################################################
     # simple tokens (operators and grouping delimiters) matched by the lexer

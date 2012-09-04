@@ -16,9 +16,9 @@ def print_usage(exit = True):
 
 def parse(css):
     from lexer import Lexer
-    from parser import Parser
+    from parser import SCSSParser
     
-    return Parser(Lexer()).parse(css)
+    return SCSSParser(Lexer).parse(css)
     
     """
     lexer.input(css)
