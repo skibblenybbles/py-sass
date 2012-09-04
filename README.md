@@ -19,12 +19,14 @@ i.e. `*display: inline`, `filter:progid:Something.Awful.From.Microsoft(param = v
 I've found that the SCSS language is not LALR-parseable. Nested selector rulesets inside of
 style declaration blocks are the culprit. For example, in this code:
 
-`nav {
+<pre><code>
+nav {
     font-size: 1.1em;
     a:hover {
         color: #e22;
     }
-}`
+}
+</code></pre>
 
 an LALR parser cannot decide whether `a:hover` is a property declaration, like the `font-size: 1.1em` line above it,
 or the start of a new selector and ruleset. This is a limitation for LALR parsers, and I would argue that modifying 
