@@ -177,7 +177,11 @@ class Lexer(object):
     # token names matched by the lexer
     ###########################################################################
     
+    # tokens used by the SCSS parser
     tokens = ()
+    
+    # tokens used by the Selector parser
+    selector_tokens = ()
 
 
     ###########################################################################
@@ -198,6 +202,7 @@ class Lexer(object):
 
     # SPACE - whitespace
     tokens += ("SPACE",)
+    selector_tokens += ("SPACE",)
 
     @lex.TOKEN(
         partials['space'],
@@ -209,6 +214,7 @@ class Lexer(object):
 
     # CDO - HTML comment delimiter open: <!--
     tokens += ("CDO",)
+    selector_tokens += ("CDO",)
 
     @lex.TOKEN(
         r'<!--',
@@ -220,6 +226,7 @@ class Lexer(object):
 
     # CDC - HTML comment delimter close: -->
     tokens += ("CDC",)
+    selector_tokens += ("CDC",)
 
     @lex.TOKEN(
         r'-->',
@@ -231,6 +238,7 @@ class Lexer(object):
 
     # BLOCKCOMMENT - block comments: /* ... */
     tokens += ("BLOCKCOMMENT",)
+    selector_tokens += ("BLOCKCOMMENT",)
 
     @lex.TOKEN(
         partials['blockcomment'],
@@ -241,14 +249,14 @@ class Lexer(object):
 
 
     # BADCOMMENT - bad block comment syntax
-    tokens += ("BADCOMMENT",)
-
     @lex.TOKEN(
         partials['badcomment'],
     )
     def t_BADCOMMENT(self, t):
         self.create_token(t, True)
-        return t
+        
+        # TODO: yell about this!
+        return None
 
 
     ###########################################################################
@@ -257,6 +265,7 @@ class Lexer(object):
 
     # NOT_SELECTOR - :not( ... ) psuedo selector
     tokens += ("NOT_SELECTOR",)
+    selector_tokens += ("NOT_SELECTOR",)
 
     @lex.TOKEN(
         ':' + ''.join([partials[e] for e in "NOT"]) + r'\(',
@@ -272,7 +281,7 @@ class Lexer(object):
 
     # SYM_IMPORT - @import
     tokens += ("SYM_IMPORT",)
-
+    
     @lex.TOKEN(
         r'@' + ''.join([partials[e] for e in "IMPORT"]),
     )
@@ -334,18 +343,19 @@ class Lexer(object):
     
 
     # BAD_STRING - bad string syntax
-    tokens += ("BAD_STRING",)
-
     @lex.TOKEN(
         partials['badstring'],
     )
     def t_BAD_STRING(self, t):
         self.create_token(t, True)
-        return t
+        
+        # TODO: yell about this
+        return None
 
 
     # HASH - hash literal: #this-is-a-hash
     tokens += ("HASH",)
+    selector_tokens += ("HASH",)
 
     @lex.TOKEN(
         r'\#(?P<name>' + partials['name'] + ')',
@@ -436,14 +446,14 @@ class Lexer(object):
 
 
     # BAD_URI - bad uri syntax
-    tokens += ("BAD_URI",)
-
     @lex.TOKEN(
         partials['baduri'],
     )
     def t_BAD_URI(self, t):
         self.create_token(t, False)
-        return t
+        # TODO: yell about this
+        
+        return None
 
 
     ###########################################################################
@@ -465,6 +475,7 @@ class Lexer(object):
 
     # NAMESPACE_PREFIX - optional identifier or "*" with following "|"
     tokens += ("NAMESPACE_PREFIX",)
+    selector_tokens += ("NAMESPACE_PREFIX",)
     
     @lex.TOKEN(
         r'((?P<identifier>' + partials['identifier'] + r')|(?P<all>\*))?\|',
@@ -479,6 +490,7 @@ class Lexer(object):
 
     # IDENTIFIER - identifier
     tokens += ("IDENTIFIER",)
+    selector_tokens += ("IDENTIFIER",)
 
     @lex.TOKEN(
         partials['identifier'],
@@ -603,6 +615,25 @@ class Lexer(object):
         ('}', "RBRACE"),
     )
     simple_tokens_xlt = dict(simple_tokens)
+    
+    selector_tokens += (
+        "OP_INCLUDES",
+        "OP_DASHMATCH",
+        "OP_PREFIXMATCH",
+        "OP_SUFFIXMATCH",
+        "OP_SUBSTRINGMATCH",
+        "OP_EQUALS",
+        "OP_PLUS",
+        "OP_MUL",
+        "OP_GT",
+        "OP_TILDE"
+        "COMMA",
+        "DOT",
+        "COLON",
+        "LBRACKET",
+        "RBRACKET",
+        "LBRACE",
+    )
     
     tokens += tuple([b for a, b in simple_tokens])
     

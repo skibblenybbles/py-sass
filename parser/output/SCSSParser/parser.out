@@ -1,11 +1,5 @@
 Created by PLY version 3.4 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    BADCOMMENT
-    BAD_STRING
-    BAD_URI
-
 Grammar
 
 Rule 0     S' -> stylesheet
@@ -191,9 +185,6 @@ Rule 179   declarations -> declaration-opt error
 
 Terminals, with rules where they appear
 
-BADCOMMENT           : 
-BAD_STRING           : 
-BAD_URI              : 
 BANG                 : 129
 BLOCKCOMMENT         : 10
 CDC                  : 12
