@@ -171,9 +171,9 @@ class Lexer(object):
         # adds keyword "important"
         ("flag", "inclusive"),
         
-        # selector:
+        # selectors:
         # adds token for matching a nested selector
-        ("selector", "inclusive"),
+        ("selectors", "inclusive"),
     )
     
 
@@ -337,6 +337,7 @@ class Lexer(object):
 
     # STRING - single or double quote string
     tokens += ("STRING",)
+    selector_tokens += ("STRING",)
 
     @lex.TOKEN(
         partials['string'],
@@ -374,6 +375,7 @@ class Lexer(object):
     # DIMENSION - number with arbitrary units
     # hybrid of CSS 2.1 and CSS 3 specs
     tokens += ("DIMENSION",)
+    selector_tokens += ("DIMENSION",)
  
     @lex.TOKEN(
         r'(?P<number>' + partials['number'] + r')(?P<units>' + partials['identifier'] + r')',
@@ -417,6 +419,7 @@ class Lexer(object):
 
     # NUMBER - number
     tokens += ("NUMBER",)
+    selector_tokens += ("NUMBER",)
 
     @lex.TOKEN(
         partials['number'],
@@ -466,6 +469,7 @@ class Lexer(object):
 
     # FUNCTION - identifier with following "("
     tokens += ("FUNCTION",)
+    selector_tokens += ("FUNCTION",)
 
     @lex.TOKEN(
         r'(?P<identifier>' + partials['identifier'] + ')\(',
@@ -570,12 +574,12 @@ class Lexer(object):
     ###########################################################################
     
     # make sure that whitespace and comments are matched in the
-    # selector state before the SELECTOR token
-    t_selector_ignore_INLINECOMMENT = t_ignore_INLINECOMMENT
-    t_selector_SPACE = t_SPACE
-    t_selector_CDO = t_CDO
-    t_selector_CDC = t_CDC
-    t_selector_BLOCKCOMMENT = t_BLOCKCOMMENT
+    # selectors state before the SELECTOR token
+    t_selectors_ignore_INLINECOMMENT = t_ignore_INLINECOMMENT
+    t_selectors_SPACE = t_SPACE
+    t_selectors_CDO = t_CDO
+    t_selectors_CDC = t_CDC
+    t_selectors_BLOCKCOMMENT = t_BLOCKCOMMENT
 
     # SELECTOR - matches the start of a nested selector
     # only available in "selector" state
@@ -584,7 +588,7 @@ class Lexer(object):
     @lex.TOKEN(
         partials['selector'],
     )
-    def t_selector_SELECTOR(self, t):
+    def t_selectors_SELECTOR(self, t):
         token = self.create_token(t, True)
         return t
     
@@ -627,13 +631,15 @@ class Lexer(object):
         "OP_SUFFIXMATCH",
         "OP_SUBSTRINGMATCH",
         "OP_EQUALS",
+        "OP_MINUS",
         "OP_PLUS",
         "OP_MUL",
         "OP_GT",
-        "OP_TILDE"
+        "OP_TILDE",
         "COMMA",
         "DOT",
         "COLON",
+        "RPAREN",
         "LBRACKET",
         "RBRACKET",
         "LBRACE",

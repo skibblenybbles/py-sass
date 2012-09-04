@@ -1,0 +1,2762 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    LBRACE
+
+Grammar
+
+Rule 0     S' -> selectors
+Rule 1     empty -> <empty>
+Rule 2     selectors -> selector COMMA space-opt selectors
+Rule 3     space-opt -> space
+Rule 4     space-opt -> empty
+Rule 5     selectors -> selector
+Rule 6     space -> space-delimiter space
+Rule 7     selector -> simple-selector combinator selector
+Rule 8     space -> space-delimiter
+Rule 9     selector -> simple-selector space-opt
+Rule 10    space-delimiter -> whitespace
+Rule 11    space-delimiter -> blockcomment
+Rule 12    space-delimiter -> htmlcomment
+Rule 13    simple-selector -> type-selector selector-rules-opt
+Rule 14    simple-selector -> selector-rules
+Rule 15    whitespace -> SPACE
+Rule 16    blockcomment -> BLOCKCOMMENT
+Rule 17    type-selector -> element-selector
+Rule 18    type-selector -> all-selector
+Rule 19    htmlcomment -> CDO
+Rule 20    htmlcomment -> CDC
+Rule 21    element-selector -> namespace-prefix-opt element-name
+Rule 22    all-selector -> namespace-prefix-opt OP_MUL
+Rule 23    namespace-prefix-opt -> namespace-prefix
+Rule 24    namespace-prefix-opt -> empty
+Rule 25    namespace-prefix -> NAMESPACE_PREFIX
+Rule 26    element-name -> IDENTIFIER
+Rule 27    selector-rules-opt -> selector-rules
+Rule 28    selector-rules-opt -> empty
+Rule 29    selector-rules -> selector-rule selector-rules
+Rule 30    selector-rules -> selector-rule
+Rule 31    selector-rule -> hash
+Rule 32    selector-rule -> class
+Rule 33    selector-rule -> attribute
+Rule 34    selector-rule -> pseudo
+Rule 35    selector-rule -> negation
+Rule 36    combinator -> space-opt combinator-op
+Rule 37    combinator -> space
+Rule 38    combinator-op -> OP_PLUS space-opt
+Rule 39    combinator-op -> OP_GT space-opt
+Rule 40    combinator-op -> OP_TILDE space-opt
+Rule 41    hash -> HASH
+Rule 42    class -> DOT IDENTIFIER
+Rule 43    attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+Rule 44    attribute-match-opt -> attribute-match
+Rule 45    attribute-match-opt -> empty
+Rule 46    attribute-match -> attribute-op attribute-value
+Rule 47    attribute-op -> OP_PREFIXMATCH space-opt
+Rule 48    attribute-op -> OP_SUFFIXMATCH space-opt
+Rule 49    attribute-op -> OP_SUBSTRINGMATCH space-opt
+Rule 50    attribute-op -> OP_INCLUDES space-opt
+Rule 51    attribute-op -> OP_DASHMATCH space-opt
+Rule 52    attribute-op -> OP_EQUALS space-opt
+Rule 53    attribute-value -> IDENTIFIER space-opt
+Rule 54    attribute-value -> STRING space-opt
+Rule 55    pseudo -> COLON pseudo-selector
+Rule 56    pseudo -> COLON COLON pseudo-selector
+Rule 57    pseudo-selector -> IDENTIFIER
+Rule 58    pseudo-selector -> pseudo-function
+Rule 59    pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN
+Rule 60    pseudo-expression -> pseudo-term pseudo-expression
+Rule 61    pseudo-expression -> pseudo-term
+Rule 62    pseudo-term -> OP_PLUS space-opt
+Rule 63    pseudo-term -> OP_MINUS space-opt
+Rule 64    pseudo-term -> DIMENSION space-opt
+Rule 65    pseudo-term -> NUMBER space-opt
+Rule 66    pseudo-term -> STRING space-opt
+Rule 67    pseudo-term -> IDENTIFIER space-opt
+Rule 68    negation -> NOT_SELECTOR space-opt negation-argument RPAREN
+Rule 69    negation-argument -> type-selector space-opt
+Rule 70    negation-argument -> hash space-opt
+Rule 71    negation-argument -> class space-opt
+Rule 72    negation-argument -> attribute space-opt
+Rule 73    negation-argument -> pseudo space-opt
+
+Terminals, with rules where they appear
+
+BLOCKCOMMENT         : 16
+CDC                  : 20
+CDO                  : 19
+COLON                : 55 56 56
+COMMA                : 2
+DIMENSION            : 64
+DOT                  : 42
+FUNCTION             : 59
+HASH                 : 41
+IDENTIFIER           : 26 42 43 53 57 67
+LBRACE               : 
+LBRACKET             : 43
+NAMESPACE_PREFIX     : 25
+NOT_SELECTOR         : 68
+NUMBER               : 65
+OP_DASHMATCH         : 51
+OP_EQUALS            : 52
+OP_GT                : 39
+OP_INCLUDES          : 50
+OP_MINUS             : 63
+OP_MUL               : 22
+OP_PLUS              : 38 62
+OP_PREFIXMATCH       : 47
+OP_SUBSTRINGMATCH    : 49
+OP_SUFFIXMATCH       : 48
+OP_TILDE             : 40
+RBRACKET             : 43
+RPAREN               : 59 68
+SPACE                : 15
+STRING               : 54 66
+error                : 
+
+Nonterminals, with rules where they appear
+
+all-selector         : 18
+attribute            : 33 72
+attribute-match      : 44
+attribute-match-opt  : 43
+attribute-op         : 46
+attribute-value      : 46
+blockcomment         : 11
+class                : 32 71
+combinator           : 7
+combinator-op        : 36
+element-name         : 21
+element-selector     : 17
+empty                : 4 24 28 45
+hash                 : 31 70
+htmlcomment          : 12
+namespace-prefix     : 23
+namespace-prefix-opt : 21 22 43
+negation             : 35
+negation-argument    : 68
+pseudo               : 34 73
+pseudo-expression    : 59 60
+pseudo-function      : 58
+pseudo-selector      : 55 56
+pseudo-term          : 60 61
+selector             : 2 5 7
+selector-rule        : 29 30
+selector-rules       : 14 27 29
+selector-rules-opt   : 13
+selectors            : 2 0
+simple-selector      : 7 9
+space                : 3 6 37
+space-delimiter      : 6 8
+space-opt            : 2 9 36 38 39 40 43 43 47 48 49 50 51 52 53 54 59 62 63 64 65 66 67 68 69 70 71 72 73
+type-selector        : 13 69
+whitespace           : 10
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . selectors
+    (2) selectors -> . selector COMMA space-opt selectors
+    (5) selectors -> . selector
+    (7) selector -> . simple-selector combinator selector
+    (9) selector -> . simple-selector space-opt
+    (13) simple-selector -> . type-selector selector-rules-opt
+    (14) simple-selector -> . selector-rules
+    (17) type-selector -> . element-selector
+    (18) type-selector -> . all-selector
+    (29) selector-rules -> . selector-rule selector-rules
+    (30) selector-rules -> . selector-rule
+    (21) element-selector -> . namespace-prefix-opt element-name
+    (22) all-selector -> . namespace-prefix-opt OP_MUL
+    (31) selector-rule -> . hash
+    (32) selector-rule -> . class
+    (33) selector-rule -> . attribute
+    (34) selector-rule -> . pseudo
+    (35) selector-rule -> . negation
+    (23) namespace-prefix-opt -> . namespace-prefix
+    (24) namespace-prefix-opt -> . empty
+    (41) hash -> . HASH
+    (42) class -> . DOT IDENTIFIER
+    (43) attribute -> . LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (55) pseudo -> . COLON pseudo-selector
+    (56) pseudo -> . COLON COLON pseudo-selector
+    (68) negation -> . NOT_SELECTOR space-opt negation-argument RPAREN
+    (25) namespace-prefix -> . NAMESPACE_PREFIX
+    (1) empty -> .
+
+    HASH            shift and go to state 5
+    DOT             shift and go to state 6
+    LBRACKET        shift and go to state 4
+    COLON           shift and go to state 11
+    NOT_SELECTOR    shift and go to state 21
+    NAMESPACE_PREFIX shift and go to state 22
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+
+    attribute                      shift and go to state 1
+    namespace-prefix               shift and go to state 2
+    type-selector                  shift and go to state 3
+    element-selector               shift and go to state 7
+    all-selector                   shift and go to state 8
+    simple-selector                shift and go to state 9
+    negation                       shift and go to state 10
+    empty                          shift and go to state 12
+    selector-rule                  shift and go to state 13
+    hash                           shift and go to state 14
+    selector                       shift and go to state 15
+    class                          shift and go to state 16
+    namespace-prefix-opt           shift and go to state 17
+    selector-rules                 shift and go to state 18
+    pseudo                         shift and go to state 19
+    selectors                      shift and go to state 20
+
+state 1
+
+    (33) selector-rule -> attribute .
+
+    HASH            reduce using rule 33 (selector-rule -> attribute .)
+    DOT             reduce using rule 33 (selector-rule -> attribute .)
+    LBRACKET        reduce using rule 33 (selector-rule -> attribute .)
+    COLON           reduce using rule 33 (selector-rule -> attribute .)
+    NOT_SELECTOR    reduce using rule 33 (selector-rule -> attribute .)
+    SPACE           reduce using rule 33 (selector-rule -> attribute .)
+    BLOCKCOMMENT    reduce using rule 33 (selector-rule -> attribute .)
+    CDO             reduce using rule 33 (selector-rule -> attribute .)
+    CDC             reduce using rule 33 (selector-rule -> attribute .)
+    OP_PLUS         reduce using rule 33 (selector-rule -> attribute .)
+    OP_GT           reduce using rule 33 (selector-rule -> attribute .)
+    OP_TILDE        reduce using rule 33 (selector-rule -> attribute .)
+    COMMA           reduce using rule 33 (selector-rule -> attribute .)
+    $end            reduce using rule 33 (selector-rule -> attribute .)
+
+
+state 2
+
+    (23) namespace-prefix-opt -> namespace-prefix .
+
+    IDENTIFIER      reduce using rule 23 (namespace-prefix-opt -> namespace-prefix .)
+    OP_MUL          reduce using rule 23 (namespace-prefix-opt -> namespace-prefix .)
+
+
+state 3
+
+    (13) simple-selector -> type-selector . selector-rules-opt
+    (27) selector-rules-opt -> . selector-rules
+    (28) selector-rules-opt -> . empty
+    (29) selector-rules -> . selector-rule selector-rules
+    (30) selector-rules -> . selector-rule
+    (1) empty -> .
+    (31) selector-rule -> . hash
+    (32) selector-rule -> . class
+    (33) selector-rule -> . attribute
+    (34) selector-rule -> . pseudo
+    (35) selector-rule -> . negation
+    (41) hash -> . HASH
+    (42) class -> . DOT IDENTIFIER
+    (43) attribute -> . LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (55) pseudo -> . COLON pseudo-selector
+    (56) pseudo -> . COLON COLON pseudo-selector
+    (68) negation -> . NOT_SELECTOR space-opt negation-argument RPAREN
+
+    SPACE           reduce using rule 1 (empty -> .)
+    BLOCKCOMMENT    reduce using rule 1 (empty -> .)
+    CDO             reduce using rule 1 (empty -> .)
+    CDC             reduce using rule 1 (empty -> .)
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_GT           reduce using rule 1 (empty -> .)
+    OP_TILDE        reduce using rule 1 (empty -> .)
+    COMMA           reduce using rule 1 (empty -> .)
+    $end            reduce using rule 1 (empty -> .)
+    HASH            shift and go to state 5
+    DOT             shift and go to state 6
+    LBRACKET        shift and go to state 4
+    COLON           shift and go to state 11
+    NOT_SELECTOR    shift and go to state 21
+
+    hash                           shift and go to state 14
+    selector-rules-opt             shift and go to state 24
+    attribute                      shift and go to state 1
+    selector-rules                 shift and go to state 25
+    pseudo                         shift and go to state 19
+    negation                       shift and go to state 10
+    class                          shift and go to state 16
+    empty                          shift and go to state 23
+    selector-rule                  shift and go to state 13
+
+state 4
+
+    (43) attribute -> LBRACKET . space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    NAMESPACE_PREFIX reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    space-opt                      shift and go to state 32
+    space-delimiter                shift and go to state 33
+    blockcomment                   shift and go to state 35
+    empty                          shift and go to state 36
+
+state 5
+
+    (41) hash -> HASH .
+
+    HASH            reduce using rule 41 (hash -> HASH .)
+    DOT             reduce using rule 41 (hash -> HASH .)
+    LBRACKET        reduce using rule 41 (hash -> HASH .)
+    COLON           reduce using rule 41 (hash -> HASH .)
+    NOT_SELECTOR    reduce using rule 41 (hash -> HASH .)
+    SPACE           reduce using rule 41 (hash -> HASH .)
+    BLOCKCOMMENT    reduce using rule 41 (hash -> HASH .)
+    CDO             reduce using rule 41 (hash -> HASH .)
+    CDC             reduce using rule 41 (hash -> HASH .)
+    OP_PLUS         reduce using rule 41 (hash -> HASH .)
+    OP_GT           reduce using rule 41 (hash -> HASH .)
+    OP_TILDE        reduce using rule 41 (hash -> HASH .)
+    COMMA           reduce using rule 41 (hash -> HASH .)
+    $end            reduce using rule 41 (hash -> HASH .)
+    RPAREN          reduce using rule 41 (hash -> HASH .)
+
+
+state 6
+
+    (42) class -> DOT . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 37
+
+
+state 7
+
+    (17) type-selector -> element-selector .
+
+    HASH            reduce using rule 17 (type-selector -> element-selector .)
+    DOT             reduce using rule 17 (type-selector -> element-selector .)
+    LBRACKET        reduce using rule 17 (type-selector -> element-selector .)
+    COLON           reduce using rule 17 (type-selector -> element-selector .)
+    NOT_SELECTOR    reduce using rule 17 (type-selector -> element-selector .)
+    SPACE           reduce using rule 17 (type-selector -> element-selector .)
+    BLOCKCOMMENT    reduce using rule 17 (type-selector -> element-selector .)
+    CDO             reduce using rule 17 (type-selector -> element-selector .)
+    CDC             reduce using rule 17 (type-selector -> element-selector .)
+    OP_PLUS         reduce using rule 17 (type-selector -> element-selector .)
+    OP_GT           reduce using rule 17 (type-selector -> element-selector .)
+    OP_TILDE        reduce using rule 17 (type-selector -> element-selector .)
+    COMMA           reduce using rule 17 (type-selector -> element-selector .)
+    $end            reduce using rule 17 (type-selector -> element-selector .)
+    RPAREN          reduce using rule 17 (type-selector -> element-selector .)
+
+
+state 8
+
+    (18) type-selector -> all-selector .
+
+    HASH            reduce using rule 18 (type-selector -> all-selector .)
+    DOT             reduce using rule 18 (type-selector -> all-selector .)
+    LBRACKET        reduce using rule 18 (type-selector -> all-selector .)
+    COLON           reduce using rule 18 (type-selector -> all-selector .)
+    NOT_SELECTOR    reduce using rule 18 (type-selector -> all-selector .)
+    SPACE           reduce using rule 18 (type-selector -> all-selector .)
+    BLOCKCOMMENT    reduce using rule 18 (type-selector -> all-selector .)
+    CDO             reduce using rule 18 (type-selector -> all-selector .)
+    CDC             reduce using rule 18 (type-selector -> all-selector .)
+    OP_PLUS         reduce using rule 18 (type-selector -> all-selector .)
+    OP_GT           reduce using rule 18 (type-selector -> all-selector .)
+    OP_TILDE        reduce using rule 18 (type-selector -> all-selector .)
+    COMMA           reduce using rule 18 (type-selector -> all-selector .)
+    $end            reduce using rule 18 (type-selector -> all-selector .)
+    RPAREN          reduce using rule 18 (type-selector -> all-selector .)
+
+
+state 9
+
+    (7) selector -> simple-selector . combinator selector
+    (9) selector -> simple-selector . space-opt
+    (36) combinator -> . space-opt combinator-op
+    (37) combinator -> . space
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_GT           reduce using rule 1 (empty -> .)
+    OP_TILDE        reduce using rule 1 (empty -> .)
+    COMMA           reduce using rule 1 (empty -> .)
+    $end            reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 38
+    blockcomment                   shift and go to state 35
+    combinator                     shift and go to state 39
+    space-opt                      shift and go to state 40
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 10
+
+    (35) selector-rule -> negation .
+
+    HASH            reduce using rule 35 (selector-rule -> negation .)
+    DOT             reduce using rule 35 (selector-rule -> negation .)
+    LBRACKET        reduce using rule 35 (selector-rule -> negation .)
+    COLON           reduce using rule 35 (selector-rule -> negation .)
+    NOT_SELECTOR    reduce using rule 35 (selector-rule -> negation .)
+    SPACE           reduce using rule 35 (selector-rule -> negation .)
+    BLOCKCOMMENT    reduce using rule 35 (selector-rule -> negation .)
+    CDO             reduce using rule 35 (selector-rule -> negation .)
+    CDC             reduce using rule 35 (selector-rule -> negation .)
+    OP_PLUS         reduce using rule 35 (selector-rule -> negation .)
+    OP_GT           reduce using rule 35 (selector-rule -> negation .)
+    OP_TILDE        reduce using rule 35 (selector-rule -> negation .)
+    COMMA           reduce using rule 35 (selector-rule -> negation .)
+    $end            reduce using rule 35 (selector-rule -> negation .)
+
+
+state 11
+
+    (55) pseudo -> COLON . pseudo-selector
+    (56) pseudo -> COLON . COLON pseudo-selector
+    (57) pseudo-selector -> . IDENTIFIER
+    (58) pseudo-selector -> . pseudo-function
+    (59) pseudo-function -> . FUNCTION space-opt pseudo-expression RPAREN
+
+    COLON           shift and go to state 43
+    IDENTIFIER      shift and go to state 45
+    FUNCTION        shift and go to state 42
+
+    pseudo-function                shift and go to state 41
+    pseudo-selector                shift and go to state 44
+
+state 12
+
+    (24) namespace-prefix-opt -> empty .
+
+    IDENTIFIER      reduce using rule 24 (namespace-prefix-opt -> empty .)
+    OP_MUL          reduce using rule 24 (namespace-prefix-opt -> empty .)
+
+
+state 13
+
+    (29) selector-rules -> selector-rule . selector-rules
+    (30) selector-rules -> selector-rule .
+    (29) selector-rules -> . selector-rule selector-rules
+    (30) selector-rules -> . selector-rule
+    (31) selector-rule -> . hash
+    (32) selector-rule -> . class
+    (33) selector-rule -> . attribute
+    (34) selector-rule -> . pseudo
+    (35) selector-rule -> . negation
+    (41) hash -> . HASH
+    (42) class -> . DOT IDENTIFIER
+    (43) attribute -> . LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (55) pseudo -> . COLON pseudo-selector
+    (56) pseudo -> . COLON COLON pseudo-selector
+    (68) negation -> . NOT_SELECTOR space-opt negation-argument RPAREN
+
+    SPACE           reduce using rule 30 (selector-rules -> selector-rule .)
+    BLOCKCOMMENT    reduce using rule 30 (selector-rules -> selector-rule .)
+    CDO             reduce using rule 30 (selector-rules -> selector-rule .)
+    CDC             reduce using rule 30 (selector-rules -> selector-rule .)
+    OP_PLUS         reduce using rule 30 (selector-rules -> selector-rule .)
+    OP_GT           reduce using rule 30 (selector-rules -> selector-rule .)
+    OP_TILDE        reduce using rule 30 (selector-rules -> selector-rule .)
+    COMMA           reduce using rule 30 (selector-rules -> selector-rule .)
+    $end            reduce using rule 30 (selector-rules -> selector-rule .)
+    HASH            shift and go to state 5
+    DOT             shift and go to state 6
+    LBRACKET        shift and go to state 4
+    COLON           shift and go to state 11
+    NOT_SELECTOR    shift and go to state 21
+
+    hash                           shift and go to state 14
+    attribute                      shift and go to state 1
+    selector-rules                 shift and go to state 46
+    pseudo                         shift and go to state 19
+    negation                       shift and go to state 10
+    class                          shift and go to state 16
+    selector-rule                  shift and go to state 13
+
+state 14
+
+    (31) selector-rule -> hash .
+
+    HASH            reduce using rule 31 (selector-rule -> hash .)
+    DOT             reduce using rule 31 (selector-rule -> hash .)
+    LBRACKET        reduce using rule 31 (selector-rule -> hash .)
+    COLON           reduce using rule 31 (selector-rule -> hash .)
+    NOT_SELECTOR    reduce using rule 31 (selector-rule -> hash .)
+    SPACE           reduce using rule 31 (selector-rule -> hash .)
+    BLOCKCOMMENT    reduce using rule 31 (selector-rule -> hash .)
+    CDO             reduce using rule 31 (selector-rule -> hash .)
+    CDC             reduce using rule 31 (selector-rule -> hash .)
+    OP_PLUS         reduce using rule 31 (selector-rule -> hash .)
+    OP_GT           reduce using rule 31 (selector-rule -> hash .)
+    OP_TILDE        reduce using rule 31 (selector-rule -> hash .)
+    COMMA           reduce using rule 31 (selector-rule -> hash .)
+    $end            reduce using rule 31 (selector-rule -> hash .)
+
+
+state 15
+
+    (2) selectors -> selector . COMMA space-opt selectors
+    (5) selectors -> selector .
+
+    COMMA           shift and go to state 47
+    $end            reduce using rule 5 (selectors -> selector .)
+
+
+state 16
+
+    (32) selector-rule -> class .
+
+    HASH            reduce using rule 32 (selector-rule -> class .)
+    DOT             reduce using rule 32 (selector-rule -> class .)
+    LBRACKET        reduce using rule 32 (selector-rule -> class .)
+    COLON           reduce using rule 32 (selector-rule -> class .)
+    NOT_SELECTOR    reduce using rule 32 (selector-rule -> class .)
+    SPACE           reduce using rule 32 (selector-rule -> class .)
+    BLOCKCOMMENT    reduce using rule 32 (selector-rule -> class .)
+    CDO             reduce using rule 32 (selector-rule -> class .)
+    CDC             reduce using rule 32 (selector-rule -> class .)
+    OP_PLUS         reduce using rule 32 (selector-rule -> class .)
+    OP_GT           reduce using rule 32 (selector-rule -> class .)
+    OP_TILDE        reduce using rule 32 (selector-rule -> class .)
+    COMMA           reduce using rule 32 (selector-rule -> class .)
+    $end            reduce using rule 32 (selector-rule -> class .)
+
+
+state 17
+
+    (21) element-selector -> namespace-prefix-opt . element-name
+    (22) all-selector -> namespace-prefix-opt . OP_MUL
+    (26) element-name -> . IDENTIFIER
+
+    OP_MUL          shift and go to state 50
+    IDENTIFIER      shift and go to state 49
+
+    element-name                   shift and go to state 48
+
+state 18
+
+    (14) simple-selector -> selector-rules .
+
+    SPACE           reduce using rule 14 (simple-selector -> selector-rules .)
+    BLOCKCOMMENT    reduce using rule 14 (simple-selector -> selector-rules .)
+    CDO             reduce using rule 14 (simple-selector -> selector-rules .)
+    CDC             reduce using rule 14 (simple-selector -> selector-rules .)
+    OP_PLUS         reduce using rule 14 (simple-selector -> selector-rules .)
+    OP_GT           reduce using rule 14 (simple-selector -> selector-rules .)
+    OP_TILDE        reduce using rule 14 (simple-selector -> selector-rules .)
+    COMMA           reduce using rule 14 (simple-selector -> selector-rules .)
+    $end            reduce using rule 14 (simple-selector -> selector-rules .)
+
+
+state 19
+
+    (34) selector-rule -> pseudo .
+
+    HASH            reduce using rule 34 (selector-rule -> pseudo .)
+    DOT             reduce using rule 34 (selector-rule -> pseudo .)
+    LBRACKET        reduce using rule 34 (selector-rule -> pseudo .)
+    COLON           reduce using rule 34 (selector-rule -> pseudo .)
+    NOT_SELECTOR    reduce using rule 34 (selector-rule -> pseudo .)
+    SPACE           reduce using rule 34 (selector-rule -> pseudo .)
+    BLOCKCOMMENT    reduce using rule 34 (selector-rule -> pseudo .)
+    CDO             reduce using rule 34 (selector-rule -> pseudo .)
+    CDC             reduce using rule 34 (selector-rule -> pseudo .)
+    OP_PLUS         reduce using rule 34 (selector-rule -> pseudo .)
+    OP_GT           reduce using rule 34 (selector-rule -> pseudo .)
+    OP_TILDE        reduce using rule 34 (selector-rule -> pseudo .)
+    COMMA           reduce using rule 34 (selector-rule -> pseudo .)
+    $end            reduce using rule 34 (selector-rule -> pseudo .)
+
+
+state 20
+
+    (0) S' -> selectors .
+
+
+
+state 21
+
+    (68) negation -> NOT_SELECTOR . space-opt negation-argument RPAREN
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    HASH            reduce using rule 1 (empty -> .)
+    DOT             reduce using rule 1 (empty -> .)
+    LBRACKET        reduce using rule 1 (empty -> .)
+    COLON           reduce using rule 1 (empty -> .)
+    NAMESPACE_PREFIX reduce using rule 1 (empty -> .)
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 51
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 22
+
+    (25) namespace-prefix -> NAMESPACE_PREFIX .
+
+    OP_MUL          reduce using rule 25 (namespace-prefix -> NAMESPACE_PREFIX .)
+    IDENTIFIER      reduce using rule 25 (namespace-prefix -> NAMESPACE_PREFIX .)
+
+
+state 23
+
+    (28) selector-rules-opt -> empty .
+
+    SPACE           reduce using rule 28 (selector-rules-opt -> empty .)
+    BLOCKCOMMENT    reduce using rule 28 (selector-rules-opt -> empty .)
+    CDO             reduce using rule 28 (selector-rules-opt -> empty .)
+    CDC             reduce using rule 28 (selector-rules-opt -> empty .)
+    OP_PLUS         reduce using rule 28 (selector-rules-opt -> empty .)
+    OP_GT           reduce using rule 28 (selector-rules-opt -> empty .)
+    OP_TILDE        reduce using rule 28 (selector-rules-opt -> empty .)
+    COMMA           reduce using rule 28 (selector-rules-opt -> empty .)
+    $end            reduce using rule 28 (selector-rules-opt -> empty .)
+
+
+state 24
+
+    (13) simple-selector -> type-selector selector-rules-opt .
+
+    SPACE           reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    BLOCKCOMMENT    reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    CDO             reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    CDC             reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    OP_PLUS         reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    OP_GT           reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    OP_TILDE        reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    COMMA           reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+    $end            reduce using rule 13 (simple-selector -> type-selector selector-rules-opt .)
+
+
+state 25
+
+    (27) selector-rules-opt -> selector-rules .
+
+    SPACE           reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    BLOCKCOMMENT    reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    CDO             reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    CDC             reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    OP_PLUS         reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    OP_GT           reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    OP_TILDE        reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    COMMA           reduce using rule 27 (selector-rules-opt -> selector-rules .)
+    $end            reduce using rule 27 (selector-rules-opt -> selector-rules .)
+
+
+state 26
+
+    (12) space-delimiter -> htmlcomment .
+
+    SPACE           reduce using rule 12 (space-delimiter -> htmlcomment .)
+    BLOCKCOMMENT    reduce using rule 12 (space-delimiter -> htmlcomment .)
+    CDO             reduce using rule 12 (space-delimiter -> htmlcomment .)
+    CDC             reduce using rule 12 (space-delimiter -> htmlcomment .)
+    HASH            reduce using rule 12 (space-delimiter -> htmlcomment .)
+    DOT             reduce using rule 12 (space-delimiter -> htmlcomment .)
+    LBRACKET        reduce using rule 12 (space-delimiter -> htmlcomment .)
+    COLON           reduce using rule 12 (space-delimiter -> htmlcomment .)
+    NAMESPACE_PREFIX reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_MUL          reduce using rule 12 (space-delimiter -> htmlcomment .)
+    IDENTIFIER      reduce using rule 12 (space-delimiter -> htmlcomment .)
+    NOT_SELECTOR    reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_PLUS         reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_MINUS        reduce using rule 12 (space-delimiter -> htmlcomment .)
+    DIMENSION       reduce using rule 12 (space-delimiter -> htmlcomment .)
+    NUMBER          reduce using rule 12 (space-delimiter -> htmlcomment .)
+    STRING          reduce using rule 12 (space-delimiter -> htmlcomment .)
+    RPAREN          reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_GT           reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_TILDE        reduce using rule 12 (space-delimiter -> htmlcomment .)
+    COMMA           reduce using rule 12 (space-delimiter -> htmlcomment .)
+    $end            reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_PREFIXMATCH  reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_SUFFIXMATCH  reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_SUBSTRINGMATCH reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_INCLUDES     reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_DASHMATCH    reduce using rule 12 (space-delimiter -> htmlcomment .)
+    OP_EQUALS       reduce using rule 12 (space-delimiter -> htmlcomment .)
+    RBRACKET        reduce using rule 12 (space-delimiter -> htmlcomment .)
+
+
+state 27
+
+    (19) htmlcomment -> CDO .
+
+    SPACE           reduce using rule 19 (htmlcomment -> CDO .)
+    BLOCKCOMMENT    reduce using rule 19 (htmlcomment -> CDO .)
+    CDO             reduce using rule 19 (htmlcomment -> CDO .)
+    CDC             reduce using rule 19 (htmlcomment -> CDO .)
+    IDENTIFIER      reduce using rule 19 (htmlcomment -> CDO .)
+    STRING          reduce using rule 19 (htmlcomment -> CDO .)
+    OP_PLUS         reduce using rule 19 (htmlcomment -> CDO .)
+    OP_MINUS        reduce using rule 19 (htmlcomment -> CDO .)
+    DIMENSION       reduce using rule 19 (htmlcomment -> CDO .)
+    NUMBER          reduce using rule 19 (htmlcomment -> CDO .)
+    RPAREN          reduce using rule 19 (htmlcomment -> CDO .)
+    RBRACKET        reduce using rule 19 (htmlcomment -> CDO .)
+    HASH            reduce using rule 19 (htmlcomment -> CDO .)
+    DOT             reduce using rule 19 (htmlcomment -> CDO .)
+    LBRACKET        reduce using rule 19 (htmlcomment -> CDO .)
+    COLON           reduce using rule 19 (htmlcomment -> CDO .)
+    NOT_SELECTOR    reduce using rule 19 (htmlcomment -> CDO .)
+    NAMESPACE_PREFIX reduce using rule 19 (htmlcomment -> CDO .)
+    OP_MUL          reduce using rule 19 (htmlcomment -> CDO .)
+    OP_GT           reduce using rule 19 (htmlcomment -> CDO .)
+    OP_TILDE        reduce using rule 19 (htmlcomment -> CDO .)
+    COMMA           reduce using rule 19 (htmlcomment -> CDO .)
+    $end            reduce using rule 19 (htmlcomment -> CDO .)
+    OP_PREFIXMATCH  reduce using rule 19 (htmlcomment -> CDO .)
+    OP_SUFFIXMATCH  reduce using rule 19 (htmlcomment -> CDO .)
+    OP_SUBSTRINGMATCH reduce using rule 19 (htmlcomment -> CDO .)
+    OP_INCLUDES     reduce using rule 19 (htmlcomment -> CDO .)
+    OP_DASHMATCH    reduce using rule 19 (htmlcomment -> CDO .)
+    OP_EQUALS       reduce using rule 19 (htmlcomment -> CDO .)
+
+
+state 28
+
+    (10) space-delimiter -> whitespace .
+
+    SPACE           reduce using rule 10 (space-delimiter -> whitespace .)
+    BLOCKCOMMENT    reduce using rule 10 (space-delimiter -> whitespace .)
+    CDO             reduce using rule 10 (space-delimiter -> whitespace .)
+    CDC             reduce using rule 10 (space-delimiter -> whitespace .)
+    HASH            reduce using rule 10 (space-delimiter -> whitespace .)
+    DOT             reduce using rule 10 (space-delimiter -> whitespace .)
+    LBRACKET        reduce using rule 10 (space-delimiter -> whitespace .)
+    COLON           reduce using rule 10 (space-delimiter -> whitespace .)
+    NAMESPACE_PREFIX reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_MUL          reduce using rule 10 (space-delimiter -> whitespace .)
+    IDENTIFIER      reduce using rule 10 (space-delimiter -> whitespace .)
+    NOT_SELECTOR    reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_PLUS         reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_MINUS        reduce using rule 10 (space-delimiter -> whitespace .)
+    DIMENSION       reduce using rule 10 (space-delimiter -> whitespace .)
+    NUMBER          reduce using rule 10 (space-delimiter -> whitespace .)
+    STRING          reduce using rule 10 (space-delimiter -> whitespace .)
+    RPAREN          reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_GT           reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_TILDE        reduce using rule 10 (space-delimiter -> whitespace .)
+    COMMA           reduce using rule 10 (space-delimiter -> whitespace .)
+    $end            reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_PREFIXMATCH  reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_SUFFIXMATCH  reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_SUBSTRINGMATCH reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_INCLUDES     reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_DASHMATCH    reduce using rule 10 (space-delimiter -> whitespace .)
+    OP_EQUALS       reduce using rule 10 (space-delimiter -> whitespace .)
+    RBRACKET        reduce using rule 10 (space-delimiter -> whitespace .)
+
+
+state 29
+
+    (3) space-opt -> space .
+
+    RPAREN          reduce using rule 3 (space-opt -> space .)
+    IDENTIFIER      reduce using rule 3 (space-opt -> space .)
+    STRING          reduce using rule 3 (space-opt -> space .)
+    OP_PLUS         reduce using rule 3 (space-opt -> space .)
+    OP_MINUS        reduce using rule 3 (space-opt -> space .)
+    DIMENSION       reduce using rule 3 (space-opt -> space .)
+    NUMBER          reduce using rule 3 (space-opt -> space .)
+    NAMESPACE_PREFIX reduce using rule 3 (space-opt -> space .)
+    OP_PREFIXMATCH  reduce using rule 3 (space-opt -> space .)
+    OP_SUFFIXMATCH  reduce using rule 3 (space-opt -> space .)
+    OP_SUBSTRINGMATCH reduce using rule 3 (space-opt -> space .)
+    OP_INCLUDES     reduce using rule 3 (space-opt -> space .)
+    OP_DASHMATCH    reduce using rule 3 (space-opt -> space .)
+    OP_EQUALS       reduce using rule 3 (space-opt -> space .)
+    RBRACKET        reduce using rule 3 (space-opt -> space .)
+    HASH            reduce using rule 3 (space-opt -> space .)
+    DOT             reduce using rule 3 (space-opt -> space .)
+    LBRACKET        reduce using rule 3 (space-opt -> space .)
+    COLON           reduce using rule 3 (space-opt -> space .)
+    OP_MUL          reduce using rule 3 (space-opt -> space .)
+    NOT_SELECTOR    reduce using rule 3 (space-opt -> space .)
+
+
+state 30
+
+    (15) whitespace -> SPACE .
+
+    SPACE           reduce using rule 15 (whitespace -> SPACE .)
+    BLOCKCOMMENT    reduce using rule 15 (whitespace -> SPACE .)
+    CDO             reduce using rule 15 (whitespace -> SPACE .)
+    CDC             reduce using rule 15 (whitespace -> SPACE .)
+    IDENTIFIER      reduce using rule 15 (whitespace -> SPACE .)
+    STRING          reduce using rule 15 (whitespace -> SPACE .)
+    OP_PREFIXMATCH  reduce using rule 15 (whitespace -> SPACE .)
+    OP_SUFFIXMATCH  reduce using rule 15 (whitespace -> SPACE .)
+    OP_SUBSTRINGMATCH reduce using rule 15 (whitespace -> SPACE .)
+    OP_INCLUDES     reduce using rule 15 (whitespace -> SPACE .)
+    OP_DASHMATCH    reduce using rule 15 (whitespace -> SPACE .)
+    OP_EQUALS       reduce using rule 15 (whitespace -> SPACE .)
+    RBRACKET        reduce using rule 15 (whitespace -> SPACE .)
+    RPAREN          reduce using rule 15 (whitespace -> SPACE .)
+    OP_PLUS         reduce using rule 15 (whitespace -> SPACE .)
+    OP_MINUS        reduce using rule 15 (whitespace -> SPACE .)
+    DIMENSION       reduce using rule 15 (whitespace -> SPACE .)
+    NUMBER          reduce using rule 15 (whitespace -> SPACE .)
+    HASH            reduce using rule 15 (whitespace -> SPACE .)
+    DOT             reduce using rule 15 (whitespace -> SPACE .)
+    LBRACKET        reduce using rule 15 (whitespace -> SPACE .)
+    COLON           reduce using rule 15 (whitespace -> SPACE .)
+    NOT_SELECTOR    reduce using rule 15 (whitespace -> SPACE .)
+    NAMESPACE_PREFIX reduce using rule 15 (whitespace -> SPACE .)
+    OP_MUL          reduce using rule 15 (whitespace -> SPACE .)
+    OP_GT           reduce using rule 15 (whitespace -> SPACE .)
+    OP_TILDE        reduce using rule 15 (whitespace -> SPACE .)
+    COMMA           reduce using rule 15 (whitespace -> SPACE .)
+    $end            reduce using rule 15 (whitespace -> SPACE .)
+
+
+state 31
+
+    (20) htmlcomment -> CDC .
+
+    SPACE           reduce using rule 20 (htmlcomment -> CDC .)
+    BLOCKCOMMENT    reduce using rule 20 (htmlcomment -> CDC .)
+    CDO             reduce using rule 20 (htmlcomment -> CDC .)
+    CDC             reduce using rule 20 (htmlcomment -> CDC .)
+    IDENTIFIER      reduce using rule 20 (htmlcomment -> CDC .)
+    STRING          reduce using rule 20 (htmlcomment -> CDC .)
+    OP_PLUS         reduce using rule 20 (htmlcomment -> CDC .)
+    OP_MINUS        reduce using rule 20 (htmlcomment -> CDC .)
+    DIMENSION       reduce using rule 20 (htmlcomment -> CDC .)
+    NUMBER          reduce using rule 20 (htmlcomment -> CDC .)
+    RPAREN          reduce using rule 20 (htmlcomment -> CDC .)
+    RBRACKET        reduce using rule 20 (htmlcomment -> CDC .)
+    HASH            reduce using rule 20 (htmlcomment -> CDC .)
+    DOT             reduce using rule 20 (htmlcomment -> CDC .)
+    LBRACKET        reduce using rule 20 (htmlcomment -> CDC .)
+    COLON           reduce using rule 20 (htmlcomment -> CDC .)
+    NOT_SELECTOR    reduce using rule 20 (htmlcomment -> CDC .)
+    NAMESPACE_PREFIX reduce using rule 20 (htmlcomment -> CDC .)
+    OP_MUL          reduce using rule 20 (htmlcomment -> CDC .)
+    OP_GT           reduce using rule 20 (htmlcomment -> CDC .)
+    OP_TILDE        reduce using rule 20 (htmlcomment -> CDC .)
+    COMMA           reduce using rule 20 (htmlcomment -> CDC .)
+    $end            reduce using rule 20 (htmlcomment -> CDC .)
+    OP_PREFIXMATCH  reduce using rule 20 (htmlcomment -> CDC .)
+    OP_SUFFIXMATCH  reduce using rule 20 (htmlcomment -> CDC .)
+    OP_SUBSTRINGMATCH reduce using rule 20 (htmlcomment -> CDC .)
+    OP_INCLUDES     reduce using rule 20 (htmlcomment -> CDC .)
+    OP_DASHMATCH    reduce using rule 20 (htmlcomment -> CDC .)
+    OP_EQUALS       reduce using rule 20 (htmlcomment -> CDC .)
+
+
+state 32
+
+    (43) attribute -> LBRACKET space-opt . namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (23) namespace-prefix-opt -> . namespace-prefix
+    (24) namespace-prefix-opt -> . empty
+    (25) namespace-prefix -> . NAMESPACE_PREFIX
+    (1) empty -> .
+
+    NAMESPACE_PREFIX shift and go to state 22
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+
+    namespace-prefix-opt           shift and go to state 52
+    empty                          shift and go to state 12
+    namespace-prefix               shift and go to state 2
+
+state 33
+
+    (6) space -> space-delimiter . space
+    (8) space -> space-delimiter .
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RPAREN          reduce using rule 8 (space -> space-delimiter .)
+    OP_PLUS         reduce using rule 8 (space -> space-delimiter .)
+    OP_MINUS        reduce using rule 8 (space -> space-delimiter .)
+    DIMENSION       reduce using rule 8 (space -> space-delimiter .)
+    NUMBER          reduce using rule 8 (space -> space-delimiter .)
+    STRING          reduce using rule 8 (space -> space-delimiter .)
+    IDENTIFIER      reduce using rule 8 (space -> space-delimiter .)
+    RBRACKET        reduce using rule 8 (space -> space-delimiter .)
+    NAMESPACE_PREFIX reduce using rule 8 (space -> space-delimiter .)
+    HASH            reduce using rule 8 (space -> space-delimiter .)
+    DOT             reduce using rule 8 (space -> space-delimiter .)
+    LBRACKET        reduce using rule 8 (space -> space-delimiter .)
+    COLON           reduce using rule 8 (space -> space-delimiter .)
+    NOT_SELECTOR    reduce using rule 8 (space -> space-delimiter .)
+    OP_MUL          reduce using rule 8 (space -> space-delimiter .)
+    OP_GT           reduce using rule 8 (space -> space-delimiter .)
+    OP_TILDE        reduce using rule 8 (space -> space-delimiter .)
+    COMMA           reduce using rule 8 (space -> space-delimiter .)
+    $end            reduce using rule 8 (space -> space-delimiter .)
+    OP_PREFIXMATCH  reduce using rule 8 (space -> space-delimiter .)
+    OP_SUFFIXMATCH  reduce using rule 8 (space -> space-delimiter .)
+    OP_SUBSTRINGMATCH reduce using rule 8 (space -> space-delimiter .)
+    OP_INCLUDES     reduce using rule 8 (space -> space-delimiter .)
+    OP_DASHMATCH    reduce using rule 8 (space -> space-delimiter .)
+    OP_EQUALS       reduce using rule 8 (space -> space-delimiter .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    blockcomment                   shift and go to state 35
+    space-delimiter                shift and go to state 33
+    space                          shift and go to state 53
+
+state 34
+
+    (16) blockcomment -> BLOCKCOMMENT .
+
+    SPACE           reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    BLOCKCOMMENT    reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    CDO             reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    CDC             reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    IDENTIFIER      reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    STRING          reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_PLUS         reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_MINUS        reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    DIMENSION       reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    NUMBER          reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    RPAREN          reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_PREFIXMATCH  reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_SUFFIXMATCH  reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_SUBSTRINGMATCH reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_INCLUDES     reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_DASHMATCH    reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_EQUALS       reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    RBRACKET        reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    HASH            reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    DOT             reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    LBRACKET        reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    COLON           reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    NAMESPACE_PREFIX reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_MUL          reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    NOT_SELECTOR    reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_GT           reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    OP_TILDE        reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    COMMA           reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+    $end            reduce using rule 16 (blockcomment -> BLOCKCOMMENT .)
+
+
+state 35
+
+    (11) space-delimiter -> blockcomment .
+
+    SPACE           reduce using rule 11 (space-delimiter -> blockcomment .)
+    BLOCKCOMMENT    reduce using rule 11 (space-delimiter -> blockcomment .)
+    CDO             reduce using rule 11 (space-delimiter -> blockcomment .)
+    CDC             reduce using rule 11 (space-delimiter -> blockcomment .)
+    HASH            reduce using rule 11 (space-delimiter -> blockcomment .)
+    DOT             reduce using rule 11 (space-delimiter -> blockcomment .)
+    LBRACKET        reduce using rule 11 (space-delimiter -> blockcomment .)
+    COLON           reduce using rule 11 (space-delimiter -> blockcomment .)
+    NAMESPACE_PREFIX reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_MUL          reduce using rule 11 (space-delimiter -> blockcomment .)
+    IDENTIFIER      reduce using rule 11 (space-delimiter -> blockcomment .)
+    NOT_SELECTOR    reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_PLUS         reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_MINUS        reduce using rule 11 (space-delimiter -> blockcomment .)
+    DIMENSION       reduce using rule 11 (space-delimiter -> blockcomment .)
+    NUMBER          reduce using rule 11 (space-delimiter -> blockcomment .)
+    STRING          reduce using rule 11 (space-delimiter -> blockcomment .)
+    RPAREN          reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_GT           reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_TILDE        reduce using rule 11 (space-delimiter -> blockcomment .)
+    COMMA           reduce using rule 11 (space-delimiter -> blockcomment .)
+    $end            reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_PREFIXMATCH  reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_SUFFIXMATCH  reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_SUBSTRINGMATCH reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_INCLUDES     reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_DASHMATCH    reduce using rule 11 (space-delimiter -> blockcomment .)
+    OP_EQUALS       reduce using rule 11 (space-delimiter -> blockcomment .)
+    RBRACKET        reduce using rule 11 (space-delimiter -> blockcomment .)
+
+
+state 36
+
+    (4) space-opt -> empty .
+
+    RPAREN          reduce using rule 4 (space-opt -> empty .)
+    IDENTIFIER      reduce using rule 4 (space-opt -> empty .)
+    STRING          reduce using rule 4 (space-opt -> empty .)
+    OP_PLUS         reduce using rule 4 (space-opt -> empty .)
+    OP_GT           reduce using rule 4 (space-opt -> empty .)
+    OP_TILDE        reduce using rule 4 (space-opt -> empty .)
+    COMMA           reduce using rule 4 (space-opt -> empty .)
+    $end            reduce using rule 4 (space-opt -> empty .)
+    OP_MINUS        reduce using rule 4 (space-opt -> empty .)
+    DIMENSION       reduce using rule 4 (space-opt -> empty .)
+    NUMBER          reduce using rule 4 (space-opt -> empty .)
+    NAMESPACE_PREFIX reduce using rule 4 (space-opt -> empty .)
+    OP_PREFIXMATCH  reduce using rule 4 (space-opt -> empty .)
+    OP_SUFFIXMATCH  reduce using rule 4 (space-opt -> empty .)
+    OP_SUBSTRINGMATCH reduce using rule 4 (space-opt -> empty .)
+    OP_INCLUDES     reduce using rule 4 (space-opt -> empty .)
+    OP_DASHMATCH    reduce using rule 4 (space-opt -> empty .)
+    OP_EQUALS       reduce using rule 4 (space-opt -> empty .)
+    RBRACKET        reduce using rule 4 (space-opt -> empty .)
+    HASH            reduce using rule 4 (space-opt -> empty .)
+    DOT             reduce using rule 4 (space-opt -> empty .)
+    LBRACKET        reduce using rule 4 (space-opt -> empty .)
+    COLON           reduce using rule 4 (space-opt -> empty .)
+    OP_MUL          reduce using rule 4 (space-opt -> empty .)
+    NOT_SELECTOR    reduce using rule 4 (space-opt -> empty .)
+
+
+state 37
+
+    (42) class -> DOT IDENTIFIER .
+
+    HASH            reduce using rule 42 (class -> DOT IDENTIFIER .)
+    DOT             reduce using rule 42 (class -> DOT IDENTIFIER .)
+    LBRACKET        reduce using rule 42 (class -> DOT IDENTIFIER .)
+    COLON           reduce using rule 42 (class -> DOT IDENTIFIER .)
+    NOT_SELECTOR    reduce using rule 42 (class -> DOT IDENTIFIER .)
+    SPACE           reduce using rule 42 (class -> DOT IDENTIFIER .)
+    BLOCKCOMMENT    reduce using rule 42 (class -> DOT IDENTIFIER .)
+    CDO             reduce using rule 42 (class -> DOT IDENTIFIER .)
+    CDC             reduce using rule 42 (class -> DOT IDENTIFIER .)
+    OP_PLUS         reduce using rule 42 (class -> DOT IDENTIFIER .)
+    OP_GT           reduce using rule 42 (class -> DOT IDENTIFIER .)
+    OP_TILDE        reduce using rule 42 (class -> DOT IDENTIFIER .)
+    COMMA           reduce using rule 42 (class -> DOT IDENTIFIER .)
+    $end            reduce using rule 42 (class -> DOT IDENTIFIER .)
+    RPAREN          reduce using rule 42 (class -> DOT IDENTIFIER .)
+
+
+state 38
+
+    (37) combinator -> space .
+    (3) space-opt -> space .
+
+    HASH            reduce using rule 37 (combinator -> space .)
+    DOT             reduce using rule 37 (combinator -> space .)
+    LBRACKET        reduce using rule 37 (combinator -> space .)
+    COLON           reduce using rule 37 (combinator -> space .)
+    NOT_SELECTOR    reduce using rule 37 (combinator -> space .)
+    NAMESPACE_PREFIX reduce using rule 37 (combinator -> space .)
+    OP_MUL          reduce using rule 37 (combinator -> space .)
+    IDENTIFIER      reduce using rule 37 (combinator -> space .)
+    OP_PLUS         reduce using rule 3 (space-opt -> space .)
+    OP_GT           reduce using rule 3 (space-opt -> space .)
+    OP_TILDE        reduce using rule 3 (space-opt -> space .)
+    COMMA           reduce using rule 3 (space-opt -> space .)
+    $end            reduce using rule 3 (space-opt -> space .)
+
+
+state 39
+
+    (7) selector -> simple-selector combinator . selector
+    (7) selector -> . simple-selector combinator selector
+    (9) selector -> . simple-selector space-opt
+    (13) simple-selector -> . type-selector selector-rules-opt
+    (14) simple-selector -> . selector-rules
+    (17) type-selector -> . element-selector
+    (18) type-selector -> . all-selector
+    (29) selector-rules -> . selector-rule selector-rules
+    (30) selector-rules -> . selector-rule
+    (21) element-selector -> . namespace-prefix-opt element-name
+    (22) all-selector -> . namespace-prefix-opt OP_MUL
+    (31) selector-rule -> . hash
+    (32) selector-rule -> . class
+    (33) selector-rule -> . attribute
+    (34) selector-rule -> . pseudo
+    (35) selector-rule -> . negation
+    (23) namespace-prefix-opt -> . namespace-prefix
+    (24) namespace-prefix-opt -> . empty
+    (41) hash -> . HASH
+    (42) class -> . DOT IDENTIFIER
+    (43) attribute -> . LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (55) pseudo -> . COLON pseudo-selector
+    (56) pseudo -> . COLON COLON pseudo-selector
+    (68) negation -> . NOT_SELECTOR space-opt negation-argument RPAREN
+    (25) namespace-prefix -> . NAMESPACE_PREFIX
+    (1) empty -> .
+
+    HASH            shift and go to state 5
+    DOT             shift and go to state 6
+    LBRACKET        shift and go to state 4
+    COLON           shift and go to state 11
+    NOT_SELECTOR    shift and go to state 21
+    NAMESPACE_PREFIX shift and go to state 22
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+
+    attribute                      shift and go to state 1
+    namespace-prefix               shift and go to state 2
+    type-selector                  shift and go to state 3
+    element-selector               shift and go to state 7
+    all-selector                   shift and go to state 8
+    simple-selector                shift and go to state 9
+    negation                       shift and go to state 10
+    empty                          shift and go to state 12
+    selector-rule                  shift and go to state 13
+    hash                           shift and go to state 14
+    selector                       shift and go to state 54
+    class                          shift and go to state 16
+    namespace-prefix-opt           shift and go to state 17
+    selector-rules                 shift and go to state 18
+    pseudo                         shift and go to state 19
+
+state 40
+
+    (9) selector -> simple-selector space-opt .
+    (36) combinator -> space-opt . combinator-op
+    (38) combinator-op -> . OP_PLUS space-opt
+    (39) combinator-op -> . OP_GT space-opt
+    (40) combinator-op -> . OP_TILDE space-opt
+
+    COMMA           reduce using rule 9 (selector -> simple-selector space-opt .)
+    $end            reduce using rule 9 (selector -> simple-selector space-opt .)
+    OP_PLUS         shift and go to state 58
+    OP_GT           shift and go to state 57
+    OP_TILDE        shift and go to state 55
+
+    combinator-op                  shift and go to state 56
+
+state 41
+
+    (58) pseudo-selector -> pseudo-function .
+
+    HASH            reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    DOT             reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    LBRACKET        reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    COLON           reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    NOT_SELECTOR    reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    SPACE           reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    BLOCKCOMMENT    reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    CDO             reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    CDC             reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    OP_PLUS         reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    OP_GT           reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    OP_TILDE        reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    COMMA           reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    $end            reduce using rule 58 (pseudo-selector -> pseudo-function .)
+    RPAREN          reduce using rule 58 (pseudo-selector -> pseudo-function .)
+
+
+state 42
+
+    (59) pseudo-function -> FUNCTION . space-opt pseudo-expression RPAREN
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_MINUS        reduce using rule 1 (empty -> .)
+    DIMENSION       reduce using rule 1 (empty -> .)
+    NUMBER          reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 59
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 43
+
+    (56) pseudo -> COLON COLON . pseudo-selector
+    (57) pseudo-selector -> . IDENTIFIER
+    (58) pseudo-selector -> . pseudo-function
+    (59) pseudo-function -> . FUNCTION space-opt pseudo-expression RPAREN
+
+    IDENTIFIER      shift and go to state 45
+    FUNCTION        shift and go to state 42
+
+    pseudo-function                shift and go to state 41
+    pseudo-selector                shift and go to state 60
+
+state 44
+
+    (55) pseudo -> COLON pseudo-selector .
+
+    HASH            reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    DOT             reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    LBRACKET        reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    COLON           reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    NOT_SELECTOR    reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    SPACE           reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    BLOCKCOMMENT    reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    CDO             reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    CDC             reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    OP_PLUS         reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    OP_GT           reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    OP_TILDE        reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    COMMA           reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    $end            reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+    RPAREN          reduce using rule 55 (pseudo -> COLON pseudo-selector .)
+
+
+state 45
+
+    (57) pseudo-selector -> IDENTIFIER .
+
+    HASH            reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    DOT             reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    LBRACKET        reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    COLON           reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    NOT_SELECTOR    reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    SPACE           reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    BLOCKCOMMENT    reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    CDO             reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    CDC             reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    OP_PLUS         reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    OP_GT           reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    OP_TILDE        reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    COMMA           reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    $end            reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+    RPAREN          reduce using rule 57 (pseudo-selector -> IDENTIFIER .)
+
+
+state 46
+
+    (29) selector-rules -> selector-rule selector-rules .
+
+    SPACE           reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    BLOCKCOMMENT    reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    CDO             reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    CDC             reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    OP_PLUS         reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    OP_GT           reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    OP_TILDE        reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    COMMA           reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+    $end            reduce using rule 29 (selector-rules -> selector-rule selector-rules .)
+
+
+state 47
+
+    (2) selectors -> selector COMMA . space-opt selectors
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    HASH            reduce using rule 1 (empty -> .)
+    DOT             reduce using rule 1 (empty -> .)
+    LBRACKET        reduce using rule 1 (empty -> .)
+    COLON           reduce using rule 1 (empty -> .)
+    NOT_SELECTOR    reduce using rule 1 (empty -> .)
+    NAMESPACE_PREFIX reduce using rule 1 (empty -> .)
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 61
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 48
+
+    (21) element-selector -> namespace-prefix-opt element-name .
+
+    HASH            reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    DOT             reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    LBRACKET        reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    COLON           reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    NOT_SELECTOR    reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    SPACE           reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    BLOCKCOMMENT    reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    CDO             reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    CDC             reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    OP_PLUS         reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    OP_GT           reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    OP_TILDE        reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    COMMA           reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    $end            reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+    RPAREN          reduce using rule 21 (element-selector -> namespace-prefix-opt element-name .)
+
+
+state 49
+
+    (26) element-name -> IDENTIFIER .
+
+    HASH            reduce using rule 26 (element-name -> IDENTIFIER .)
+    DOT             reduce using rule 26 (element-name -> IDENTIFIER .)
+    LBRACKET        reduce using rule 26 (element-name -> IDENTIFIER .)
+    COLON           reduce using rule 26 (element-name -> IDENTIFIER .)
+    NOT_SELECTOR    reduce using rule 26 (element-name -> IDENTIFIER .)
+    SPACE           reduce using rule 26 (element-name -> IDENTIFIER .)
+    BLOCKCOMMENT    reduce using rule 26 (element-name -> IDENTIFIER .)
+    CDO             reduce using rule 26 (element-name -> IDENTIFIER .)
+    CDC             reduce using rule 26 (element-name -> IDENTIFIER .)
+    OP_PLUS         reduce using rule 26 (element-name -> IDENTIFIER .)
+    OP_GT           reduce using rule 26 (element-name -> IDENTIFIER .)
+    OP_TILDE        reduce using rule 26 (element-name -> IDENTIFIER .)
+    COMMA           reduce using rule 26 (element-name -> IDENTIFIER .)
+    $end            reduce using rule 26 (element-name -> IDENTIFIER .)
+    RPAREN          reduce using rule 26 (element-name -> IDENTIFIER .)
+
+
+state 50
+
+    (22) all-selector -> namespace-prefix-opt OP_MUL .
+
+    HASH            reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    DOT             reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    LBRACKET        reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    COLON           reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    NOT_SELECTOR    reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    SPACE           reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    BLOCKCOMMENT    reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    CDO             reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    CDC             reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    OP_PLUS         reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    OP_GT           reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    OP_TILDE        reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    COMMA           reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    $end            reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+    RPAREN          reduce using rule 22 (all-selector -> namespace-prefix-opt OP_MUL .)
+
+
+state 51
+
+    (68) negation -> NOT_SELECTOR space-opt . negation-argument RPAREN
+    (69) negation-argument -> . type-selector space-opt
+    (70) negation-argument -> . hash space-opt
+    (71) negation-argument -> . class space-opt
+    (72) negation-argument -> . attribute space-opt
+    (73) negation-argument -> . pseudo space-opt
+    (17) type-selector -> . element-selector
+    (18) type-selector -> . all-selector
+    (41) hash -> . HASH
+    (42) class -> . DOT IDENTIFIER
+    (43) attribute -> . LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (55) pseudo -> . COLON pseudo-selector
+    (56) pseudo -> . COLON COLON pseudo-selector
+    (21) element-selector -> . namespace-prefix-opt element-name
+    (22) all-selector -> . namespace-prefix-opt OP_MUL
+    (23) namespace-prefix-opt -> . namespace-prefix
+    (24) namespace-prefix-opt -> . empty
+    (25) namespace-prefix -> . NAMESPACE_PREFIX
+    (1) empty -> .
+
+    HASH            shift and go to state 5
+    DOT             shift and go to state 6
+    LBRACKET        shift and go to state 4
+    COLON           shift and go to state 11
+    NAMESPACE_PREFIX shift and go to state 22
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+
+    element-selector               shift and go to state 7
+    hash                           shift and go to state 64
+    attribute                      shift and go to state 62
+    namespace-prefix-opt           shift and go to state 17
+    pseudo                         shift and go to state 67
+    namespace-prefix               shift and go to state 2
+    type-selector                  shift and go to state 63
+    all-selector                   shift and go to state 8
+    negation-argument              shift and go to state 65
+    class                          shift and go to state 66
+    empty                          shift and go to state 12
+
+state 52
+
+    (43) attribute -> LBRACKET space-opt namespace-prefix-opt . IDENTIFIER space-opt attribute-match-opt RBRACKET
+
+    IDENTIFIER      shift and go to state 68
+
+
+state 53
+
+    (6) space -> space-delimiter space .
+
+    RPAREN          reduce using rule 6 (space -> space-delimiter space .)
+    OP_PLUS         reduce using rule 6 (space -> space-delimiter space .)
+    OP_MINUS        reduce using rule 6 (space -> space-delimiter space .)
+    DIMENSION       reduce using rule 6 (space -> space-delimiter space .)
+    NUMBER          reduce using rule 6 (space -> space-delimiter space .)
+    STRING          reduce using rule 6 (space -> space-delimiter space .)
+    IDENTIFIER      reduce using rule 6 (space -> space-delimiter space .)
+    RBRACKET        reduce using rule 6 (space -> space-delimiter space .)
+    NAMESPACE_PREFIX reduce using rule 6 (space -> space-delimiter space .)
+    HASH            reduce using rule 6 (space -> space-delimiter space .)
+    DOT             reduce using rule 6 (space -> space-delimiter space .)
+    LBRACKET        reduce using rule 6 (space -> space-delimiter space .)
+    COLON           reduce using rule 6 (space -> space-delimiter space .)
+    NOT_SELECTOR    reduce using rule 6 (space -> space-delimiter space .)
+    OP_MUL          reduce using rule 6 (space -> space-delimiter space .)
+    OP_GT           reduce using rule 6 (space -> space-delimiter space .)
+    OP_TILDE        reduce using rule 6 (space -> space-delimiter space .)
+    COMMA           reduce using rule 6 (space -> space-delimiter space .)
+    $end            reduce using rule 6 (space -> space-delimiter space .)
+    OP_PREFIXMATCH  reduce using rule 6 (space -> space-delimiter space .)
+    OP_SUFFIXMATCH  reduce using rule 6 (space -> space-delimiter space .)
+    OP_SUBSTRINGMATCH reduce using rule 6 (space -> space-delimiter space .)
+    OP_INCLUDES     reduce using rule 6 (space -> space-delimiter space .)
+    OP_DASHMATCH    reduce using rule 6 (space -> space-delimiter space .)
+    OP_EQUALS       reduce using rule 6 (space -> space-delimiter space .)
+
+
+state 54
+
+    (7) selector -> simple-selector combinator selector .
+
+    COMMA           reduce using rule 7 (selector -> simple-selector combinator selector .)
+    $end            reduce using rule 7 (selector -> simple-selector combinator selector .)
+
+
+state 55
+
+    (40) combinator-op -> OP_TILDE . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    HASH            reduce using rule 1 (empty -> .)
+    DOT             reduce using rule 1 (empty -> .)
+    LBRACKET        reduce using rule 1 (empty -> .)
+    COLON           reduce using rule 1 (empty -> .)
+    NOT_SELECTOR    reduce using rule 1 (empty -> .)
+    NAMESPACE_PREFIX reduce using rule 1 (empty -> .)
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 69
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 56
+
+    (36) combinator -> space-opt combinator-op .
+
+    HASH            reduce using rule 36 (combinator -> space-opt combinator-op .)
+    DOT             reduce using rule 36 (combinator -> space-opt combinator-op .)
+    LBRACKET        reduce using rule 36 (combinator -> space-opt combinator-op .)
+    COLON           reduce using rule 36 (combinator -> space-opt combinator-op .)
+    NOT_SELECTOR    reduce using rule 36 (combinator -> space-opt combinator-op .)
+    NAMESPACE_PREFIX reduce using rule 36 (combinator -> space-opt combinator-op .)
+    OP_MUL          reduce using rule 36 (combinator -> space-opt combinator-op .)
+    IDENTIFIER      reduce using rule 36 (combinator -> space-opt combinator-op .)
+
+
+state 57
+
+    (39) combinator-op -> OP_GT . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    HASH            reduce using rule 1 (empty -> .)
+    DOT             reduce using rule 1 (empty -> .)
+    LBRACKET        reduce using rule 1 (empty -> .)
+    COLON           reduce using rule 1 (empty -> .)
+    NOT_SELECTOR    reduce using rule 1 (empty -> .)
+    NAMESPACE_PREFIX reduce using rule 1 (empty -> .)
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 70
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 58
+
+    (38) combinator-op -> OP_PLUS . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    HASH            reduce using rule 1 (empty -> .)
+    DOT             reduce using rule 1 (empty -> .)
+    LBRACKET        reduce using rule 1 (empty -> .)
+    COLON           reduce using rule 1 (empty -> .)
+    NOT_SELECTOR    reduce using rule 1 (empty -> .)
+    NAMESPACE_PREFIX reduce using rule 1 (empty -> .)
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 71
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 59
+
+    (59) pseudo-function -> FUNCTION space-opt . pseudo-expression RPAREN
+    (60) pseudo-expression -> . pseudo-term pseudo-expression
+    (61) pseudo-expression -> . pseudo-term
+    (62) pseudo-term -> . OP_PLUS space-opt
+    (63) pseudo-term -> . OP_MINUS space-opt
+    (64) pseudo-term -> . DIMENSION space-opt
+    (65) pseudo-term -> . NUMBER space-opt
+    (66) pseudo-term -> . STRING space-opt
+    (67) pseudo-term -> . IDENTIFIER space-opt
+
+    OP_PLUS         shift and go to state 75
+    OP_MINUS        shift and go to state 73
+    DIMENSION       shift and go to state 79
+    NUMBER          shift and go to state 74
+    STRING          shift and go to state 72
+    IDENTIFIER      shift and go to state 78
+
+    pseudo-term                    shift and go to state 77
+    pseudo-expression              shift and go to state 76
+
+state 60
+
+    (56) pseudo -> COLON COLON pseudo-selector .
+
+    HASH            reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    DOT             reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    LBRACKET        reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    COLON           reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    NOT_SELECTOR    reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    SPACE           reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    BLOCKCOMMENT    reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    CDO             reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    CDC             reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    OP_PLUS         reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    OP_GT           reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    OP_TILDE        reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    COMMA           reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    $end            reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+    RPAREN          reduce using rule 56 (pseudo -> COLON COLON pseudo-selector .)
+
+
+state 61
+
+    (2) selectors -> selector COMMA space-opt . selectors
+    (2) selectors -> . selector COMMA space-opt selectors
+    (5) selectors -> . selector
+    (7) selector -> . simple-selector combinator selector
+    (9) selector -> . simple-selector space-opt
+    (13) simple-selector -> . type-selector selector-rules-opt
+    (14) simple-selector -> . selector-rules
+    (17) type-selector -> . element-selector
+    (18) type-selector -> . all-selector
+    (29) selector-rules -> . selector-rule selector-rules
+    (30) selector-rules -> . selector-rule
+    (21) element-selector -> . namespace-prefix-opt element-name
+    (22) all-selector -> . namespace-prefix-opt OP_MUL
+    (31) selector-rule -> . hash
+    (32) selector-rule -> . class
+    (33) selector-rule -> . attribute
+    (34) selector-rule -> . pseudo
+    (35) selector-rule -> . negation
+    (23) namespace-prefix-opt -> . namespace-prefix
+    (24) namespace-prefix-opt -> . empty
+    (41) hash -> . HASH
+    (42) class -> . DOT IDENTIFIER
+    (43) attribute -> . LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    (55) pseudo -> . COLON pseudo-selector
+    (56) pseudo -> . COLON COLON pseudo-selector
+    (68) negation -> . NOT_SELECTOR space-opt negation-argument RPAREN
+    (25) namespace-prefix -> . NAMESPACE_PREFIX
+    (1) empty -> .
+
+    HASH            shift and go to state 5
+    DOT             shift and go to state 6
+    LBRACKET        shift and go to state 4
+    COLON           shift and go to state 11
+    NOT_SELECTOR    shift and go to state 21
+    NAMESPACE_PREFIX shift and go to state 22
+    OP_MUL          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+
+    attribute                      shift and go to state 1
+    namespace-prefix               shift and go to state 2
+    type-selector                  shift and go to state 3
+    element-selector               shift and go to state 7
+    all-selector                   shift and go to state 8
+    simple-selector                shift and go to state 9
+    negation                       shift and go to state 10
+    empty                          shift and go to state 12
+    selector-rule                  shift and go to state 13
+    hash                           shift and go to state 14
+    selector                       shift and go to state 15
+    class                          shift and go to state 16
+    namespace-prefix-opt           shift and go to state 17
+    selector-rules                 shift and go to state 18
+    pseudo                         shift and go to state 19
+    selectors                      shift and go to state 80
+
+state 62
+
+    (72) negation-argument -> attribute . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 81
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 63
+
+    (69) negation-argument -> type-selector . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 82
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 64
+
+    (70) negation-argument -> hash . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 83
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 65
+
+    (68) negation -> NOT_SELECTOR space-opt negation-argument . RPAREN
+
+    RPAREN          shift and go to state 84
+
+
+state 66
+
+    (71) negation-argument -> class . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 85
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 67
+
+    (73) negation-argument -> pseudo . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 86
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 68
+
+    (43) attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER . space-opt attribute-match-opt RBRACKET
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PREFIXMATCH  reduce using rule 1 (empty -> .)
+    OP_SUFFIXMATCH  reduce using rule 1 (empty -> .)
+    OP_SUBSTRINGMATCH reduce using rule 1 (empty -> .)
+    OP_INCLUDES     reduce using rule 1 (empty -> .)
+    OP_DASHMATCH    reduce using rule 1 (empty -> .)
+    OP_EQUALS       reduce using rule 1 (empty -> .)
+    RBRACKET        reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    space-opt                      shift and go to state 87
+    space-delimiter                shift and go to state 33
+    blockcomment                   shift and go to state 35
+    empty                          shift and go to state 36
+
+state 69
+
+    (40) combinator-op -> OP_TILDE space-opt .
+
+    HASH            reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+    DOT             reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+    LBRACKET        reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+    COLON           reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+    NOT_SELECTOR    reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+    NAMESPACE_PREFIX reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+    OP_MUL          reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+    IDENTIFIER      reduce using rule 40 (combinator-op -> OP_TILDE space-opt .)
+
+
+state 70
+
+    (39) combinator-op -> OP_GT space-opt .
+
+    HASH            reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+    DOT             reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+    LBRACKET        reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+    COLON           reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+    NOT_SELECTOR    reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+    NAMESPACE_PREFIX reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+    OP_MUL          reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+    IDENTIFIER      reduce using rule 39 (combinator-op -> OP_GT space-opt .)
+
+
+state 71
+
+    (38) combinator-op -> OP_PLUS space-opt .
+
+    HASH            reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+    DOT             reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+    LBRACKET        reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+    COLON           reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+    NOT_SELECTOR    reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+    NAMESPACE_PREFIX reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+    OP_MUL          reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+    IDENTIFIER      reduce using rule 38 (combinator-op -> OP_PLUS space-opt .)
+
+
+state 72
+
+    (66) pseudo-term -> STRING . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_MINUS        reduce using rule 1 (empty -> .)
+    DIMENSION       reduce using rule 1 (empty -> .)
+    NUMBER          reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 88
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 73
+
+    (63) pseudo-term -> OP_MINUS . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_MINUS        reduce using rule 1 (empty -> .)
+    DIMENSION       reduce using rule 1 (empty -> .)
+    NUMBER          reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 89
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 74
+
+    (65) pseudo-term -> NUMBER . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_MINUS        reduce using rule 1 (empty -> .)
+    DIMENSION       reduce using rule 1 (empty -> .)
+    NUMBER          reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 90
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 75
+
+    (62) pseudo-term -> OP_PLUS . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_MINUS        reduce using rule 1 (empty -> .)
+    DIMENSION       reduce using rule 1 (empty -> .)
+    NUMBER          reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 91
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 76
+
+    (59) pseudo-function -> FUNCTION space-opt pseudo-expression . RPAREN
+
+    RPAREN          shift and go to state 92
+
+
+state 77
+
+    (60) pseudo-expression -> pseudo-term . pseudo-expression
+    (61) pseudo-expression -> pseudo-term .
+    (60) pseudo-expression -> . pseudo-term pseudo-expression
+    (61) pseudo-expression -> . pseudo-term
+    (62) pseudo-term -> . OP_PLUS space-opt
+    (63) pseudo-term -> . OP_MINUS space-opt
+    (64) pseudo-term -> . DIMENSION space-opt
+    (65) pseudo-term -> . NUMBER space-opt
+    (66) pseudo-term -> . STRING space-opt
+    (67) pseudo-term -> . IDENTIFIER space-opt
+
+    RPAREN          reduce using rule 61 (pseudo-expression -> pseudo-term .)
+    OP_PLUS         shift and go to state 75
+    OP_MINUS        shift and go to state 73
+    DIMENSION       shift and go to state 79
+    NUMBER          shift and go to state 74
+    STRING          shift and go to state 72
+    IDENTIFIER      shift and go to state 78
+
+    pseudo-term                    shift and go to state 77
+    pseudo-expression              shift and go to state 93
+
+state 78
+
+    (67) pseudo-term -> IDENTIFIER . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_MINUS        reduce using rule 1 (empty -> .)
+    DIMENSION       reduce using rule 1 (empty -> .)
+    NUMBER          reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 94
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 79
+
+    (64) pseudo-term -> DIMENSION . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    OP_PLUS         reduce using rule 1 (empty -> .)
+    OP_MINUS        reduce using rule 1 (empty -> .)
+    DIMENSION       reduce using rule 1 (empty -> .)
+    NUMBER          reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    RPAREN          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 95
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 80
+
+    (2) selectors -> selector COMMA space-opt selectors .
+
+    $end            reduce using rule 2 (selectors -> selector COMMA space-opt selectors .)
+
+
+state 81
+
+    (72) negation-argument -> attribute space-opt .
+
+    RPAREN          reduce using rule 72 (negation-argument -> attribute space-opt .)
+
+
+state 82
+
+    (69) negation-argument -> type-selector space-opt .
+
+    RPAREN          reduce using rule 69 (negation-argument -> type-selector space-opt .)
+
+
+state 83
+
+    (70) negation-argument -> hash space-opt .
+
+    RPAREN          reduce using rule 70 (negation-argument -> hash space-opt .)
+
+
+state 84
+
+    (68) negation -> NOT_SELECTOR space-opt negation-argument RPAREN .
+
+    HASH            reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    DOT             reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    LBRACKET        reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    COLON           reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    NOT_SELECTOR    reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    SPACE           reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    BLOCKCOMMENT    reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    CDO             reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    CDC             reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    OP_PLUS         reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    OP_GT           reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    OP_TILDE        reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    COMMA           reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+    $end            reduce using rule 68 (negation -> NOT_SELECTOR space-opt negation-argument RPAREN .)
+
+
+state 85
+
+    (71) negation-argument -> class space-opt .
+
+    RPAREN          reduce using rule 71 (negation-argument -> class space-opt .)
+
+
+state 86
+
+    (73) negation-argument -> pseudo space-opt .
+
+    RPAREN          reduce using rule 73 (negation-argument -> pseudo space-opt .)
+
+
+state 87
+
+    (43) attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt . attribute-match-opt RBRACKET
+    (44) attribute-match-opt -> . attribute-match
+    (45) attribute-match-opt -> . empty
+    (46) attribute-match -> . attribute-op attribute-value
+    (1) empty -> .
+    (47) attribute-op -> . OP_PREFIXMATCH space-opt
+    (48) attribute-op -> . OP_SUFFIXMATCH space-opt
+    (49) attribute-op -> . OP_SUBSTRINGMATCH space-opt
+    (50) attribute-op -> . OP_INCLUDES space-opt
+    (51) attribute-op -> . OP_DASHMATCH space-opt
+    (52) attribute-op -> . OP_EQUALS space-opt
+
+    RBRACKET        reduce using rule 1 (empty -> .)
+    OP_PREFIXMATCH  shift and go to state 100
+    OP_SUFFIXMATCH  shift and go to state 96
+    OP_SUBSTRINGMATCH shift and go to state 103
+    OP_INCLUDES     shift and go to state 101
+    OP_DASHMATCH    shift and go to state 97
+    OP_EQUALS       shift and go to state 102
+
+    attribute-op                   shift and go to state 98
+    attribute-match                shift and go to state 99
+    empty                          shift and go to state 104
+    attribute-match-opt            shift and go to state 105
+
+state 88
+
+    (66) pseudo-term -> STRING space-opt .
+
+    OP_PLUS         reduce using rule 66 (pseudo-term -> STRING space-opt .)
+    OP_MINUS        reduce using rule 66 (pseudo-term -> STRING space-opt .)
+    DIMENSION       reduce using rule 66 (pseudo-term -> STRING space-opt .)
+    NUMBER          reduce using rule 66 (pseudo-term -> STRING space-opt .)
+    STRING          reduce using rule 66 (pseudo-term -> STRING space-opt .)
+    IDENTIFIER      reduce using rule 66 (pseudo-term -> STRING space-opt .)
+    RPAREN          reduce using rule 66 (pseudo-term -> STRING space-opt .)
+
+
+state 89
+
+    (63) pseudo-term -> OP_MINUS space-opt .
+
+    OP_PLUS         reduce using rule 63 (pseudo-term -> OP_MINUS space-opt .)
+    OP_MINUS        reduce using rule 63 (pseudo-term -> OP_MINUS space-opt .)
+    DIMENSION       reduce using rule 63 (pseudo-term -> OP_MINUS space-opt .)
+    NUMBER          reduce using rule 63 (pseudo-term -> OP_MINUS space-opt .)
+    STRING          reduce using rule 63 (pseudo-term -> OP_MINUS space-opt .)
+    IDENTIFIER      reduce using rule 63 (pseudo-term -> OP_MINUS space-opt .)
+    RPAREN          reduce using rule 63 (pseudo-term -> OP_MINUS space-opt .)
+
+
+state 90
+
+    (65) pseudo-term -> NUMBER space-opt .
+
+    OP_PLUS         reduce using rule 65 (pseudo-term -> NUMBER space-opt .)
+    OP_MINUS        reduce using rule 65 (pseudo-term -> NUMBER space-opt .)
+    DIMENSION       reduce using rule 65 (pseudo-term -> NUMBER space-opt .)
+    NUMBER          reduce using rule 65 (pseudo-term -> NUMBER space-opt .)
+    STRING          reduce using rule 65 (pseudo-term -> NUMBER space-opt .)
+    IDENTIFIER      reduce using rule 65 (pseudo-term -> NUMBER space-opt .)
+    RPAREN          reduce using rule 65 (pseudo-term -> NUMBER space-opt .)
+
+
+state 91
+
+    (62) pseudo-term -> OP_PLUS space-opt .
+
+    OP_PLUS         reduce using rule 62 (pseudo-term -> OP_PLUS space-opt .)
+    OP_MINUS        reduce using rule 62 (pseudo-term -> OP_PLUS space-opt .)
+    DIMENSION       reduce using rule 62 (pseudo-term -> OP_PLUS space-opt .)
+    NUMBER          reduce using rule 62 (pseudo-term -> OP_PLUS space-opt .)
+    STRING          reduce using rule 62 (pseudo-term -> OP_PLUS space-opt .)
+    IDENTIFIER      reduce using rule 62 (pseudo-term -> OP_PLUS space-opt .)
+    RPAREN          reduce using rule 62 (pseudo-term -> OP_PLUS space-opt .)
+
+
+state 92
+
+    (59) pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .
+
+    HASH            reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    DOT             reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    LBRACKET        reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    COLON           reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    NOT_SELECTOR    reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    SPACE           reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    BLOCKCOMMENT    reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    CDO             reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    CDC             reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    OP_PLUS         reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    OP_GT           reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    OP_TILDE        reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    COMMA           reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    $end            reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+    RPAREN          reduce using rule 59 (pseudo-function -> FUNCTION space-opt pseudo-expression RPAREN .)
+
+
+state 93
+
+    (60) pseudo-expression -> pseudo-term pseudo-expression .
+
+    RPAREN          reduce using rule 60 (pseudo-expression -> pseudo-term pseudo-expression .)
+
+
+state 94
+
+    (67) pseudo-term -> IDENTIFIER space-opt .
+
+    OP_PLUS         reduce using rule 67 (pseudo-term -> IDENTIFIER space-opt .)
+    OP_MINUS        reduce using rule 67 (pseudo-term -> IDENTIFIER space-opt .)
+    DIMENSION       reduce using rule 67 (pseudo-term -> IDENTIFIER space-opt .)
+    NUMBER          reduce using rule 67 (pseudo-term -> IDENTIFIER space-opt .)
+    STRING          reduce using rule 67 (pseudo-term -> IDENTIFIER space-opt .)
+    IDENTIFIER      reduce using rule 67 (pseudo-term -> IDENTIFIER space-opt .)
+    RPAREN          reduce using rule 67 (pseudo-term -> IDENTIFIER space-opt .)
+
+
+state 95
+
+    (64) pseudo-term -> DIMENSION space-opt .
+
+    OP_PLUS         reduce using rule 64 (pseudo-term -> DIMENSION space-opt .)
+    OP_MINUS        reduce using rule 64 (pseudo-term -> DIMENSION space-opt .)
+    DIMENSION       reduce using rule 64 (pseudo-term -> DIMENSION space-opt .)
+    NUMBER          reduce using rule 64 (pseudo-term -> DIMENSION space-opt .)
+    STRING          reduce using rule 64 (pseudo-term -> DIMENSION space-opt .)
+    IDENTIFIER      reduce using rule 64 (pseudo-term -> DIMENSION space-opt .)
+    RPAREN          reduce using rule 64 (pseudo-term -> DIMENSION space-opt .)
+
+
+state 96
+
+    (48) attribute-op -> OP_SUFFIXMATCH . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 106
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 97
+
+    (51) attribute-op -> OP_DASHMATCH . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 107
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 98
+
+    (46) attribute-match -> attribute-op . attribute-value
+    (53) attribute-value -> . IDENTIFIER space-opt
+    (54) attribute-value -> . STRING space-opt
+
+    IDENTIFIER      shift and go to state 108
+    STRING          shift and go to state 110
+
+    attribute-value                shift and go to state 109
+
+state 99
+
+    (44) attribute-match-opt -> attribute-match .
+
+    RBRACKET        reduce using rule 44 (attribute-match-opt -> attribute-match .)
+
+
+state 100
+
+    (47) attribute-op -> OP_PREFIXMATCH . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 111
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 101
+
+    (50) attribute-op -> OP_INCLUDES . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 112
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 102
+
+    (52) attribute-op -> OP_EQUALS . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 113
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 103
+
+    (49) attribute-op -> OP_SUBSTRINGMATCH . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    IDENTIFIER      reduce using rule 1 (empty -> .)
+    STRING          reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 114
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 104
+
+    (45) attribute-match-opt -> empty .
+
+    RBRACKET        reduce using rule 45 (attribute-match-opt -> empty .)
+
+
+state 105
+
+    (43) attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt . RBRACKET
+
+    RBRACKET        shift and go to state 115
+
+
+state 106
+
+    (48) attribute-op -> OP_SUFFIXMATCH space-opt .
+
+    IDENTIFIER      reduce using rule 48 (attribute-op -> OP_SUFFIXMATCH space-opt .)
+    STRING          reduce using rule 48 (attribute-op -> OP_SUFFIXMATCH space-opt .)
+
+
+state 107
+
+    (51) attribute-op -> OP_DASHMATCH space-opt .
+
+    IDENTIFIER      reduce using rule 51 (attribute-op -> OP_DASHMATCH space-opt .)
+    STRING          reduce using rule 51 (attribute-op -> OP_DASHMATCH space-opt .)
+
+
+state 108
+
+    (53) attribute-value -> IDENTIFIER . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RBRACKET        reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 116
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 109
+
+    (46) attribute-match -> attribute-op attribute-value .
+
+    RBRACKET        reduce using rule 46 (attribute-match -> attribute-op attribute-value .)
+
+
+state 110
+
+    (54) attribute-value -> STRING . space-opt
+    (3) space-opt -> . space
+    (4) space-opt -> . empty
+    (6) space -> . space-delimiter space
+    (8) space -> . space-delimiter
+    (1) empty -> .
+    (10) space-delimiter -> . whitespace
+    (11) space-delimiter -> . blockcomment
+    (12) space-delimiter -> . htmlcomment
+    (15) whitespace -> . SPACE
+    (16) blockcomment -> . BLOCKCOMMENT
+    (19) htmlcomment -> . CDO
+    (20) htmlcomment -> . CDC
+
+    RBRACKET        reduce using rule 1 (empty -> .)
+    SPACE           shift and go to state 30
+    BLOCKCOMMENT    shift and go to state 34
+    CDO             shift and go to state 27
+    CDC             shift and go to state 31
+
+    htmlcomment                    shift and go to state 26
+    whitespace                     shift and go to state 28
+    space                          shift and go to state 29
+    blockcomment                   shift and go to state 35
+    space-opt                      shift and go to state 117
+    space-delimiter                shift and go to state 33
+    empty                          shift and go to state 36
+
+state 111
+
+    (47) attribute-op -> OP_PREFIXMATCH space-opt .
+
+    IDENTIFIER      reduce using rule 47 (attribute-op -> OP_PREFIXMATCH space-opt .)
+    STRING          reduce using rule 47 (attribute-op -> OP_PREFIXMATCH space-opt .)
+
+
+state 112
+
+    (50) attribute-op -> OP_INCLUDES space-opt .
+
+    IDENTIFIER      reduce using rule 50 (attribute-op -> OP_INCLUDES space-opt .)
+    STRING          reduce using rule 50 (attribute-op -> OP_INCLUDES space-opt .)
+
+
+state 113
+
+    (52) attribute-op -> OP_EQUALS space-opt .
+
+    IDENTIFIER      reduce using rule 52 (attribute-op -> OP_EQUALS space-opt .)
+    STRING          reduce using rule 52 (attribute-op -> OP_EQUALS space-opt .)
+
+
+state 114
+
+    (49) attribute-op -> OP_SUBSTRINGMATCH space-opt .
+
+    IDENTIFIER      reduce using rule 49 (attribute-op -> OP_SUBSTRINGMATCH space-opt .)
+    STRING          reduce using rule 49 (attribute-op -> OP_SUBSTRINGMATCH space-opt .)
+
+
+state 115
+
+    (43) attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .
+
+    HASH            reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    DOT             reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    LBRACKET        reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    COLON           reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    NOT_SELECTOR    reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    SPACE           reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    BLOCKCOMMENT    reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    CDO             reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    CDC             reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    OP_PLUS         reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    OP_GT           reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    OP_TILDE        reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    COMMA           reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    $end            reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+    RPAREN          reduce using rule 43 (attribute -> LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET .)
+
+
+state 116
+
+    (53) attribute-value -> IDENTIFIER space-opt .
+
+    RBRACKET        reduce using rule 53 (attribute-value -> IDENTIFIER space-opt .)
+
+
+state 117
+
+    (54) attribute-value -> STRING space-opt .
+
+    RBRACKET        reduce using rule 54 (attribute-value -> STRING space-opt .)
+

@@ -1,16 +1,16 @@
 from Parser import Parser
-from productions import Stylesheet, MSHacks
+from productions import Selectors
 
 
-class SCSSParser(Parser, Stylesheet, MSHacks):
+class SelectorsParser(Parser, Selectors):
     
     ###########################################################################
     # overrideable methods
     ###########################################################################
     
     def get_tokens(self):
-        return self.lexer.tokens
+        return self.lexer.selector_tokens
     
     def get_start(self):
-        return "stylesheet"
+        return "selectors"
     
