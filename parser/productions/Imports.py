@@ -49,11 +49,11 @@ class Imports(Media):
     
     
     # import-src
-    # : value-string
-    # | value-uri
+    # : STRING space-opt
+    # | URI space-opt
     @PRODUCTION(
-        "import-src : value-string",
-        "           | value-uri",
+        "import-src : STRING space-opt",
+        "           | URI space-opt",
     )
     def p_import_src(self, t):
         # TODO - build AST

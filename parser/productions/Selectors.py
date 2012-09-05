@@ -82,8 +82,8 @@ class Selectors(WhitespaceComment):
     def p_element_selector(self, t):
         # TODO - build AST
         pass
-
-
+    
+    
     # all-selector
     # : namespace-prefix-opt OP_MUL
     @PRODUCTION(
@@ -114,7 +114,7 @@ class Selectors(WhitespaceComment):
     def p_namespace_prefix(self, t):
         # TODO - build AST
         pass
-    
+         
 
     # element-name
     # : IDENTIFIER
@@ -237,7 +237,7 @@ class Selectors(WhitespaceComment):
     def p_attribute(self, t):
         # TODO - build AST
         pass
-
+    
     
     # attribute-match-opt
     # : attribute-match
