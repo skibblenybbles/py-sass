@@ -1,6 +1,7 @@
 import re
 from ply import lex
 from tokens import Token
+from tags import tags, deprecated_tags
 
 
 class Lexer(object):
@@ -56,14 +57,16 @@ class Lexer(object):
     partials['hex']                 = r'[0-9a-f]'
     partials['nonascii']            = r'[\240-\377]'
     partials['unicode']             = r'(\\' + partials['hex'] + r'{1,6}(\r\n|[ \t\r\n\f])?)'
-    partials['escape']              = partials['unicode'] + r'|(\\[^\r\n\f0-9a-f])'
+    partials['escape']              = r'(' + partials['unicode'] + r'|(\\[^\r\n\f0-9a-f]))'
 
     # names and identifiers
     partials['namestart']           = r'([_a-z]|' + partials['nonascii'] + r'|' + partials['escape'] + r')'
     partials['namechar']            = r'([-_a-z0-9]|' + partials['nonascii'] + r'|' + partials['escape'] + r')'
     partials['name']                = r'(' + partials['namechar'] + r'+)'
     partials['identifier']          = r'(-?' + partials['namestart'] + partials['namechar'] + r'*)'
-
+    partials['namespace']           = r'(' + partials['identifier'] + r'|\*)'
+    partials['namespacedelim']      = r'\|'
+    
     # strings
     partials['stringdouble']        = r'(\"([^\n\r\f\\"]|\\' + partials['newline'] + r'|' + partials['escape'] + r')*\")'
     partials['stringsingle']        = r"(\'([^\n\r\f\\']|\\" + partials['newline'] + r'|' + partials['escape'] + r")*\')"
@@ -177,10 +180,6 @@ class Lexer(object):
         # flag:
         # adds keyword "important"
         ("flag", "inclusive"),
-        
-        # selectors:
-        # adds token for matching a nested selector
-        ("selectors", "inclusive"),
     )
     
 
@@ -191,9 +190,6 @@ class Lexer(object):
     # tokens used by the SCSS parser
     tokens = ()
     
-    # tokens used by the Selector parser
-    selector_tokens = ()
-
 
     ###########################################################################
     # ignored tokens
@@ -213,7 +209,6 @@ class Lexer(object):
 
     # SPACE - whitespace
     tokens += ("SPACE",)
-    selector_tokens += ("SPACE",)
 
     @lex.TOKEN(
         partials['space'],
@@ -225,7 +220,6 @@ class Lexer(object):
 
     # CDO - HTML comment delimiter open: <!--
     tokens += ("CDO",)
-    selector_tokens += ("CDO",)
 
     @lex.TOKEN(
         r'<!--',
@@ -237,7 +231,6 @@ class Lexer(object):
 
     # CDC - HTML comment delimter close: -->
     tokens += ("CDC",)
-    selector_tokens += ("CDC",)
 
     @lex.TOKEN(
         r'-->',
@@ -249,7 +242,6 @@ class Lexer(object):
 
     # BLOCKCOMMENT - block comments: /* ... */
     tokens += ("BLOCKCOMMENT",)
-    selector_tokens += ("BLOCKCOMMENT",)
 
     @lex.TOKEN(
         partials['blockcomment'],
@@ -276,7 +268,6 @@ class Lexer(object):
 
     # NOT_SELECTOR - :not( ... ) psuedo selector
     tokens += ("NOT_SELECTOR",)
-    selector_tokens += ("NOT_SELECTOR",)
 
     @lex.TOKEN(
         ':' + ''.join([partials[e] for e in "NOT"]) + r'\(',
@@ -344,7 +335,6 @@ class Lexer(object):
 
     # STRING - single or double quote string
     tokens += ("STRING",)
-    selector_tokens += ("STRING",)
 
     @lex.TOKEN(
         partials['string'],
@@ -367,14 +357,13 @@ class Lexer(object):
 
     # HASH - hash literal: #this-is-a-hash
     tokens += ("HASH",)
-    selector_tokens += ("HASH",)
 
     @lex.TOKEN(
         r'\#(?P<name>' + partials['name'] + ')',
     )
     def t_HASH(self, t):
         m = self.lexer.lexmatch
-        token = self.create_token(t, False)
+        token = self.create_token(t, True)
         token.name = m.group('name')
         return t
 
@@ -382,14 +371,13 @@ class Lexer(object):
     # DIMENSION - number with arbitrary units
     # hybrid of CSS 2.1 and CSS 3 specs
     tokens += ("DIMENSION",)
-    selector_tokens += ("DIMENSION",)
  
     @lex.TOKEN(
         r'(?P<number>' + partials['number'] + r')(?P<units>' + partials['identifier'] + r')',
     )
     def t_DIMENSION(self, t):
         m = self.lexer.lexmatch
-        token = self.create_token(t, False)
+        token = self.create_token(t, True)
         token.number = m.group('number')
         try:
             token.number = int(token.number)
@@ -426,7 +414,6 @@ class Lexer(object):
 
     # NUMBER - number
     tokens += ("NUMBER",)
-    selector_tokens += ("NUMBER",)
 
     @lex.TOKEN(
         partials['number'],
@@ -454,7 +441,7 @@ class Lexer(object):
     )
     def t_URI(self, t):
         m = self.lexer.lexmatch
-        token = self.create_token(t, False)
+        token = self.create_token(t, True)
         token.url = m.group('url')
         return t
 
@@ -464,55 +451,84 @@ class Lexer(object):
         partials['baduri'],
     )
     def t_BAD_URI(self, t):
-        self.create_token(t, False)
+        self.create_token(t, True)
         # TODO: yell about this
         
         return None
 
 
     ###########################################################################
-    # function, namespace prefix and identifier tokens
+    # function, prefixed identifiers and identifier tokens
     ###########################################################################
 
     # FUNCTION - identifier with following "("
     tokens += ("FUNCTION",)
-    selector_tokens += ("FUNCTION",)
 
     @lex.TOKEN(
         r'(?P<identifier>' + partials['identifier'] + ')\(',
     )
     def t_FUNCTION(self, t):
         m = self.lexer.lexmatch
-        token = self.create_token(t, False)
+        token = self.create_token(t, True)
         t.identifier = m.group('identifier')
         return t
 
 
-    # NAMESPACE_PREFIX - optional identifier or "*" with following "|"
-    tokens += ("NAMESPACE_PREFIX",)
-    selector_tokens += ("NAMESPACE_PREFIX",)
+    # PREFIXED_IDENTIFIER - optional namespace followed by a namespace
+    # delimiter, prefixing an identifier
+    tokens += ("PREFIXED_IDENTIFIER",)
     
     @lex.TOKEN(
-        r'((?P<identifier>' + partials['identifier'] + r')|(?P<all>\*))?\|',
+        r'(?P<namespace>' + partials['namespace'] + r')?' + partials['namespacedelim'] + r'(?P<identifier>' + partials['identifier'] + r')'
     )
-    def t_NAMESPACE_PREFIX(self, t):
+    def t_PREFIXED_IDENTIFIER(self, t):
         m = self.lexer.lexmatch
-        token = self.create_token(t, False)
+        token = self.create_token(t, True)
+        t.namespace = m.group('namespace')
         t.identifier = m.group('identifier')
-        t.all = m.group('all')
         return t
     
-
+    
+    # PREFIXED_ALL - optional namespace followed by a namespace
+    # delimiter, prefixing '*"
+    tokens += ("PREFIXED_ALL",)
+    
+    @lex.TOKEN(
+        r'(?P<namespace>' + partials['namespace'] + r')?' + partials['namespacedelim'] + r'\*'
+    )
+    def t_PREFIXED_ALL(self, t):
+        m = self.lexer.lexmatch
+        token = self.create_token(t, True)
+        t.namespace = m.group('namespace')
+        return t
+    
+    
     # IDENTIFIER - identifier
     tokens += ("IDENTIFIER",)
-    selector_tokens += ("IDENTIFIER",)
 
     @lex.TOKEN(
         partials['identifier'],
     )
     def t_IDENTIFIER(self, t):
-        self.create_token(t, False)
+        # TODO: improve this check...
+        if t.value in tags:
+            
+            #t.type = "ELEMENT"
+            pass
+            
+        elif t.value in deprecated_tags:
+            
+            # TODO: yell about this
+            # treat it as an identifier
+            pass
+        
+        self.create_token(t, True)
         return t
+    
+    
+    # TEMP!
+    tokens += ("ELEMENT",)
+    t_ELEMENT = t_IDENTIFIER
 
     
     
@@ -577,30 +593,6 @@ class Lexer(object):
     
     
     ###########################################################################
-    # selector state tokens
-    ###########################################################################
-    
-    # make sure that whitespace and comments are matched in the
-    # selectors state before the SELECTORS token
-    t_selectors_ignore_INLINECOMMENT = t_ignore_INLINECOMMENT
-    t_selectors_SPACE = t_SPACE
-    t_selectors_CDO = t_CDO
-    t_selectors_CDC = t_CDC
-    t_selectors_BLOCKCOMMENT = t_BLOCKCOMMENT
-
-    # SELECTOR - matches the start of a nested selector
-    # only available in "selector" state
-    tokens += ("SELECTORS",)
-    
-    @lex.TOKEN(
-        partials['selectors'],
-    )
-    def t_selectors_SELECTORS(self, t):
-        token = self.create_token(t, True)
-        return t
-    
-
-    ###########################################################################
     # simple tokens (operators and grouping delimiters) matched by the lexer
     ###########################################################################
 
@@ -630,27 +622,6 @@ class Lexer(object):
         ('}', "RBRACE"),
     )
     simple_tokens_xlt = dict(simple_tokens)
-    
-    selector_tokens += (
-        "OP_INCLUDES",
-        "OP_DASHMATCH",
-        "OP_PREFIXMATCH",
-        "OP_SUFFIXMATCH",
-        "OP_SUBSTRINGMATCH",
-        "OP_EQUALS",
-        "OP_MINUS",
-        "OP_PLUS",
-        "OP_MUL",
-        "OP_GT",
-        "OP_TILDE",
-        "COMMA",
-        "DOT",
-        "COLON",
-        "RPAREN",
-        "LBRACKET",
-        "RBRACKET",
-        "LBRACE",
-    )
     
     tokens += tuple([b for a, b in simple_tokens])
     

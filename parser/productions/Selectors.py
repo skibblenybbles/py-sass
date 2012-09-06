@@ -8,6 +8,12 @@ class Selectors(WhitespaceComment):
     # selectors
     ###########################################################################
     
+    
+    # TEMP!
+    
+    
+    
+    
     # selectors
     # : selector COMMA space-opt selectors
     # | selector
@@ -24,8 +30,8 @@ class Selectors(WhitespaceComment):
     def p_selectors_terminal(self, t):
         # TODO - build AST
         pass
-
-
+    
+    
     # selector
     # : simple-selector combinator selector
     # | simple-selector space-opt
@@ -43,133 +49,85 @@ class Selectors(WhitespaceComment):
         # TODO - build AST
         pass
 
-
+    
     # simple-selector
-    # : type-selector selector-rules-opt
-    # | selector-rules
+    # : element-selector selector-filters-opt
+    # | selector-filters
     @PRODUCTION(
-        "simple-selector : type-selector selector-rules-opt",
+        "simple-selector : element-selector selector-filters-opt",
     )
     def p_simple_selector_type(self, t):
         # TODO - build AST
         pass
 
     @PRODUCTION(
-        "simple-selector : selector-rules",
+        "simple-selector : selector-filters",
     )
-    def p_simple_selector_rules(self, t):
+    def p_simple_selector_filters(self, t):
         # TODO - build AST
         pass
 
-
-    # type-selector
-    # : element-selector
-    # | all-selector
-    @PRODUCTION(
-        "type-selector : element-selector",
-        "              | all-selector",
-    )
-    def p_type_selector(self, t):
-        # TODO - build AST
-        pass
-    
 
     # element-selector
-    # : namespace-prefix-opt element-name
+    # : IDENTIFER
+    # | OP_MUL
+    # | PREFIXED_IDENTIFIER
+    # | PREFIXED_ALL
     @PRODUCTION(
-        "element-selector : namespace-prefix-opt element-name",
+        "element-selector : IDENTIFIER",
+        "element-selector : OP_MUL",
+        "                 | PREFIXED_IDENTIFIER",
+        "                 | PREFIXED_ALL",
     )
     def p_element_selector(self, t):
         # TODO - build AST
         pass
     
     
-    # all-selector
-    # : namespace-prefix-opt OP_MUL
-    @PRODUCTION(
-        "all-selector : namespace-prefix-opt OP_MUL",
-    )
-    def p_all_selector(self, t):
-        # TODO - build AST
-        pass
-    
-    
-    # namespace-prefix-opt 
-    # : namespace-prefix
-    # : empty
-    @PRODUCTION(
-        "namespace-prefix-opt : namespace-prefix",
-        "                     | empty",
-    )
-    def p_namespace_prefix_opt(self, t):
-        # TODO - build AST
-        pass
-
-    
-    # namespace-prefix
-    # : NAMESPACE_PREFIX
-    @PRODUCTION(
-        "namespace-prefix : NAMESPACE_PREFIX",
-    )
-    def p_namespace_prefix(self, t):
-        # TODO - build AST
-        pass
-         
-
-    # element-name
-    # : IDENTIFIER
-    @PRODUCTION(
-        "element-name : IDENTIFIER",
-    )
-    def p_identifier(self, t):
-        # TODO - build AST
-        pass
-
-
-    # selector-rules-opt
-    # : selector-rules
+    # selector-filters-opt
+    # : selector-filters
     # | empty
     @PRODUCTION(
-        "selector-rules-opt : selector-rules",
-        "                   | empty",
+        "selector-filters-opt : selector-filters",
+        "                     | empty",
     )
-    def p_selector_rules_opt(self, t):
+    def p_selector_filters_opt(self, t):
         # TODO - build AST
         pass
     
     
-    # selector-rules
-    # : selector-rule selector-rules
-    # | selector-rule
+    # selector-filters
+    # : selector-filter selector-filters
+    # | selector-filter
     @PRODUCTION(
-        "selector-rules : selector-rule selector-rules",
+        "selector-filters : selector-filter selector-filters",
     )
-    def p_selector_rules_list(self, t):
+    def p_selector_filters_list(self, t):
         # TODO - build AST
         pass
 
     @PRODUCTION(
-        "selector-rules : selector-rule",
+        "selector-filters : selector-filter",
     )
-    def p_selector_rules_terminal(self, t):
+    def p_selector_filters_terminal(self, t):
         # TODO - build AST
         pass
 
 
-    # selector-rule
+    # selector-filter
     # : HASH
     # | class
     # | attribute
     # | pseudo
     # | negation
     @PRODUCTION(
-        "selector-rule : hash",
-        "              | class",
-        "              | attribute",
-        "              | pseudo",
-        "              | negation",
+        "selector-filter : hash",
+        "                | class",
+        "                | attribute",
+        "                | pseudo",
+        "                | negation",
     )
-    def p_selector_rule(self, t):
+    def p_selector_filter(self, t):
         # TODO - build AST
         pass
     
@@ -227,14 +185,27 @@ class Selectors(WhitespaceComment):
     def p_class(self, t):
         # TODO - build AST
         pass
-
-
+    
+    
     # attribute
-    # : LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET
+    # : LBRACKET space-opt attribute-name attribute-match-opt RBRACKET
     @PRODUCTION(
-        "attribute : LBRACKET space-opt namespace-prefix-opt IDENTIFIER space-opt attribute-match-opt RBRACKET",
+        "attribute : LBRACKET space-opt attribute-name attribute-match-opt RBRACKET",
     )
     def p_attribute(self, t):
+        # TODO - build AST
+        pass
+    
+    
+    # attribute-name
+    # : IDENTIFIER space-opt
+    # | PREFIXED_IDENTIFIER space-opt
+    @PRODUCTION(
+        "attribute-name : ELEMENT space-opt",
+        "               | IDENTIFIER space-opt",
+        "               | PREFIXED_IDENTIFIER space-opt",
+    )
+    def p_attribute_name(self, t):
         # TODO - build AST
         pass
     
@@ -388,13 +359,13 @@ class Selectors(WhitespaceComment):
 
 
     # negation-argument
-    # : type-selector space-opt
+    # : element-selector space-opt
     # | hash space-opt
     # | class space-opt
     # | attribute space-opt
     # | pseudo space-opt
     @PRODUCTION(
-        "negation-argument : type-selector space-opt",
+        "negation-argument : element-selector space-opt",
         "                  | hash space-opt",
         "                  | class space-opt",
         "                  | attribute space-opt",

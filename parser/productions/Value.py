@@ -113,12 +113,14 @@ class Value(WhitespaceComment):
     # : value-string
     # | value-uri
     # | value-identifier
+    # | value-element
     # | value-hexcolor
     # | value-function
     @PRODUCTION(
         "value-nonnumeric : value-string",
         "                 | value-uri",
         "                 | value-identifier",
+        #"                 | value-element",
         "                 | value-hexcolor",
         "                 | value-function",
     )
@@ -186,6 +188,17 @@ class Value(WhitespaceComment):
         # TODO - build AST
         pass
     
+    
+    
+    # value-element
+    # : ELEMENT space-opt
+    # @PRODUCTION(
+    #         "value-element : ELEMENT space-opt",
+    #     )
+    #     def p_value_element(self, t):
+    #         # TODO - build AST
+    #         pass
+    #     
 
     # value-hexcolor
     # : HASH space-opt
